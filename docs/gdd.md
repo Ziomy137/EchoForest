@@ -78,19 +78,20 @@ _(To be revealed during gameplay:)_
 
 - **Walking:** Movement in 4 cardinal directions
 - **Running:** Accelerated movement for traversal
-- **Jumping:** Vertical movement and obstacle navigation
-- **Sneaking/Crouching:** Stealth and concealment capability
+- (optional) **Sneaking/Crouching:** Stealth and concealment capability
 
 ### 5.2 Equipment System
 
-- **Equipment Changes:** Dynamic changing of clothing and gear
-- **Weapon Combat:** Direct melee combat system
+- **Equipment Changes:** Dynamic changing of clothing (one costume) and gear
+- **Weapon Combat:** Direct melee combat system and archery
+- (optional) **Magic Combat:** Magic staff with range damage (fire, frost, lighting)
 
 ### 5.3 Inventory Elements
 
-- **Clothing:** Full outfits and clothing pieces
-- **Weapons:** Swords, Bows, Shields
+- **Clothing:** Full outfits
+- **Weapons:** Swords, Bows, Shields and optional magic staffs
 - **Consumables:** Tinctures (potions/healing items)
+- **Artifacts:** quest items
 
 ---
 
@@ -145,12 +146,14 @@ A carefully curated, limited color palette creates the game's cohesive medieval 
   - Swords (melee combat)
   - Bow (ranged combat)
   - Shield (defense)
+  - (optional) Magic staffs (ranged combat)
 - **Consumables:** Tinctures (healing and utility items)
 
 ### 7.2 World Elements
 
-- **Map Layout:** Interconnected areas including cottage, city, and mystical locations
-- **Environmental Objects:** Farm elements, architecture, natural features
+- **Map Layout:** Map divided into 7 areas. You can travel between them using roads or other special passages.
+  Areas must be closed by forests, walls, mountains or water.
+- **Environmental Objects:** Trees, bushes, rocks, river, lake, mountains, farm buildings, castle, towers, animals, caves, villages, villagers.
 
 ---
 
@@ -162,7 +165,7 @@ A carefully curated, limited color palette creates the game's cohesive medieval 
 
 ## 9. Game Scope & Duration
 
-- **Estimated Playtime:** 2-3 days of casual gameplay
+- **Estimated Playtime:** 20-30 hours of gameplay
 - **Narrative Pacing:** Short, focused story arc with clear resolution
 - **Player Progression:** Linear story progression with gameplay objectives
 
