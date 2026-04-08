@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+env:
+  DOTNET_VERSION: "10.0.x"
+  GODOT_VERSION: "4.3.0.stable"
+  COVERAGE_THRESHOLD: 90
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      # Godot SDK NuGet package requires the Godot binary to resolve
+      # platform-specific build targets. chickensoft/setup-godot installs
+      # the exact same version as our project.godot without the editor UI.
+      - name: Setup Godot ${{ env.GODOT_VERSION }}
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: true
+          include-templates: false
+
+      - name: Verify Godot installation
+        run: godot --version
+
+      - name: Restore NuGet packages
+        run: dotnet restore EchoForest.sln
+
+      - name: Build solution (Release)
+        run: dotnet build EchoForest.sln --configuration Release --no-restore --no-incremental
+
+      # Run NUnit tests (pure C# logic only — Godot-coupled code is tested via GUT in editor)
+      - name: Run NUnit tests with coverage
+        run: |
+          dotnet test src/Scripts/Tests/EchoForest.Tests.csproj \
+            --configuration Release \
+            --no-build \
+            --logger "trx;LogFileName=test-results.trx" \
+            --results-directory ./TestResults \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Generate coverage report
+        run: |
+          reportgenerator \
+            "-reports:TestResults/**/coverage.cobertura.xml" \
+            "-targetdir:coverage-report" \
+            "-reporttypes:TextSummary;Html;Cobertura"
+
+      # Skip threshold enforcement when there is no production code yet
+      # (new project bootstrapping). Will enforce once classes exist in src/Scripts/Core/.
+      - name: Enforce ${{ env.COVERAGE_THRESHOLD }}% coverage threshold
+        shell: bash
+        run: |
+          SUMMARY_FILE="coverage-report/Summary.txt"
+          if [ ! -f "$SUMMARY_FILE" ]; then
+            echo "No coverage summary — no production code to measure yet. Skipping."
+            exit 0
+          fi
+          cat "$SUMMARY_FILE"
+          LINE_RATE=$(grep -oP 'Line coverage: \K[0-9]+(\.[0-9]+)?' "$SUMMARY_FILE" | head -1)
+          if [ -z "$LINE_RATE" ]; then
+            echo "No line coverage metric — no production lines to cover yet. Skipping."
+            exit 0
+          fi
+          echo "Line coverage: ${LINE_RATE}%"
+          if awk "BEGIN { exit !(${LINE_RATE} + 0 < ${{ env.COVERAGE_THRESHOLD }}) }"; then
+            echo "::error::Coverage ${LINE_RATE}% is below the required ${{ env.COVERAGE_THRESHOLD }}% threshold."
+            exit 1
+          fi
+          echo "Coverage check passed: ${LINE_RATE}% >= ${{ env.COVERAGE_THRESHOLD }}%"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: TestResults/
+          retention-days: 14
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage-report/
+          retention-days: 14

@@ -109,6 +109,36 @@ EchoForest/
 - [ ] Portal visual effects
 - [ ] Particle systems (if applicable)
 
+### 3.4 Graphics Options
+
+#### Window Mode
+
+- [ ] Supported modes: **Windowed** and **Borderless Fullscreen**
+- [ ] No exclusive fullscreen mode
+- [ ] In Borderless Fullscreen mode the resolution is locked to the current desktop resolution — no manual resolution selection is available
+- [ ] In Windowed mode the window can be freely resized by the user
+
+#### Display Settings
+
+| Option          | Description                                               | Notes                                                                |
+| --------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Window Mode** | Windowed / Borderless Fullscreen                          | Default: Windowed                                                    |
+| **Monitor**     | Target display for Borderless Fullscreen                  | Only relevant in Borderless Fullscreen mode; hidden in Windowed mode |
+| **FPS Limit**   | Cap the frame rate (e.g. 30 / 60 / 120 / 144 / Unlimited) | Disabled when VSync is active                                        |
+| **VSync**       | Synchronize frame output with display refresh rate        | When enabled, FPS Limit option is grayed out                         |
+| **Brightness**  | Overall screen brightness adjustment                      | Post-process; range 0–200%, default 100%                             |
+| **Gamma**       | Gamma curve correction                                    | Post-process; range 0–200%, default 100%                             |
+
+#### Implementation Notes
+
+- [ ] Window mode managed via `DisplayServer.window_set_mode()` and `DisplayServer.window_set_flag(BORDERLESS)`
+- [ ] Desktop resolution retrieved via `DisplayServer.screen_get_size()` — applied automatically on Borderless Fullscreen switch
+- [ ] Monitor enumeration via `DisplayServer.get_screen_count()` and `DisplayServer.screen_get_position()`
+- [ ] FPS cap via `Engine.max_fps`; set to `0` for Unlimited
+- [ ] VSync via `DisplayServer.window_set_vsync_mode()` (`VSYNC_ENABLED` / `VSYNC_DISABLED`)
+- [ ] Brightness and Gamma applied via a full-screen `ColorRect` shader or `Environment` resource adjustments
+- [ ] All settings persisted to user config (see §8.1)
+
 ---
 
 ## 4. Gameplay Systems
@@ -183,7 +213,7 @@ EchoForest/
 - [ ] Sneak/crouch key
 - [ ] Interact key
 - [ ] Equipment/inventory key
-- [ ] Pause key
+- [ ] Menu key
 
 **Gamepad Support (future consideration):**
 
@@ -200,7 +230,7 @@ EchoForest/
 
 ## 8. Data & Configuration
 
-### 8.1 Game Settings
+### 8.1 Debug config options
 
 - [ ] Player movement speed
 - [ ] Jump force and gravity

@@ -1,0 +1,49 @@
+# ─── Godot ───────────────────────────────────────────────────────────────────
+# Auto-generated Godot files
+.godot/
+*.uid
+
+# Godot import files (auto-generated per-asset)
+*.import
+
+# Mono / C# (legacy Godot 3)
+.mono/
+
+# Export templates cache
+/export_presets.cfg
+
+# ─── C# / .NET ───────────────────────────────────────────────────────────────
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.DotSettings.user
+
+# NuGet packages (restored automatically)
+*.nuget/
+
+# Test results & coverage
+TestResults/
+coverage/
+coverage.xml
+*.coverage
+*.coveragexml
+
+# ─── Build output ────────────────────────────────────────────────────────────
+/build/
+
+# ─── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.idea/
+*.swp
+*~
+
+# ─── Project logs ────────────────────────────────────────────────────────────
+logs/
+*.log

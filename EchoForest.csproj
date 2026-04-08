@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/4.3.0">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <RootNamespace>EchoForest</RootNamespace>
+    <AssemblyName>EchoForest</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Exclude test files — they belong to EchoForest.Tests.csproj only -->
+  <ItemGroup>
+    <Compile Remove="src/Scripts/Tests/**/*.cs" />
+  </ItemGroup>
+</Project>

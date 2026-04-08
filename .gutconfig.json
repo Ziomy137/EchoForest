@@ -1,0 +1,18 @@
+{
+  "dirs": ["res://src/Scripts/Tests/"],
+  "double_strategy": "partial",
+  "ignore_pause": false,
+  "include_subdirs": true,
+  "inner_class": "",
+  "log_level": 1,
+  "opacity": 100,
+  "post_run_script": "",
+  "pre_run_script": "",
+  "prefix": "test_",
+  "selected": "",
+  "should_exit": true,
+  "should_exit_on_success": true,
+  "should_maximize": false,
+  "suffix": ".gd",
+  "unit_test_name": ""
+}
