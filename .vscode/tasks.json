@@ -1,0 +1,175 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ── Restore ──────────────────────────────────────────────────────────────
+    {
+      "label": "restore",
+      "type": "shell",
+      "command": "dotnet restore EchoForest.sln",
+      "group": "build",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": "$msCompile"
+    },
+
+    // ── Build (game project only — Godot build) ───────────────────────────
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "dotnet build EchoForest.csproj --configuration Debug",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": "restore",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": "$msCompile"
+    },
+
+    // ── Build Release ─────────────────────────────────────────────────────
+    {
+      "label": "build-release",
+      "type": "shell",
+      "command": "dotnet build EchoForest.csproj --configuration Release",
+      "group": "build",
+      "dependsOn": "restore",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": "$msCompile"
+    },
+
+    // ── Build Test Project ────────────────────────────────────────────────
+    {
+      "label": "build-tests",
+      "type": "shell",
+      "command": "dotnet build src/Scripts/Tests/EchoForest.Tests.csproj --configuration Debug",
+      "group": "build",
+      "dependsOn": "restore",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": "$msCompile"
+    },
+
+    // ── Run NUnit Tests ───────────────────────────────────────────────────
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "dotnet test src/Scripts/Tests/EchoForest.Tests.csproj --verbosity normal",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "dependsOn": "build-tests",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+
+    // ── Run Single Test (by name filter) ─────────────────────────────────
+    {
+      "label": "test-filter",
+      "type": "shell",
+      "command": "dotnet test src/Scripts/Tests/EchoForest.Tests.csproj --filter \"${input:testFilter}\" --verbosity normal",
+      "group": "test",
+      "dependsOn": "build-tests",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+
+    // ── Run Tests with Coverage ───────────────────────────────────────────
+    {
+      "label": "test-coverage",
+      "type": "shell",
+      "command": "dotnet test src/Scripts/Tests/EchoForest.Tests.csproj --collect:\"XPlat Code Coverage\" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura",
+      "group": "test",
+      "dependsOn": "build-tests",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+
+    // ── Watch Tests (re-run on file save) ─────────────────────────────────
+    {
+      "label": "test-watch",
+      "type": "shell",
+      "command": "dotnet watch test src/Scripts/Tests/EchoForest.Tests.csproj --verbosity normal",
+      "group": "test",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^dotnet watch",
+          "endsPattern": "^\\s*$"
+        }
+      }
+    },
+
+    // ── Launch Godot Editor ───────────────────────────────────────────────
+    //    Set GODOT_PATH in your shell profile or .env, e.g.:
+    //    export GODOT_PATH="/Applications/Godot_mono.app/Contents/MacOS/Godot"
+    {
+      "label": "godot-editor",
+      "type": "shell",
+      "command": "${env:GODOT_PATH:-godot4} --editor --path ${workspaceFolder}",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+
+    // ── Run Game (headless, for CI-style validation) ──────────────────────
+    {
+      "label": "godot-run-headless",
+      "type": "shell",
+      "command": "${env:GODOT_PATH:-godot4} --headless --path ${workspaceFolder} --quit",
+      "group": "none",
+      "dependsOn": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ],
+
+  "inputs": [
+    {
+      "id": "testFilter",
+      "type": "promptString",
+      "description": "NUnit test filter (e.g. class name or test method)",
+      "default": "InputHandlerTest"
+    }
+  ]
+}

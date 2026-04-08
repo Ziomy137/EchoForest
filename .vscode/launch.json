@@ -1,0 +1,119 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // ── Debug NUnit Tests ─────────────────────────────────────────────────
+    //    Requires: C# Dev Kit or C# (OmniSharp) extension
+    {
+      "name": "Debug NUnit Tests",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-tests",
+      "program": "dotnet",
+      "args": [
+        "test",
+        "${workspaceFolder}/src/Scripts/Tests/EchoForest.Tests.csproj",
+        "--no-build",
+        "--verbosity",
+        "normal"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+
+    // ── Debug Single Test Class or Method ─────────────────────────────────
+    //    Edit "filter" value to target a specific test, e.g.
+    //    "InputHandlerTest" or "InputHandlerTest.MockInputHandler_Reset_ClearsAllPressedActions"
+    {
+      "name": "Debug NUnit Tests (filtered)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-tests",
+      "program": "dotnet",
+      "args": [
+        "test",
+        "${workspaceFolder}/src/Scripts/Tests/EchoForest.Tests.csproj",
+        "--no-build",
+        "--filter",
+        "${input:debugTestFilter}",
+        "--verbosity",
+        "detailed"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    },
+
+    // ── Attach to Godot Process ───────────────────────────────────────────
+    //    1. Open Godot editor
+    //    2. In Godot: Editor → Editor Settings → Mono → Debug → Enable Mono Debug
+    //    3. Run the game with F5 from Godot
+    //    4. Start this configuration to attach
+    {
+      "name": "Attach to Godot",
+      "type": "coreclr",
+      "request": "attach",
+      "processName": "Godot",
+      "justMyCode": false
+    },
+
+    // ── Launch Godot Game (Debug) ─────────────────────────────────────────
+    //    Requires GODOT_PATH environment variable set to the Godot 4 Mono binary:
+    //      macOS: /Applications/Godot_mono.app/Contents/MacOS/Godot
+    //      Linux: /usr/local/bin/godot4
+    //      Windows: C:\Godot\Godot_v4.3-stable_mono_win64.exe
+    //
+    //    Set in your shell profile:
+    //      export GODOT_PATH="/Applications/Godot_mono.app/Contents/MacOS/Godot"
+    {
+      "name": "Launch Godot (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${env:GODOT_PATH}",
+      "args": [
+        "--path",
+        "${workspaceFolder}",
+        "--debug-collisions",
+        "--verbose"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+        "GODOT_DEBUG_MONO": "1"
+      }
+    },
+
+    // ── Launch Godot (Headless — CI-style) ────────────────────────────────
+    {
+      "name": "Launch Godot (Headless)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${env:GODOT_PATH}",
+      "args": [
+        "--headless",
+        "--path",
+        "${workspaceFolder}",
+        "--quit"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    }
+  ],
+
+  "inputs": [
+    {
+      "id": "debugTestFilter",
+      "type": "promptString",
+      "description": "NUnit test filter (FullyQualifiedName~ClassName or exact method name)",
+      "default": "InputHandlerTest"
+    }
+  ]
+}
