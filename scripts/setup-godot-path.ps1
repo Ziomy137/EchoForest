@@ -22,9 +22,9 @@ function Write-Err     { param($msg) Write-Host "[ERROR] $msg" -ForegroundColor 
 
 # ── Known search paths ────────────────────────────────────────────────────────
 $Candidates = @(
-    # Godot 4.3 Mono — common Windows install locations
-    "C:\Godot\Godot_v4.3-stable_mono_win64.exe"
-    "C:\Godot\Godot_v4.3_mono_win64.exe"
+    # Godot 4.6.2 Mono — common Windows install locations
+    "C:\Godot\Godot_v4.6.2-stable_mono_win64.exe"
+    "C:\Godot\Godot_v4.6.2_mono_win64.exe"
     "C:\Godot\Godot.exe"
     "$env:LOCALAPPDATA\Programs\Godot\Godot_mono.exe"
     "$env:LOCALAPPDATA\Programs\Godot\Godot.exe"
@@ -37,7 +37,7 @@ $Candidates = @(
     # Chocolatey
     "$env:ChocolateyInstall\bin\godot4.exe"
     # Common manual download locations
-    "$env:USERPROFILE\Downloads\Godot_v4.3-stable_mono_win64\Godot_v4.3-stable_mono_win64.exe"
+    "$env:USERPROFILE\Downloads\Godot_v4.6.2-stable_mono_win64\Godot_v4.6.2-stable_mono_win64.exe"
     "$env:USERPROFILE\Godot\Godot_mono.exe"
     "$env:USERPROFILE\Godot\Godot.exe"
 )

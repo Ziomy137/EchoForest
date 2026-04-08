@@ -64,7 +64,7 @@
     //    Requires GODOT_PATH environment variable set to the Godot 4 Mono binary:
     //      macOS: /Applications/Godot_mono.app/Contents/MacOS/Godot
     //      Linux: /usr/local/bin/godot4
-    //      Windows: C:\Godot\Godot_v4.3-stable_mono_win64.exe
+    //      Windows: C:\Godot\Godot_v4.6.2-stable_mono_win64.exe
     //
     //    Set in your shell profile:
     //      export GODOT_PATH="/Applications/Godot_mono.app/Contents/MacOS/Godot"

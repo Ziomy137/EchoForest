@@ -9,7 +9,7 @@ repository (they are third-party code managed separately).
 
 ### Option A — Godot AssetLib (recommended)
 
-1. Open the project in Godot 4.3
+1. Open the project in Godot 4.6.2
 2. Go to **AssetLib** tab (top menu)
 3. Search for **"GUT"**
 4. Install version **≥ 9.3.0** (Godot 4 compatible)

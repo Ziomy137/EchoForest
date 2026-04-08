@@ -8,7 +8,7 @@ on:
 
 env:
   DOTNET_VERSION: "10.0.x"
-  GODOT_VERSION: "4.3.0.stable"
+  GODOT_VERSION: "4.6.2.stable"
   COVERAGE_THRESHOLD: 90
 
 jobs:

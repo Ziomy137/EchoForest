@@ -31,8 +31,8 @@ if [[ "$OS" == "Darwin" ]]; then
     CANDIDATES=(
         "/Applications/Godot_mono.app/Contents/MacOS/Godot"
         "/Applications/Godot.app/Contents/MacOS/Godot"
-        "/Applications/Godot_v4.3_mono.app/Contents/MacOS/Godot"
-        "/Applications/Godot_v4.3-stable_mono.app/Contents/MacOS/Godot"
+        "/Applications/Godot_v4.6.2_mono.app/Contents/MacOS/Godot"
+        "/Applications/Godot_v4.6.2-stable_mono.app/Contents/MacOS/Godot"
         "$HOME/Applications/Godot_mono.app/Contents/MacOS/Godot"
         "$HOME/Applications/Godot.app/Contents/MacOS/Godot"
         "/opt/homebrew/bin/godot4"

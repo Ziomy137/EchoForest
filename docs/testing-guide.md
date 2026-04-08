@@ -35,7 +35,7 @@ We use **two complementary test frameworks**: NUnit for pure C# logic and GUT fo
 ### Prerequisites
 
 - .NET SDK 8.0 — [download](https://dotnet.microsoft.com/download/dotnet/8.0)
-- Godot 4.3 with .NET support installed (required to build `EchoForest.csproj`)
+- Godot 4.6.2 with .NET support installed (required to build `EchoForest.csproj`)
 
 ### Quick Run
 
@@ -86,7 +86,7 @@ Passed!  - Failed: 0, Passed: 3, Skipped: 0, Total: 3
 
 GUT is **not bundled** in this repository. Install it before running GUT tests:
 
-1. Open the project in **Godot 4.3**
+1. Open the project in **Godot 4.6.2**
 2. Click **AssetLib** in the top toolbar
 3. Search for **GUT** and install version ≥ 9.3.0
 4. Enable via **Project → Project Settings → Plugins → GUT → ✅ Enable**
@@ -239,7 +239,7 @@ The GitHub Actions pipeline (`.github/workflows/ci.yml`) runs automatically on e
 
 **Pipeline steps:**
 
-1. Checkout → Setup .NET 8 → Setup Godot 4.3
+1. Checkout → Setup .NET 8 → Setup Godot 4.6.2
 2. `dotnet restore` → `dotnet build`
 3. `dotnet test` with Coverlet
 4. ReportGenerator → HTML + TextSummary
