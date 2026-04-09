@@ -9,8 +9,8 @@ namespace EchoForest.Core;
 ///
 /// Rules:
 /// <list type="bullet">
-///   <item>Fully transparent pixels (alpha &lt; 1) are never approved — they
-///   are typically skipped by sprite checkers rather than validated.</item>
+///   <item>Non-opaque pixels (alpha &lt; 1) are never approved — they are
+///   typically skipped by sprite checkers rather than validated.</item>
 ///   <item>A color is approved when its opaque RGB hex exactly matches one of
 ///   the 16 entries in <see cref="Palette.All"/>.</item>
 /// </list>
