@@ -42,7 +42,7 @@ public class IsometricSorterTest
     public void ZIndex_NegativeY_ReturnsNegativeOrZero()
     {
         int z = IsometricSorter.CalculateZIndex(new Vector2(0f, -100f));
-        Assert.That(z, Is.LessThan(0));
+        Assert.That(z, Is.LessThanOrEqualTo(0));
     }
 
     [Test]
