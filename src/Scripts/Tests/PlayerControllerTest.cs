@@ -238,17 +238,6 @@ public class PlayerControllerTest
         Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Right));
     }
 
-    // ── SetVelocityForTest ────────────────────────────────────────────────────
-
-    [TestCase(80f, 0f, Direction.Right)]
-    [TestCase(-80f, 0f, Direction.Left)]
-    [TestCase(0f, 80f, Direction.Down)]
-    [TestCase(0f, -80f, Direction.Up)]
-    public void Direction_FromVelocity_IsCorrect(float vx, float vy, Direction expected)
-    {
-        _player.SetVelocityForTest(new Vector2(vx, vy));
-        Assert.That(_player.FacingDirection, Is.EqualTo(expected));
-    }
 
     // ── Position integration ──────────────────────────────────────────────────
 

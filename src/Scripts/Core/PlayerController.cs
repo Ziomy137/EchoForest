@@ -71,19 +71,6 @@ public sealed class PlayerController : IPlayerController
         Position += Velocity * delta;
     }
 
-    // ── Test helpers ──────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Directly sets velocity and updates facing direction.
-    /// Used in unit tests that bypass SimulatePhysicsFrame.
-    /// </summary>
-    public void SetVelocityForTest(Vector2 velocity)
-    {
-        Velocity = velocity;
-        if (velocity.LengthSquared() > 0f)
-            FacingDirection = DominantDirection(velocity);
-    }
-
     // ── Private helpers ───────────────────────────────────────────────────────
 
     private void UpdateStateMachine()
