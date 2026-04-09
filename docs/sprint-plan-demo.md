@@ -329,13 +329,13 @@ public class EngineBootTest {
 
 **Tasks:**
 
-- [ ] Create `IsometricSorter.cs` — static utility class for depth sorting
-- [ ] Implement `CalculateZIndex(Vector2 worldPos) → int` using Y position
-- [ ] Attach auto-sorting logic to `Node2D` base for all game objects
-- [ ] Verify sprites render in correct front-to-back order:
+- [x] Create `IsometricSorter.cs` — static utility class for depth sorting
+- [x] Implement `CalculateZIndex(Vector2 worldPos) → int` using Y position
+- [x] Attach auto-sorting logic to `Node2D` base for all game objects (`IsometricYSorterNode.cs`)
+- [x] Verify sprites render in correct front-to-back order:
   - Objects further up the screen (lower Y) render behind objects lower on screen (higher Y)
   - Player always sorts correctly relative to environment objects
-- [ ] Test with two overlapping objects at different Y positions
+- [x] Test with two overlapping objects at different Y positions
 
 **Acceptance Criteria:**
 
