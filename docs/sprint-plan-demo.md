@@ -551,7 +551,7 @@ public void IsApprovedColor_ReturnsCorrectResult(string hex, bool expected) {
 
 **Tasks:**
 
-- [x] Create `PlayerController.cs` implementing `IPlayerController` using `CharacterBody2D` as Godot node base
+- [x] Create `PlayerController.cs` as a pure C# class implementing `IPlayerController` (no Godot Node inheritance; a `CharacterBody2D` wrapper node will be introduced in a future task to call `MoveAndSlide()`)
 - [x] Implement `SimulatePhysicsFrame(float delta)` to read input via `IInputHandler` and update velocity
 - [x] Movement constants (from `Constants.cs`):
   - `WalkSpeed = 80f` (pixels/second)
