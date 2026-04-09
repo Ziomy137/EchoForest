@@ -40,9 +40,9 @@ func test_camera_with_target_moves_toward_it() -> void:
 func test_camera_snap_to_pixels_produces_integer_position() -> void:
 	_target.global_position = Vector2(99.7, 150.3)
 	_camera.FollowTarget = _target
-	_camera.FollowSpeed = 100.0 # fast — nearly snaps immediately
+	# Property setters call SyncControllerSettings() immediately — no _ready() needed.
+	_camera.FollowSpeed = 100.0 # fast — snaps in one frame with delta=1.0
 	_camera.SnapToPixels = true
-	_camera._ready() # re-apply exported properties
 	_camera._process(1.0)
 	var pos: Vector2 = _camera.global_position
 	assert_eq(pos.x, round(pos.x), "X should be integer when SnapToPixels is on")
