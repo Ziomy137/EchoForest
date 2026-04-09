@@ -43,7 +43,7 @@ public static class Palette
 
     /// <summary>
     /// Returns all 16 approved palette colors.
-    /// The array is a fixed internal reference — do not mutate.
+    /// A defensive copy is returned so callers cannot mutate the internal palette definition.
     /// </summary>
-    public static Color[] All => _all;
+    public static Color[] All => (Color[])_all.Clone();
 }
