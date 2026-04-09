@@ -283,15 +283,15 @@ public class EngineBootTest {
 
 **Tasks:**
 
-- [ ] Create `IsometricTileMap.tscn` scene using Godot's `TileMap` node in isometric mode
-- [ ] Set tile size to **64×32 pixels** (isometric diamond: 64px wide, 32px tall)
-- [ ] Configure TileSet with isometric offset and correct projection
-- [ ] Create `TileMapService.cs` implementing `ITileMapService`:
+- [x] Create `IsometricTileMap.tscn` scene using Godot's `TileMapLayer` node in isometric mode
+- [x] Set tile size to **64×32 pixels** (isometric diamond: 64px wide, 32px tall)
+- [x] Configure TileSet with isometric offset and correct projection
+- [x] Create `TileMapService.cs` implementing `ITileMapService`:
   - `WorldToTile(Vector2 worldPos) → Vector2I` — converts world coordinates to tile coordinates
   - `TileToWorld(Vector2I tilePos) → Vector2` — converts tile to world center
   - `IsWalkable(Vector2I tilePos) → bool` — checks if tile is passable
   - `GetTileAtPosition(Vector2 worldPos) → TileData` — returns tile metadata
-- [ ] Configure collision layers:
+- [x] Configure collision layers:
   - Layer 1: `World` (static environment)
   - Layer 2: `Player`
   - Layer 3: `NPCs`
@@ -1255,14 +1255,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status      |
-| --------- | ------------ | ------------------------------------ | -------------- | ----------- |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | Not Started |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | Not Started |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | Not Started |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | Not Started |
-| **Total** | **10 weeks** |                                      | **106 points** |             |
+| Sprint    | Duration     | Focus                                | Story Points   | Status         |
+| --------- | ------------ | ------------------------------------ | -------------- | -------------- |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete    |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | 🔄 In Progress |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | Not Started    |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | Not Started    |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | Not Started    |
+| **Total** | **10 weeks** |                                      | **106 points** |                |
 
 ---
 
