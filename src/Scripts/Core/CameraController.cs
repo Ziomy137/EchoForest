@@ -126,8 +126,8 @@ public sealed class CameraController
     public void ApplyPixelSnap()
     {
         Position = new Vector2(
-            MathF.Round(Position.X),
-            MathF.Round(Position.Y)
+            MathF.Round(Position.X, MidpointRounding.AwayFromZero),
+            MathF.Round(Position.Y, MidpointRounding.AwayFromZero)
         );
     }
 
