@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace EchoForest.Core;
@@ -11,6 +12,7 @@ namespace EchoForest.Core;
 /// Walkability is determined by a custom boolean data property named
 /// <c>"walkable"</c> on the TileSet's custom data layer.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Godot engine wrapper — tested via GUT integration tests, not NUnit")]
 public sealed class TileMapService : ITileMapService
 {
     private readonly TileMapLayer _layer;

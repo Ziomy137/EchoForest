@@ -146,4 +146,30 @@ public class TileMapServiceTest
         mock.SetWalkable(new Vector2I(1, 1), false);
         Assert.That(mock.IsWalkable(new Vector2I(1, 1)), Is.False);
     }
+
+    // ── IsometricMath — CalculateZIndex ──────────────────────────────────────
+
+    [Test]
+    public void CalculateZIndex_HigherY_ReturnsHigherZIndex()
+    {
+        int z1 = IsometricMath.CalculateZIndex(new Vector2(0f, 100f));
+        int z2 = IsometricMath.CalculateZIndex(new Vector2(0f, 200f));
+        Assert.That(z2, Is.GreaterThan(z1));
+    }
+
+    [Test]
+    public void CalculateZIndex_SameX_DifferentY_AreDifferent()
+    {
+        int z1 = IsometricMath.CalculateZIndex(new Vector2(50f, 50f));
+        int z2 = IsometricMath.CalculateZIndex(new Vector2(50f, 51f));
+        Assert.That(z1, Is.Not.EqualTo(z2));
+    }
+
+    [Test]
+    public void CalculateZIndex_ReturnsRoundedY()
+    {
+        Assert.That(IsometricMath.CalculateZIndex(new Vector2(0f, 128.4f)), Is.EqualTo(128));
+        Assert.That(IsometricMath.CalculateZIndex(new Vector2(0f, 128.6f)), Is.EqualTo(129));
+    }
 }
+
