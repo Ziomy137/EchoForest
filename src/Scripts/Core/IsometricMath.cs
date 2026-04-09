@@ -35,8 +35,9 @@ public static class IsometricMath
     }
 
     /// <summary>
-    /// Converts a world-space position to the nearest isometric tile coordinate.
-    /// Uses floor to ensure consistent snapping across the entire grid.
+    /// Converts a world-space position to its containing isometric tile coordinate.
+    /// Uses floor-snapping (Math.Floor) so each position deterministically maps
+    /// to the tile whose origin is at or below-left of the given point.
     /// </summary>
     public static Vector2I WorldToTile(Vector2 worldPos)
     {
