@@ -26,7 +26,7 @@ public partial class IsometricCameraNode : Camera2D
     /// <summary>
     /// Camera lerp speed (units per second). Must be greater than zero.
     /// </summary>
-    private float _followSpeed = 5f;
+    private float _followSpeed = Constants.CameraFollowSpeed;
 
     [Export]
     public float FollowSpeed
@@ -77,7 +77,7 @@ public partial class IsometricCameraNode : Camera2D
 
     private void SyncControllerSettings()
     {
-        _controller.FollowSpeed = FollowSpeed > 0f ? FollowSpeed : 5f;
+        _controller.FollowSpeed = FollowSpeed > 0f ? FollowSpeed : Constants.CameraFollowSpeed;
         _controller.Offset = FollowOffset;
         _controller.SnapToPixels = SnapToPixels;
     }

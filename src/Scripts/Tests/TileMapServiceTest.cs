@@ -146,6 +146,17 @@ public class TileMapServiceTest
         Assert.That(mock.IsWalkable(new Vector2I(1, 1)), Is.False);
     }
 
+    [Test]
+    public void MockTileMapService_Reset_ClearsAllWalkableTiles()
+    {
+        var mock = new MockTileMapService();
+        mock.SetWalkable(new Vector2I(0, 0), true);
+        mock.SetWalkable(new Vector2I(1, 2), true);
+        mock.Reset();
+        Assert.That(mock.IsWalkable(new Vector2I(0, 0)), Is.False);
+        Assert.That(mock.IsWalkable(new Vector2I(1, 2)), Is.False);
+    }
+
     // ── IsometricMath — CalculateZIndex ──────────────────────────────────────
 
     [Test]
