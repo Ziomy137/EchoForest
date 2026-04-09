@@ -40,5 +40,8 @@ public sealed class PlayerStateMachine : StateMachine<PlayerState>
             (PlayerState.Idle,    PlayerState.Combat),
             (PlayerState.Walking, PlayerState.Combat),
             (PlayerState.Combat,  PlayerState.Idle),
+
+            // Running → Idle (release all keys while sprinting)
+            (PlayerState.Running, PlayerState.Idle),
         };
 }
