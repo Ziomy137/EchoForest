@@ -369,11 +369,11 @@ public class EngineBootTest {
 
 **Tasks:**
 
-- [ ] Create `CameraController.cs` implementing smooth follow behavior
-- [ ] Camera follows a `target` (Node2D reference) with configurable `FollowSpeed`
-- [ ] Configurable `Offset` for isometric centering
-- [ ] Implement `SetBounds(Rect2 bounds)` to prevent camera from showing outside map edges
-- [ ] Camera snaps immediately on scene load, then transitions smoothly during play
+- [x] Create `CameraController.cs` implementing smooth follow behavior
+- [x] Camera follows a `target` (Node2D reference) with configurable `FollowSpeed`
+- [x] Configurable `Offset` for isometric centering
+- [x] Implement `SetBounds(Rect2 bounds)` to prevent camera from showing outside map edges
+- [x] Camera snaps immediately on scene load, then transitions smoothly during play
 
 **Acceptance Criteria:**
 

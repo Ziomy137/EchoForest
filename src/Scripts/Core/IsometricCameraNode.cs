@@ -1,0 +1,66 @@
+using System.Diagnostics.CodeAnalysis;
+using Godot;
+
+namespace EchoForest.Core;
+
+/// <summary>
+/// Godot <c>Camera2D</c> node that drives smooth isometric camera follow
+/// using <see cref="CameraController"/>.
+///
+/// Attach this node to the scene. Assign the <see cref="FollowTarget"/> export
+/// to any <c>Node2D</c> in the scene (typically the player). The controller
+/// will lerp toward it every frame.
+///
+/// Excluded from NUnit code coverage because it requires the Godot scene tree.
+/// Behaviour is verified in <c>test_isometric_camera.gd</c> (GUT).
+/// </summary>
+[ExcludeFromCodeCoverage(Justification = "Godot Camera2D wrapper — tested via GUT")]
+public partial class IsometricCameraNode : Camera2D
+{
+    /// <summary>
+    /// The node the camera will follow. Leave <c>null</c> to disable following.
+    /// </summary>
+    [Export]
+    public Node2D? FollowTarget { get; set; }
+
+    /// <summary>
+    /// Camera lerp speed (units per second). Must be greater than zero.
+    /// </summary>
+    [Export]
+    public float FollowSpeed { get; set; } = 5f;
+
+    /// <summary>
+    /// World-space offset applied to the follow target position. Useful for
+    /// adjusting vertical centering in isometric perspective.
+    /// </summary>
+    [Export]
+    public Vector2 FollowOffset { get; set; } = Vector2.Zero;
+
+    /// <summary>
+    /// When enabled, camera position is snapped to integer pixels every frame
+    /// to eliminate sub-pixel sprite blurring during movement.
+    /// </summary>
+    [Export]
+    public bool SnapToPixels { get; set; } = false;
+
+    private CameraController _controller = new();
+
+    public override void _Ready()
+    {
+        _controller.FollowSpeed = FollowSpeed > 0f ? FollowSpeed : 5f;
+        _controller.Offset = FollowOffset;
+        _controller.SnapToPixels = SnapToPixels;
+        _controller.ForcePosition(GlobalPosition);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (FollowTarget != null)
+            _controller.SetTarget(FollowTarget.GlobalPosition);
+        else
+            _controller.ClearTarget();
+
+        _controller.Update(delta);
+        GlobalPosition = _controller.Position;
+    }
+}
