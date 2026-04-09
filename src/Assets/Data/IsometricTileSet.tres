@@ -1,0 +1,17 @@
+; IsometricTileSet.tres — Placeholder TileSet resource for the isometric 64x32 grid.
+; Configure this resource in the Godot editor:
+;   1. Open this resource in the TileSet editor
+;   2. Tile Shape: Isometric
+;   3. Tile Size: 64 x 32
+;   4. Add a Custom Data Layer:  name="walkable"  type=bool
+;   5. Add a Physics Layer for collision (Layer 1 = World)
+;
+[gd_resource type="TileSet" format=3]
+
+[resource]
+tile_size = Vector2i(64, 32)
+tile_shape = 2
+tile_layout = 0
+tile_offset_axis = 0
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
