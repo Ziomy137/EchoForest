@@ -412,7 +412,7 @@ public class EngineBootTest {
 
 **Tasks:**
 
-- [ ] Create `palette.tres` — Godot color palette resource containing all 16 approved colors from GDD
+- [x] Create `palette.tres` — Godot color palette resource containing all 16 approved colors from GDD
 - [x] Create `Palette.cs`: static class that exposes all palette colors as constants:
   ```csharp
   public static class Palette {
@@ -473,14 +473,14 @@ public void IsApprovedColor_ReturnsCorrectResult(string hex, bool expected) {
 
 **Tasks:**
 
-- [ ] Implement generic `StateMachine<TState>` class implementing `IStateMachine<TState>`
+- [x] Implement generic `StateMachine<TState>` class implementing `IStateMachine<TState>`
   - `CurrentState` property
   - `TransitionTo(TState newState)` method
   - `OnStateEnter(TState state, Action callback)` — register entry callbacks
   - `OnStateExit(TState state, Action callback)` — register exit callbacks
   - `IsValidTransition(TState from, TState to) → bool` — enforces allowed transitions
-- [ ] Implement `PlayerStateMachine.cs` extending generic state machine with `PlayerState` enum
-- [ ] Define valid transitions:
+- [x] Implement `PlayerStateMachine.cs` extending generic state machine with `PlayerState` enum
+- [x] Define valid transitions:
   - `Idle ↔ Walking`
   - `Walking ↔ Running`
   - `Idle/Walking/Running → Jumping`
