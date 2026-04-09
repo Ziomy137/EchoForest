@@ -45,8 +45,8 @@ func test_camera_snap_to_pixels_produces_integer_position() -> void:
 	_camera._ready() # re-apply exported properties
 	_camera._process(1.0)
 	var pos: Vector2 = _camera.global_position
-	assert_eq(int(pos.x), int(round(pos.x)), "X should be integer when SnapToPixels is on")
-	assert_eq(int(pos.y), int(round(pos.y)), "Y should be integer when SnapToPixels is on")
+	assert_eq(pos.x, round(pos.x), "X should be integer when SnapToPixels is on")
+	assert_eq(pos.y, round(pos.y), "Y should be integer when SnapToPixels is on")
 
 
 func test_camera_higher_follow_speed_converges_faster() -> void:
