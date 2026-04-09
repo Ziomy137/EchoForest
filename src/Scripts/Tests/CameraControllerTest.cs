@@ -157,6 +157,28 @@ public class CameraControllerTest
     }
 
     [Test]
+    public void Camera_WithoutTarget_Update_StillAppliesBounds()
+    {
+        var cam = new CameraController();
+        cam.SetBounds(new Rect2(0, 0, 100, 100));
+        cam.ForcePosition(new Vector2(500f, 500f));
+        cam.Update(0.016);
+        Assert.That(cam.Position.X, Is.LessThanOrEqualTo(100f));
+        Assert.That(cam.Position.Y, Is.LessThanOrEqualTo(100f));
+    }
+
+    [Test]
+    public void Camera_WithoutTarget_Update_StillAppliesPixelSnap()
+    {
+        var cam = new CameraController();
+        cam.SnapToPixels = true;
+        cam.ForcePosition(new Vector2(10.7f, 20.3f));
+        cam.Update(0.016);
+        Assert.That(cam.Position.X % 1f, Is.EqualTo(0f));
+        Assert.That(cam.Position.Y % 1f, Is.EqualTo(0f));
+    }
+
+    [Test]
     public void Camera_WithTarget_Update_MovesPositionTowardTarget()
     {
         var cam = new CameraController();

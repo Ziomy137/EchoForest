@@ -140,11 +140,12 @@ public sealed class CameraController
     /// </summary>
     public void Update(double delta)
     {
-        if (_target == null) return;
-
-        Vector2 destination = _target.Value + Offset;
-        float t = Math.Clamp((float)(_followSpeed * delta), 0f, 1f);
-        Position = Position.Lerp(destination, t);
+        if (_target != null)
+        {
+            Vector2 destination = _target.Value + Offset;
+            float t = Math.Clamp((float)(_followSpeed * delta), 0f, 1f);
+            Position = Position.Lerp(destination, t);
+        }
 
         ApplyBounds();
 
