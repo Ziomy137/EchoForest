@@ -74,4 +74,32 @@ public class ConstantsTest
     [Test]
     public void PixelsPerUnit_IsPositive() =>
         Assert.That(Constants.PixelsPerUnit, Is.GreaterThan(0));
+
+    // ── Layers.All ────────────────────────────────────────────────────────────
+
+    [Test]
+    public void Layers_All_ContainsAllFourLayers()
+    {
+        var all = Constants.Layers.All;
+        Assert.That(all, Contains.Item(Constants.Layers.World));
+        Assert.That(all, Contains.Item(Constants.Layers.Player));
+        Assert.That(all, Contains.Item(Constants.Layers.Npcs));
+        Assert.That(all, Contains.Item(Constants.Layers.Interactables));
+    }
+
+    [Test]
+    public void Layers_All_HasExactlyFourEntries() =>
+        Assert.That(Constants.Layers.All, Has.Length.EqualTo(4));
+
+    // ── HUD ───────────────────────────────────────────────────────────────────
+
+    [Test]
+    public void TutorialHintTimeout_IsPositive() =>
+        Assert.That(Constants.TutorialHintTimeout, Is.GreaterThan(0f));
+
+    // ── Camera ────────────────────────────────────────────────────────────────
+
+    [Test]
+    public void CameraFollowSpeed_IsPositive() =>
+        Assert.That(Constants.CameraFollowSpeed, Is.GreaterThan(0f));
 }
