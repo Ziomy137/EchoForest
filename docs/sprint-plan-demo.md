@@ -566,7 +566,7 @@ public void IsApprovedColor_ReturnsCorrectResult(string hex, bool expected) {
   - No input → `Idle`
   - Moving at walk speed → `Walking`
   - Moving + `run` held → `Running`
-- [ ] Apply `MoveAndSlide()` for collision resolution (Godot node wrapper — future task)
+- [x] Apply `MoveAndSlide()` for collision resolution via `PlayerControllerNode.cs` (`CharacterBody2D` wrapper)
 
 **Acceptance Criteria:**
 
