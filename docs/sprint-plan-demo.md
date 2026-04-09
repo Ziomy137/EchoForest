@@ -551,22 +551,22 @@ public void IsApprovedColor_ReturnsCorrectResult(string hex, bool expected) {
 
 **Tasks:**
 
-- [ ] Create `PlayerController.cs` implementing `IPlayerController` using `CharacterBody2D` as Godot node base
-- [ ] Implement `_PhysicsProcess(double delta)` to read input via `IInputHandler` and update velocity
-- [ ] Movement constants (from `Constants.cs`):
+- [x] Create `PlayerController.cs` as a pure C# class implementing `IPlayerController` (no Godot Node inheritance; a `CharacterBody2D` wrapper node will be introduced in a future task to call `MoveAndSlide()`)
+- [x] Implement `SimulatePhysicsFrame(float delta)` to read input via `IInputHandler` and update velocity
+- [x] Movement constants (from `Constants.cs`):
   - `WalkSpeed = 80f` (pixels/second)
   - `RunSpeed = 160f` (pixels/second — hold `run` action)
-- [ ] Isometric movement adjustment: diagonal movement must be normalized (no speed boost on diagonals)
-- [ ] Movement mapped to isometric axes:
+- [x] Isometric movement adjustment: diagonal movement must be normalized (no speed boost on diagonals)
+- [x] Movement mapped to isometric axes:
   - `move_up` → move toward top-left in world space
   - `move_down` → move toward bottom-right
   - `move_left` → move toward bottom-left
   - `move_right` → move toward top-right
-- [ ] Transition `PlayerStateMachine`:
+- [x] Transition `PlayerStateMachine`:
   - No input → `Idle`
   - Moving at walk speed → `Walking`
   - Moving + `run` held → `Running`
-- [ ] Apply `MoveAndSlide()` for collision resolution
+- [x] Apply `MoveAndSlide()` for collision resolution via `PlayerControllerNode.cs` (`CharacterBody2D` wrapper)
 
 **Acceptance Criteria:**
 
@@ -1255,14 +1255,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status         |
-| --------- | ------------ | ------------------------------------ | -------------- | -------------- |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete    |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | 🔄 In Progress |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | Not Started    |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | Not Started    |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | Not Started    |
-| **Total** | **10 weeks** |                                      | **106 points** |                |
+| Sprint    | Duration     | Focus                                | Story Points   | Status      |
+| --------- | ------------ | ------------------------------------ | -------------- | ----------- |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | Not Started |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | Not Started |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | Not Started |
+| **Total** | **10 weeks** |                                      | **106 points** |             |
 
 ---
 
@@ -1286,6 +1286,7 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 4. **Palette compliance is automatic.** `PaletteValidator` CI step rejects non-compliant assets.
 5. **No magic numbers.** All constants live in `Constants.cs` — tested.
 6. **Feature branches** for work. `main` always holds the latest passing demo build.
+7. **All new changes** must go through pull requests. Avoid direct pushes or merges to `main`.
 
 ---
 

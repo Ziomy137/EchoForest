@@ -7,6 +7,8 @@ namespace EchoForest.Core;
 /// Valid transitions:
 ///   Idle     ↔ Walking
 ///   Walking  ↔ Running
+///   Idle     → Running
+///   Running  → Idle
 ///   Idle / Walking / Running → Jumping
 ///   Jumping  → Idle
 ///   Walking / Idle → Combat
@@ -40,5 +42,11 @@ public sealed class PlayerStateMachine : StateMachine<PlayerState>
             (PlayerState.Idle,    PlayerState.Combat),
             (PlayerState.Walking, PlayerState.Combat),
             (PlayerState.Combat,  PlayerState.Idle),
+
+            // Running → Idle (release all keys while sprinting)
+            (PlayerState.Running, PlayerState.Idle),
+
+            // Idle → Running (press Run from a standing start)
+            (PlayerState.Idle, PlayerState.Running),
         };
 }
