@@ -41,15 +41,15 @@ jobs:
       - name: Restore NuGet packages
         run: dotnet restore EchoForest.sln
 
-      - name: Build solution (Release)
-        run: dotnet build EchoForest.sln --configuration Release --no-restore --no-incremental
+      - name: Build solution (ExportRelease)
+        run: dotnet build EchoForest.sln --configuration ExportRelease --no-restore --no-incremental
 
       # Run NUnit tests (pure C# logic only — Godot-coupled code is tested via GUT in editor)
+      # The test project is not built by the solution under ExportRelease, so build it here.
       - name: Run NUnit tests with coverage
         run: |
           dotnet test src/Scripts/Tests/EchoForest.Tests.csproj \
-            --configuration Release \
-            --no-build \
+            --configuration Debug \
             --logger "trx;LogFileName=test-results.trx" \
             --results-directory ./TestResults \
             --collect:"XPlat Code Coverage" \
