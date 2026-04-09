@@ -54,7 +54,7 @@ jobs:
             --results-directory ./TestResults \
             --collect:"XPlat Code Coverage" \
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
-               DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[GodotPlugins*]*
+               DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile=**/.godot/**/*.cs
 
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
