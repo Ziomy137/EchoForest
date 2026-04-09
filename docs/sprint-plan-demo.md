@@ -413,7 +413,7 @@ public class EngineBootTest {
 **Tasks:**
 
 - [ ] Create `palette.tres` — Godot color palette resource containing all 16 approved colors from GDD
-- [ ] Create `PaletteValidator.cs`: static class that exposes all palette colors as constants:
+- [x] Create `Palette.cs`: static class that exposes all palette colors as constants:
   ```csharp
   public static class Palette {
       public static readonly Color DeepBlack   = new Color("#1a1a1a");
@@ -435,8 +435,8 @@ public class EngineBootTest {
       public static Color[] All => new[] { DeepBlack, DarkBrown, ... };
   }
   ```
-- [ ] Create `PaletteValidator.IsApprovedColor(Color c) → bool` to verify sprites only use palette colors
-- [ ] Create optional `palette_swap.gdshader` shader for runtime palette modification (day/night)
+- [x] Create `PaletteValidator.IsApprovedColor(Color c) → bool` to verify sprites only use palette colors
+- [x] Create optional `palette_swap.gdshader` shader for runtime palette modification (day/night)
 
 **Acceptance Criteria:**
 

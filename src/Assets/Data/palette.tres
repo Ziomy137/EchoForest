@@ -1,0 +1,46 @@
+; palette.tres — EchoForest approved color palette (16 colors).
+; Loaded in-engine as a PaletteResource for shaders and runtime palette queries.
+; The color order mirrors Palette.All defined in src/Scripts/Core/Palette.cs.
+;
+; Color mapping:
+;   [0]  DeepBlack   #1a1a1a
+;   [1]  DarkBrown   #2d2416
+;   [2]  DarkGray    #3d3d3d
+;   [3]  MediumGray  #5a5a5a
+;   [4]  WarmBrown   #8b7355
+;   [5]  DarkLeather #5c3d2e
+;   [6]  DarkRed     #8b0000
+;   [7]  DeepPurple  #2a1a4a
+;   [8]  DarkOrange  #ff6b00
+;   [9]  Gold        #ffd700
+;   [10] DarkGreen   #1a3a1a
+;   [11] DeepWater   #1a3a5c
+;   [12] SkinTone    #8b6f47
+;   [13] LightSkin   #a88860
+;   [14] White       #ffffff
+;   [15] LightGray   #cccccc
+
+[gd_resource type="Resource" script_class="PaletteResource" format=3]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/PaletteResource.cs" id="1"]
+
+[resource]
+script = ExtResource("1")
+Colors = PackedColorArray(
+    0.101961, 0.101961, 0.101961, 1,
+    0.176471, 0.141176, 0.086275, 1,
+    0.239216, 0.239216, 0.239216, 1,
+    0.352941, 0.352941, 0.352941, 1,
+    0.545098, 0.450980, 0.333333, 1,
+    0.360784, 0.239216, 0.180392, 1,
+    0.545098, 0.000000, 0.000000, 1,
+    0.164706, 0.101961, 0.290196, 1,
+    1.000000, 0.419608, 0.000000, 1,
+    1.000000, 0.843137, 0.000000, 1,
+    0.101961, 0.227451, 0.101961, 1,
+    0.101961, 0.227451, 0.360784, 1,
+    0.545098, 0.435294, 0.278431, 1,
+    0.658824, 0.533333, 0.376471, 1,
+    1.000000, 1.000000, 1.000000, 1,
+    0.800000, 0.800000, 0.800000, 1
+)
