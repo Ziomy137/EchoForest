@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 using EchoForest.Core;
 
@@ -9,6 +10,7 @@ namespace EchoForest;
 ///
 /// Pass a <see cref="MockInputHandler"/> in NUnit tests instead.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed class InputHandler : IInputHandler
 {
     public bool IsActionPressed(string action) =>
