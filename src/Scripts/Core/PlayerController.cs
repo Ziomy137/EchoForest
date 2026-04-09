@@ -83,13 +83,7 @@ public sealed class PlayerController : IPlayerController
         }
         else if (_input.IsActionPressed(InputActionNames.Run))
         {
-            // May need to walk first if currently Idle
             target = PlayerState.Running;
-            if (_stateMachine.CurrentState == PlayerState.Idle)
-            {
-                if (_stateMachine.IsValidTransition(PlayerState.Idle, PlayerState.Walking))
-                    _stateMachine.TransitionTo(PlayerState.Walking);
-            }
         }
         else
         {
