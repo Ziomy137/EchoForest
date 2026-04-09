@@ -43,7 +43,7 @@ public static class Constants
         public const int Npcs = 3;
         public const int Interactables = 4;
 
-        public static int[] All => new[] { World, Player, Npcs, Interactables };
+        public static readonly int[] All = { World, Player, Npcs, Interactables };
     }
 
     // ── HUD ───────────────────────────────────────────────────────────────────

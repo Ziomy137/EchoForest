@@ -23,7 +23,7 @@ public sealed class CameraController
 
     // ─── FollowSpeed ──────────────────────────────────────────────────────────
 
-    private float _followSpeed = 5f;
+    private float _followSpeed = Constants.CameraFollowSpeed;
 
     /// <summary>
     /// Lerp factor applied each second when following a target.
@@ -81,6 +81,15 @@ public sealed class CameraController
     {
         _bounds = bounds;
         _hasBounds = true;
+    }
+
+    /// <summary>
+    /// Removes the active bounds constraint; the camera position will no longer
+    /// be clamped. No-op if no bounds have been set.
+    /// </summary>
+    public void ClearBounds()
+    {
+        _hasBounds = false;
     }
 
     // ─── ForcePosition ────────────────────────────────────────────────────────

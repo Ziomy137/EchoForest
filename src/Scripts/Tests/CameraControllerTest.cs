@@ -24,6 +24,13 @@ public class CameraControllerTest
         Assert.That(cam.FollowSpeed, Is.GreaterThan(0f));
     }
 
+    [Test]
+    public void Camera_DefaultFollowSpeed_MatchesCameraFollowSpeedConstant()
+    {
+        var cam = new CameraController();
+        Assert.That(cam.FollowSpeed, Is.EqualTo(Constants.CameraFollowSpeed));
+    }
+
     // ─── FollowSpeed validation ───────────────────────────────────────────────
 
     [Test]
@@ -115,6 +122,23 @@ public class CameraControllerTest
         cam2.ForcePosition(new Vector2(-999f, -999f));
         Assert.That(cam2.Position.X, Is.GreaterThanOrEqualTo(10f));
         Assert.That(cam2.Position.Y, Is.GreaterThanOrEqualTo(20f));
+    }
+
+    [Test]
+    public void ClearBounds_AfterSetBounds_AllowsPositionOutsideFormerBounds()
+    {
+        var cam = new CameraController();
+        cam.SetBounds(new Rect2(0, 0, 100, 100));
+        cam.ClearBounds();
+        cam.ForcePosition(new Vector2(9999f, 9999f));
+        Assert.That(cam.Position, Is.EqualTo(new Vector2(9999f, 9999f)));
+    }
+
+    [Test]
+    public void ClearBounds_WhenNoBoundsSet_DoesNotThrow()
+    {
+        var cam = new CameraController();
+        Assert.That(() => cam.ClearBounds(), Throws.Nothing);
     }
 
     // ─── PixelSnap ───────────────────────────────────────────────────────────
