@@ -17,7 +17,7 @@ public class PaletteTest
     }
 
     [Test]
-    public void Palette_All_ContainsNoNullEntries()
+    public void Palette_All_ContainsNoDefaultColorEntries()
     {
         foreach (var color in Palette.All)
             Assert.That(color, Is.Not.EqualTo(default(Color)));
