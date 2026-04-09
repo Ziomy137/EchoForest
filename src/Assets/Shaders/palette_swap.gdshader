@@ -8,7 +8,7 @@
 // Usage (GDScript):
 //   var mat := ShaderMaterial.new()
 //   mat.shader = preload("res://src/Assets/Shaders/palette_swap.gdshader")
-//   mat.set_shader_parameter("source_color", Palette.DarkGreen)
+//   mat.set_shader_parameter("source_color", Color("#1a3a1a"))  # DarkGreen
 //   mat.set_shader_parameter("target_color", Color("#0a2a0a"))  # darker night green
 //   mat.set_shader_parameter("tolerance", 0.01)
 //   sprite.material = mat
