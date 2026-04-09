@@ -412,8 +412,8 @@ public class EngineBootTest {
 
 **Tasks:**
 
-- [x] Create `palette.tres` — Godot color palette resource containing all 16 approved colors from GDD
-- [x] Create `PaletteValidator.cs`: static class that exposes all palette colors as constants:
+- [ ] Create `palette.tres` — Godot color palette resource containing all 16 approved colors from GDD
+- [x] Create `Palette.cs`: static class that exposes all palette colors as constants:
   ```csharp
   public static class Palette {
       public static readonly Color DeepBlack   = new Color("#1a1a1a");
