@@ -26,30 +26,65 @@ public partial class IsometricCameraNode : Camera2D
     /// <summary>
     /// Camera lerp speed (units per second). Must be greater than zero.
     /// </summary>
+    private float _followSpeed = 5f;
+
     [Export]
-    public float FollowSpeed { get; set; } = 5f;
+    public float FollowSpeed
+    {
+        get => _followSpeed;
+        set
+        {
+            _followSpeed = value;
+            SyncControllerSettings();
+        }
+    }
 
     /// <summary>
     /// World-space offset applied to the follow target position. Useful for
     /// adjusting vertical centering in isometric perspective.
     /// </summary>
+    private Vector2 _followOffset = Vector2.Zero;
+
     [Export]
-    public Vector2 FollowOffset { get; set; } = Vector2.Zero;
+    public Vector2 FollowOffset
+    {
+        get => _followOffset;
+        set
+        {
+            _followOffset = value;
+            SyncControllerSettings();
+        }
+    }
 
     /// <summary>
     /// When enabled, camera position is snapped to integer pixels every frame
     /// to eliminate sub-pixel sprite blurring during movement.
     /// </summary>
+    private bool _snapToPixels = false;
+
     [Export]
-    public bool SnapToPixels { get; set; } = false;
+    public bool SnapToPixels
+    {
+        get => _snapToPixels;
+        set
+        {
+            _snapToPixels = value;
+            SyncControllerSettings();
+        }
+    }
 
     private CameraController _controller = new();
 
-    public override void _Ready()
+    private void SyncControllerSettings()
     {
         _controller.FollowSpeed = FollowSpeed > 0f ? FollowSpeed : 5f;
         _controller.Offset = FollowOffset;
         _controller.SnapToPixels = SnapToPixels;
+    }
+
+    public override void _Ready()
+    {
+        SyncControllerSettings();
         _controller.ForcePosition(GlobalPosition);
     }
 
