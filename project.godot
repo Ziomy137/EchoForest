@@ -29,10 +29,6 @@ window/handheld/orientation="landscape"
 
 project/assembly_name="EchoForest"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
-
 [input]
 
 move_up={
