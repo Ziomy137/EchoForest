@@ -31,7 +31,7 @@ public static class Palette
     public static readonly Color White = new Color("#ffffff");
     public static readonly Color LightGray = new Color("#cccccc");
 
-    // ─── Backing array (16 entries — order must match the count test) ─────────
+    // ─── Backing array (16 entries) ───────────────────────────────────────────
 
     private static readonly Color[] _all =
     {
