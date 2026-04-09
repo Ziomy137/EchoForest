@@ -4,7 +4,7 @@ extends GutTest
 
 var _scene: PackedScene
 var _instance: Node2D
-var _tile_map: TileMap
+var _tile_map_layer: TileMapLayer
 
 func before_each() -> void:
 	_scene = load("res://src/Scenes/IsometricTileMap.tscn")
@@ -13,7 +13,7 @@ func before_each() -> void:
 		return
 	_instance = _scene.instantiate()
 	add_child_autofree(_instance)
-	_tile_map = _instance.get_node("TileMap") as TileMap
+	_tile_map_layer = _instance.get_node("TileMapLayer") as TileMapLayer
 
 func test_scene_loads() -> void:
 	assert_not_null(_scene, "IsometricTileMap.tscn must be loadable")
@@ -22,25 +22,25 @@ func test_tilemap_node_exists() -> void:
 	if _instance == null:
 		pass_test("Scene not available — skipped")
 		return
-	assert_not_null(_tile_map, "TileMap child node must exist in scene")
+	assert_not_null(_tile_map_layer, "TileMapLayer child node must exist in scene")
 
 func test_tileset_is_assigned() -> void:
-	if _tile_map == null:
-		pass_test("TileMap not available — skipped")
+	if _tile_map_layer == null:
+		pass_test("TileMapLayer not available — skipped")
 		return
-	assert_not_null(_tile_map.tile_set, "TileSet resource must be assigned to TileMap")
+	assert_not_null(_tile_map_layer.tile_set, "TileSet resource must be assigned to TileMapLayer")
 
 func test_tileset_tile_size_is_64x32() -> void:
-	if _tile_map == null or _tile_map.tile_set == null:
+	if _tile_map_layer == null or _tile_map_layer.tile_set == null:
 		pass_test("TileSet not available — skipped")
 		return
-	assert_eq(_tile_map.tile_set.tile_size, Vector2i(64, 32),
+	assert_eq(_tile_map_layer.tile_set.tile_size, Vector2i(64, 32),
 		"TileSet tile_size must be 64x32")
 
 func test_tileset_shape_is_isometric() -> void:
-	if _tile_map == null or _tile_map.tile_set == null:
+	if _tile_map_layer == null or _tile_map_layer.tile_set == null:
 		pass_test("TileSet not available — skipped")
 		return
 	# TileSet.TileShape.TILE_SHAPE_ISOMETRIC = 2
-	assert_eq(int(_tile_map.tile_set.tile_shape), 2,
+	assert_eq(int(_tile_map_layer.tile_set.tile_shape), 2,
 		"TileSet tile_shape must be Isometric (2)")
