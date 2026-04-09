@@ -1286,7 +1286,7 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 4. **Palette compliance is automatic.** `PaletteValidator` CI step rejects non-compliant assets.
 5. **No magic numbers.** All constants live in `Constants.cs` — tested.
 6. **Feature branches** for work. `main` always holds the latest passing demo build.
-7. **All new changes** must go through the pull request. We should avoid to pull to the main branch.
+7. **All new changes** must go through pull requests. Avoid direct pushes or merges to `main`.
 
 ---
 
