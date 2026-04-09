@@ -169,4 +169,28 @@ public class InputHandlerTest
         Assert.That(mock.IsActionPressed(InputActionNames.Run), Is.False);
         Assert.That(mock.IsActionJustPressed(InputActionNames.Jump), Is.False);
     }
+
+    [Test]
+    public void MockInputHandler_SetPressed_False_RemovesActionFromPressed()
+    {
+        var mock = new MockInputHandler();
+        mock.SetPressed(InputActionNames.MoveUp, true);
+        Assert.That(mock.IsActionPressed(InputActionNames.MoveUp), Is.True);
+        mock.SetPressed(InputActionNames.MoveUp, false);
+        Assert.That(mock.IsActionPressed(InputActionNames.MoveUp), Is.False);
+    }
+
+    [Test]
+    public void MockInputHandler_SetJustPressed_False_RemovesActionFromJustPressed()
+    {
+        var mock = new MockInputHandler();
+        mock.SetJustPressed(InputActionNames.Interact, true);
+        Assert.That(mock.IsActionJustPressed(InputActionNames.Interact), Is.True);
+        mock.SetJustPressed(InputActionNames.Interact, false);
+        Assert.That(mock.IsActionJustPressed(InputActionNames.Interact), Is.False);
+    }
+
+    [Test]
+    public void InputActionNames_ToggleFullscreen_IsCorrectString() =>
+        Assert.That(InputActionNames.ToggleFullscreen, Is.EqualTo("toggle_fullscreen"));
 }

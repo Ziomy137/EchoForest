@@ -26,6 +26,7 @@ obj/
 # Test results & coverage
 TestResults/
 coverage/
+coverage-report/
 coverage.xml
 *.coverage
 *.coveragexml
