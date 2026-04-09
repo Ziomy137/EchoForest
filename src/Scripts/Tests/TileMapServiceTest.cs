@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using NUnit.Framework;
 using EchoForest.Core;
