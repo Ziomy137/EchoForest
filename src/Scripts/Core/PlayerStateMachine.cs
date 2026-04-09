@@ -47,6 +47,6 @@ public sealed class PlayerStateMachine : StateMachine<PlayerState>
             (PlayerState.Running, PlayerState.Idle),
 
             // Idle → Running (press Run from a standing start)
-            (PlayerState.Idle,    PlayerState.Running),
+            (PlayerState.Idle, PlayerState.Running),
         };
 }
