@@ -8,13 +8,7 @@ var _sorter_node: Node2D
 func before_each() -> void:
 	_sorter_node = Node2D.new()
 	_sorter_node.set_script(load("res://src/Scripts/Core/IsometricYSorterNode.cs"))
-	add_child(_sorter_node)
-
-
-func after_each() -> void:
-	_sorter_node.queue_free()
-
-
+	add_child_autofree(_sorter_node)
 func test_auto_sort_enabled_by_default() -> void:
 	assert_true(_sorter_node.AutoSort, "AutoSort should be true by default")
 
