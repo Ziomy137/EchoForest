@@ -13,3 +13,5 @@ tile_size = Vector2i(64, 32)
 tile_shape = 2
 tile_layout = 0
 tile_offset_axis = 0
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
