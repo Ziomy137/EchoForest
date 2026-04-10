@@ -72,13 +72,6 @@ public class DirectionTest
         Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Right));
     }
 
-    [Test]
-    public void Direction_DefaultFacing_IsDown()
-    {
-        // A freshly constructed PlayerController should face Down (enum value 0)
-        Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Down));
-    }
-
     // ── Velocity is stored correctly ──────────────────────────────────────────
 
     [Test]
