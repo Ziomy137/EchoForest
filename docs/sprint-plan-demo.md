@@ -718,10 +718,10 @@ public void Animation_AllCombinations_MapCorrectly(PlayerState state, Direction 
 
 **Tasks:**
 
-- [ ] Add `CollisionShape2D` to player with `CapsuleShape2D` sized to fit isometric character
-- [ ] Set physics layers: Player is on Layer 2, collides with Layer 1 (World)
-- [ ] Tune `CharacterBody2D` motion mode to `Grounded` for 2D movement
-- [ ] Verify player cannot pass through `StaticBody2D` wall tiles
+- [x] Add `CollisionShape2D` to player with `CapsuleShape2D` sized to fit isometric character
+- [x] Set physics layers: Player is on Layer 2, collides with Layer 1 (World)
+- [x] Tune `CharacterBody2D` motion mode to `Grounded` for 2D movement
+- [x] Verify player cannot pass through `StaticBody2D` wall tiles
 - [x] Create reusable `PhysicsLayers.cs` constants matching Godot project physics layer settings
 
 **Acceptance Criteria:**

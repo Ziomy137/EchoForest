@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace EchoForest.Core;
@@ -13,6 +14,7 @@ namespace EchoForest.Core;
 /// Marked <c>[GlobalClass]</c> so Godot's editor and importer can resolve the
 /// type without walking the full C# assembly on every project load.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Godot Resource — requires editor/runtime to instantiate")]
 [GlobalClass]
 public partial class PaletteResource : Resource
 {

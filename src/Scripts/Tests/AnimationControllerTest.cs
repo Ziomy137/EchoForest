@@ -158,6 +158,20 @@ public class AnimationControllerTest
     // ── AnimationNames constants mirror Get() ─────────────────────────────────
 
     [Test]
+    public void AnimationNames_Get_InvalidPlayerState_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.That(() => AnimationNames.Get((PlayerState)99, Direction.Down),
+            Throws.TypeOf<ArgumentOutOfRangeException>());
+    }
+
+    [Test]
+    public void AnimationNames_Get_InvalidDirection_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.That(() => AnimationNames.Get(PlayerState.Idle, (Direction)99),
+            Throws.TypeOf<ArgumentOutOfRangeException>());
+    }
+
+    [Test]
     public void AnimationNames_Constants_MatchGetMethod()
     {
         Assert.Multiple(() =>
