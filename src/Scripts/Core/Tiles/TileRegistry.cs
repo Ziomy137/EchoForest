@@ -21,11 +21,11 @@ public static class TileRegistry
 
     public static readonly TileDefinition GrassGround = new(
         "GrassGround", BasePath + "tile_grass.png", IsoWidth, IsoHeight,
-        new[] { "1a3a1a", "2d5a2d", "4a7a4a" });
+        new[] { "1a3a1a" });
 
     public static readonly TileDefinition GrassVariation = new(
         "GrassVariation", BasePath + "tile_grass_var.png", IsoWidth, IsoHeight,
-        new[] { "1a3a1a", "2d5a2d", "4a7a4a", "1a1a1a" });
+        new[] { "1a3a1a", "1a1a1a" });
 
     public static readonly TileDefinition DirtPath = new(
         "DirtPath", BasePath + "tile_dirt.png", IsoWidth, IsoHeight,
