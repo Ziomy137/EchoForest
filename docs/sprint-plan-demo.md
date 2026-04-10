@@ -664,7 +664,7 @@ public void Direction_FromVelocity_IsCorrect(float vx, float vy, Direction expec
 
 **Tasks:**
 
-- [x] Create `PlayerAnimationController.cs` — subscribes to `PlayerStateMachine` and `FacingDirection`
+- [x] Create `PlayerAnimationController.cs` — pure controller; caller passes `PlayerState` and `Direction` into `UpdateAnimation(...)`
 - [x] Map `(PlayerState, Direction)` pair to animation name string:
   - `(Idle, Down)` → `"idle_down"`
   - `(Walking, Up)` → `"walk_up"`
