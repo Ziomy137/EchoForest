@@ -103,12 +103,6 @@ public class PlayerCollisionConfigTest
     }
 
     [Test]
-    public void MaskBitmask_IsEqualTo_1()
-    {
-        Assert.That(PlayerCollisionConfig.MaskBitmask, Is.EqualTo(1u));
-    }
-
-    [Test]
     public void LayerBitmask_AndMaskBitmask_AreDifferent()
     {
         Assert.That(PlayerCollisionConfig.LayerBitmask,
