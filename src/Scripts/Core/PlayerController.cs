@@ -97,6 +97,21 @@ public sealed class PlayerController : IPlayerController
         }
     }
 
+    // ── Test helpers ──────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Test-only helper: directly sets <see cref="Velocity"/> and updates
+    /// <see cref="FacingDirection"/> without going through input handling or
+    /// state machine updates. When <paramref name="velocity"/> is zero the
+    /// facing direction is intentionally kept unchanged (same as SimulatePhysicsFrame).
+    /// </summary>
+    internal void SetVelocityForTest(Vector2 velocity)
+    {
+        Velocity = velocity;
+        if (velocity.LengthSquared() > 0f)
+            FacingDirection = DominantDirection(velocity);
+    }
+
     private static Direction DominantDirection(Vector2 v)
     {
         if (MathF.Abs(v.X) >= MathF.Abs(v.Y))

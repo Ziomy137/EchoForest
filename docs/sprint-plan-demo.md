@@ -618,9 +618,9 @@ public void IsApprovedColor_ReturnsCorrectResult(string hex, bool expected) {
 
 **Tasks:**
 
-- [ ] Create `Direction` enum: `Up`, `Down`, `Left`, `Right`
-- [ ] Add `FacingDirection` property to `PlayerController`
-- [ ] Update `FacingDirection` every frame based on velocity vector:
+- [x] Create `Direction` enum: `Up`, `Down`, `Left`, `Right`
+- [x] Add `FacingDirection` property to `PlayerController`
+- [x] Update `FacingDirection` every frame based on velocity vector:
   - Positive X → `Right`
   - Negative X → `Left`
   - Positive Y → `Down`
