@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace EchoForest.Core;
@@ -14,6 +15,7 @@ namespace EchoForest.Core;
 /// type without walking the full C# assembly on every project load.
 /// </summary>
 [GlobalClass]
+[ExcludeFromCodeCoverage]
 public partial class PaletteResource : Resource
 {
     /// <summary>All 16 approved palette colors, in the same order as <see cref="Palette.All"/>.</summary>

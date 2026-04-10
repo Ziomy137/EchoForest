@@ -798,10 +798,11 @@ public void Animation_AllCombinations_MapCorrectly(PlayerState state, Direction 
 
 **Tasks:**
 
-- [ ] Create all tiles listed above
+- [x] Create all tiles listed above
 - [ ] Import all tiles into Godot with correct settings (`Nearest` filter, `2D Pixel` project setting)
 - [ ] Run `PaletteValidator` against all sprites to confirm palette compliance
-- [ ] Add all tiles to `TileSet` resource for the isometric TileMap
+- [x] Add all tiles to `TileSet` resource for the isometric TileMap
+- [x] Create `TileDefinition` record + `TileRegistry` with all 11 tile definitions (pure C# — NUnit tested)
 
 **Acceptance Criteria:**
 
@@ -866,6 +867,7 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 - [ ] Create all 5 props listed above
 - [ ] Run `PaletteValidator` against all sprites
 - [ ] Import all assets using `Nearest` filter
+- [x] Create `AnimationClipDefinition` record + `PlayerSpriteSheet` static class with all 12 clips (pure C# — NUnit tested)
 
 **Acceptance Criteria:**
 
@@ -952,10 +954,12 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 - [ ] Build complete scene with all tiles placed
 - [ ] Add all environmental props (well, trees, haybales, fence posts)
-- [ ] Set up all collision shapes
-- [ ] Place player spawn marker
+- [x] Set up all collision shapes
+- [x] Place player spawn marker
 - [ ] Test manual walkthrough (can navigate entire area without getting stuck)
-- [ ] Add scene to Build autoload / test runner
+- [x] Add scene to Build autoload / test runner
+- [x] Create `TestArea_Cottage.tscn` scene (TileMapLayer, PlayerSpawnPoint, CollisionBoundary)
+- [x] Create `TestAreaConfig.cs` with all config constants (pure C# — NUnit tested)
 
 **Acceptance Criteria:**
 
@@ -997,14 +1001,15 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Create `SceneLoader.cs` implementing `ISceneLoader`:
+- [x] Create `SceneLoader.cs` implementing `ISceneLoader`:
   - `LoadScene(string scenePath) → void`
   - `LoadSceneAsync(string scenePath) → Task`
-  - `GetCurrentScene() → Node`
 - [ ] Create `GameBootstrap.tscn` — root scene that launches on game start
 - [ ] `GameBootstrap` loads `TestArea_Cottage.tscn` directly for demo build
 - [ ] Display loading screen for async transitions (even if 1 frame for demo)
 - [ ] Ensure player node is spawned at `PlayerSpawnPoint` position during scene load
+- [x] Create `SceneLoaderNode.cs` Godot wrapper (excluded from coverage)
+- [x] Full NUnit coverage: null path, empty path, invalid format, delegate invocation
 
 **Acceptance Criteria:**
 

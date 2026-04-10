@@ -155,6 +155,22 @@ public class AnimationControllerTest
         Assert.That(_sprite.PlayCallCount, Is.EqualTo(2));
     }
 
+    // ── AnimationNames invalid enum guards ─────────────────────────────────────
+
+    [Test]
+    public void AnimationNames_Get_InvalidPlayerState_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.That(() => AnimationNames.Get((PlayerState)99, Direction.Down),
+            Throws.TypeOf<ArgumentOutOfRangeException>());
+    }
+
+    [Test]
+    public void AnimationNames_Get_InvalidDirection_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.That(() => AnimationNames.Get(PlayerState.Idle, (Direction)99),
+            Throws.TypeOf<ArgumentOutOfRangeException>());
+    }
+
     // ── AnimationNames constants mirror Get() ─────────────────────────────────
 
     [Test]

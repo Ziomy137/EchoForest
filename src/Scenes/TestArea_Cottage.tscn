@@ -1,0 +1,45 @@
+; TestArea_Cottage.tscn — Cottage Exterior test area scene for EchoForest demo.
+;
+; Scene tree structure:
+;   TestArea_Cottage       (Node2D)        — root, Y-sort enabled
+;   ├── TileMapLayer       (TileMapLayer)  — isometric tile grid
+;   ├── PlayerSpawnPoint   (Marker2D)      — player spawn at cottage yard centre
+;   ├── CollisionBoundary  (StaticBody2D)  — invisible scene-edge barrier
+;   │   └── BoundaryShape  (CollisionShape2D)
+;   └── Props              (Node2D)        — environment prop container
+;
+; Bootstrap:
+;   - Assign IsometricTileSet.tres to TileMapLayer.tile_set in the editor
+;   - Place tile_grass, tile_stone, tile_farm, tile_dirt etc. tiles on TileMapLayer
+;   - Player character node is spawned at PlayerSpawnPoint.position at runtime
+;     by GameBootstrap / SceneLoader
+;
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="TileSet" path="res://src/Assets/Data/IsometricTileSet.tres" id="1"]
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(1920, 1080)
+
+[node name="TestArea_Cottage" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1")
+y_sort_enabled = true
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+; Spawn at tile (15, 12) in isometric screen-space:
+;   x = (15 - 12) * TileWidth/2  = 3 * 32  = 96
+;   y = (15 + 12) * TileHeight/2 = 27 * 16 = 432
+position = Vector2(96, 432)
+
+[node name="CollisionBoundary" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask  = 0
+
+[node name="BoundaryShape" type="CollisionShape2D" parent="CollisionBoundary"]
+shape = SubResource("2")
+
+[node name="Props" type="Node2D" parent="."]
+y_sort_enabled = true
