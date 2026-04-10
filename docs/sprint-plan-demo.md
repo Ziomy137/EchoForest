@@ -664,15 +664,15 @@ public void Direction_FromVelocity_IsCorrect(float vx, float vy, Direction expec
 
 **Tasks:**
 
-- [ ] Create `PlayerAnimationController.cs` — subscribes to `PlayerStateMachine` and `FacingDirection`
-- [ ] Map `(PlayerState, Direction)` pair to animation name string:
+- [x] Create `PlayerAnimationController.cs` — subscribes to `PlayerStateMachine` and `FacingDirection`
+- [x] Map `(PlayerState, Direction)` pair to animation name string:
   - `(Idle, Down)` → `"idle_down"`
   - `(Walking, Up)` → `"walk_up"`
   - `(Running, Left)` → `"run_left"`
   - etc. — full matrix: 3 states × 4 directions = 12 animation names
-- [ ] Call `AnimatedSprite2D.Play(animationName)` when state or direction changes
-- [ ] No animation restart if same animation is already playing
-- [ ] Create animation name constants in `AnimationNames.cs`
+- [x] Call `AnimatedSprite2D.Play(animationName)` when state or direction changes
+- [x] No animation restart if same animation is already playing
+- [x] Create animation name constants in `AnimationNames.cs`
 
 **Acceptance Criteria:**
 
