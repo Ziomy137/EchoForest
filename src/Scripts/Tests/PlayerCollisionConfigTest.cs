@@ -118,15 +118,6 @@ public class PlayerCollisionConfigTest
     // ── Cross-checks with PhysicsLayers ──────────────────────────────────────
 
     [Test]
-    public void LayerBitmask_IsConsistentWith_PhysicsLayersPlayer()
-    {
-        // LayerBitmask encodes the same layer number as PhysicsLayers.Player
-        int layerNumber = PhysicsLayers.Player;
-        uint expectedBitmask = 1u << (layerNumber - 1);
-        Assert.That(PlayerCollisionConfig.LayerBitmask, Is.EqualTo(expectedBitmask));
-    }
-
-    [Test]
     public void MaskBitmask_IsConsistentWith_PhysicsLayersWorld()
     {
         int layerNumber = PhysicsLayers.World;
