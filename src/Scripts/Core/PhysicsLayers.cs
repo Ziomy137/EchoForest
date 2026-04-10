@@ -26,5 +26,5 @@ public static class PhysicsLayers
     public const int Interactables = Constants.Layers.Interactables;
 
     /// <summary>All defined layer IDs in ascending order.</summary>
-    public static readonly int[] All = { World, Player, Npcs, Interactables };
+    public static readonly int[] All = Constants.Layers.All;
 }
