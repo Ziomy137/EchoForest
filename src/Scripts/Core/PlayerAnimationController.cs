@@ -11,10 +11,12 @@ namespace EchoForest.Core;
 public sealed class PlayerAnimationController
 {
     private readonly IAnimatedSprite _sprite;
-    private string _currentAnimation = string.Empty;
 
-    /// <summary>Name of the animation clip currently being played.</summary>
-    public string CurrentAnimationName => _currentAnimation;
+    /// <summary>
+    /// Name of the animation clip currently being played, reflected directly
+    /// from the underlying <see cref="IAnimatedSprite"/>.
+    /// </summary>
+    public string CurrentAnimationName => _sprite.CurrentAnimation;
 
     public PlayerAnimationController(IAnimatedSprite sprite)
     {
@@ -24,15 +26,17 @@ public sealed class PlayerAnimationController
     /// <summary>
     /// Resolves the correct animation name for <paramref name="state"/> and
     /// <paramref name="direction"/> and calls <see cref="IAnimatedSprite.Play"/>
-    /// only when the clip would change.
+    /// only when the clip would change.  Compares against
+    /// <see cref="IAnimatedSprite.CurrentAnimation"/> so that a clip already
+    /// playing on the sprite (e.g. set before this controller was constructed)
+    /// is also skipped.
     /// </summary>
     public void UpdateAnimation(PlayerState state, Direction direction)
     {
         string animName = AnimationNames.Get(state, direction);
-        if (animName == _currentAnimation)
+        if (animName == _sprite.CurrentAnimation)
             return;
 
-        _currentAnimation = animName;
         _sprite.Play(animName);
     }
 }

@@ -99,6 +99,18 @@ public class AnimationControllerTest
         Assert.That(_sprite.PlayCallCount, Is.EqualTo(playCount));
     }
 
+    [Test]
+    public void Animation_SpriteAlreadyPlayingClip_DoesNotRestartOnFirstUpdate()
+    {
+        // Sprite already playing "idle_down" before the controller calls UpdateAnimation
+        _sprite.Play("idle_down");
+        int playCount = _sprite.PlayCallCount;
+
+        _controller.UpdateAnimation(PlayerState.Idle, Direction.Down);
+
+        Assert.That(_sprite.PlayCallCount, Is.EqualTo(playCount));
+    }
+
     // ── Play IS called when animation changes ─────────────────────────────────
 
     [Test]
