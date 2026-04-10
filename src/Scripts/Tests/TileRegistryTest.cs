@@ -156,7 +156,7 @@ public class TileRegistryTest
     }
 
     [Test]
-    public void TileDefinition_DifferentName_AreNotEqual()
+    public void TileDefinition_DifferentNames_AreNotEqual()
     {
         var a = new TileDefinition("TileA", "res://test.png", 64, 32, new[] { "1a1a1a" });
         var b = new TileDefinition("TileB", "res://test.png", 64, 32, new[] { "1a1a1a" });
