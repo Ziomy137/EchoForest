@@ -9,6 +9,11 @@
     <AssemblyName>EchoForest</AssemblyName>
   </PropertyGroup>
 
+  <!-- Grant the test assembly access to internal members -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="EchoForest.Tests" />
+  </ItemGroup>
+
   <!-- Exclude test files — they belong to EchoForest.Tests.csproj only -->
   <ItemGroup>
     <Compile Remove="src/Scripts/Tests/**/*.cs" />

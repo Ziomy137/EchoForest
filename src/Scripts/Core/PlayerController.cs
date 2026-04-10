@@ -105,7 +105,7 @@ public sealed class PlayerController : IPlayerController
     /// state machine updates. When <paramref name="velocity"/> is zero the
     /// facing direction is intentionally kept unchanged (same as SimulatePhysicsFrame).
     /// </summary>
-    public void SetVelocityForTest(Vector2 velocity)
+    internal void SetVelocityForTest(Vector2 velocity)
     {
         Velocity = velocity;
         if (velocity.LengthSquared() > 0f)
