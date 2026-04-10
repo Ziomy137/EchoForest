@@ -59,16 +59,20 @@ public class DirectionTest
         Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Right));
     }
 
-    // ── Zero velocity retains previous direction ──────────────────────────────
+    // ── SetVelocityForTest preserves facing when zeroing velocity ─────────────
 
     [Test]
-    public void Direction_ZeroVelocityAfterRight_RetainsRight()
+    public void SetVelocityForTest_ZeroVelocity_UpdatesVelocityWithoutChangingFacingDirection()
     {
-        _player.SetVelocityForTest(new Vector2(80f, 0f));
+        var movingRight = new Vector2(80f, 0f);
+        _player.SetVelocityForTest(movingRight);
+
+        Assert.That(_player.Velocity, Is.EqualTo(movingRight));
         Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Right));
 
         _player.SetVelocityForTest(Vector2.Zero);
 
+        Assert.That(_player.Velocity, Is.EqualTo(Vector2.Zero));
         Assert.That(_player.FacingDirection, Is.EqualTo(Direction.Right));
     }
 
