@@ -54,21 +54,21 @@ public class AnimationClipConfigTest
     [Test]
     public void FrameColumns_IdleClip_Returns0And1()
     {
-        Assert.That(_sut.FrameColumns, Is.EquivalentTo(new[] { 0, 1 }));
+        Assert.That(_sut.FrameColumns, Is.EqualTo(new[] { 0, 1 }));
     }
 
     [Test]
     public void FrameColumns_WalkClip_Returns2Through5()
     {
         var clip = new AnimationClipConfig("walk_down", 0, startColumn: 2, frameCount: 4, fps: 8.0f);
-        Assert.That(clip.FrameColumns, Is.EquivalentTo(new[] { 2, 3, 4, 5 }));
+        Assert.That(clip.FrameColumns, Is.EqualTo(new[] { 2, 3, 4, 5 }));
     }
 
     [Test]
     public void FrameColumns_RunClip_Returns6Through9()
     {
         var clip = new AnimationClipConfig("run_down", 0, startColumn: 6, frameCount: 4, fps: 10.0f);
-        Assert.That(clip.FrameColumns, Is.EquivalentTo(new[] { 6, 7, 8, 9 }));
+        Assert.That(clip.FrameColumns, Is.EqualTo(new[] { 6, 7, 8, 9 }));
     }
 
     [Test]
