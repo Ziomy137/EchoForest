@@ -6,7 +6,7 @@
 ; Custom Data Layer 0: "walkable" (bool)
 ; Physics Layer 0: collision mask for World (Layer 1)
 ;
-[gd_resource type="TileSet" load_steps=12 format=3]
+[gd_resource type="TileSet" load_steps=23 format=3]
 
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass.png" id="tile_grass"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass_var.png" id="tile_grass_var"]
