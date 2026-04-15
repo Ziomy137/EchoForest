@@ -83,7 +83,7 @@ public class AnimationClipConfigTest
     {
         var clip = new AnimationClipConfig("x", 1, startColumn: 3, frameCount: 3, fps: 8.0f);
         var expected = new[] { 3, 4, 5 };
-        Assert.That(clip.FrameColumns, Is.EquivalentTo(expected));
+        Assert.That(clip.FrameColumns, Is.EqualTo(expected));
     }
 
     // ─── Various rows ─────────────────────────────────────────────────────────
