@@ -80,9 +80,9 @@ public static class CharacterSpriteConfig
     // ─── Resource paths ───────────────────────────────────────────────────────
 
     /// <summary>Godot resource path for the player sprite sheet.</summary>
-    public const string SpritesResPath = "res://src/Assets/Sprites/Characters";
+    public static readonly string SpritesResPath = CharacterImportConfig.CharacterSpritesResPath;
     /// <summary>Godot resource path for the player sprite sheet PNG.</summary>
-    public const string SheetResPath = $"{SpritesResPath}/player_spritesheet.png";
+    public static readonly string SheetResPath = $"{SpritesResPath}/player_spritesheet.png";
     /// <summary>Godot resource path for the SpriteFrames animation library.</summary>
     public const string AnimationsResPath = "res://src/Assets/Animations/player_animations.tres";
 
