@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EchoForest.Core;
 
@@ -53,6 +54,6 @@ public sealed class TileConfig
         Width = width;
         Height = height;
         IsWalkable = isWalkable;
-        ExpectedColorHexCodes = expectedColorHexCodes;
+        ExpectedColorHexCodes = new ReadOnlyCollection<string>(new List<string>(expectedColorHexCodes));
     }
 }

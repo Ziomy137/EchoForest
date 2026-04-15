@@ -73,6 +73,15 @@ public class TileConfigTest
         var mono = new TileConfig("Mono", "mono.png", 64, 32, true, new[] { "1a1a1a" });
         Assert.That(mono.ExpectedColorHexCodes.Count, Is.EqualTo(1));
     }
+
+    [Test]
+    public void ExpectedColorHexCodes_IsImmutable_MutatingSourceArrayDoesNotAffectConfig()
+    {
+        var source = new[] { "1a3a1a", "2d2416" };
+        var tile = new TileConfig("Test", "test.png", 64, 32, true, source);
+        source[0] = "ffffff";
+        Assert.That(tile.ExpectedColorHexCodes[0], Is.EqualTo("1a3a1a"));
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
