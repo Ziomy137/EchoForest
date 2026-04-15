@@ -3,8 +3,12 @@ namespace EchoForest.Core;
 /// <summary>
 /// Import configuration constants for tile sprite assets.
 ///
-/// Ensures all tile PNGs are imported with consistent settings:
-/// nearest-neighbor filtering (no bilinear), no mipmaps, uncompressed.
+/// Godot auto-generates a <c>.import</c> sidecar file for every asset the first
+/// time the project is opened in the editor. Those files are excluded from
+/// version control via <c>*.import</c> in <c>.gitignore</c> (standard practice
+/// for Godot projects). This class documents the expected import settings so
+/// that developers can verify their locally generated <c>.import</c> files match
+/// the intended configuration (nearest-neighbor filtering, no mipmaps, lossless).
 ///
 /// Pure C# — no Godot runtime required. Testable with NUnit.
 /// </summary>
