@@ -1,12 +1,24 @@
-; IsometricTileSet.tres — Placeholder TileSet resource for the isometric 64x32 grid.
-; Configure this resource in the Godot editor:
-;   1. Open this resource in the TileSet editor
-;   2. Tile Shape: Isometric
-;   3. Tile Size: 64 x 32
-;   4. Add a Custom Data Layer:  name="walkable"  type=bool
-;   5. Add a Physics Layer for collision (Layer 1 = World)
+; IsometricTileSet.tres — TileSet resource for the isometric 64x32 grid.
+; Contains all S3-01 tile sprites as individual TileSetAtlasSource entries.
 ;
-[gd_resource type="TileSet" format=3]
+; Tile Shape: Isometric (2)
+; Tile Size: 64 x 32
+; Custom Data Layer 0: "walkable" (bool)
+; Physics Layer 0: collision mask for World (Layer 1)
+;
+[gd_resource type="TileSet" load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass.png" id="tile_grass"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass_var.png" id="tile_grass_var"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_dirt.png" id="tile_dirt"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_farm.png" id="tile_farm"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_stone.png" id="tile_stone"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_water.png" id="tile_water"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_wall_front.png" id="tile_wall_front"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_roof.png" id="tile_roof"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_fence_h.png" id="tile_fence_h"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_fence_v.png" id="tile_fence_v"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_shadow.png" id="tile_shadow"]
 
 [resource]
 tile_size = Vector2i(64, 32)
@@ -15,3 +27,94 @@ tile_layout = 0
 tile_offset_axis = 0
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 1
+
+; Source 0: Grass Ground (walkable)
+0:sources/0 = SubResource("src_grass")
+; Source 1: Grass Variation (walkable)
+0:sources/1 = SubResource("src_grass_var")
+; Source 2: Dirt Path (walkable)
+0:sources/2 = SubResource("src_dirt")
+; Source 3: Farmland (walkable)
+0:sources/3 = SubResource("src_farm")
+; Source 4: Stone Floor (walkable)
+0:sources/4 = SubResource("src_stone")
+; Source 5: Water (blocking)
+0:sources/5 = SubResource("src_water")
+; Source 6: Cottage Wall (blocking)
+0:sources/6 = SubResource("src_wall")
+; Source 7: Cottage Roof (blocking)
+0:sources/7 = SubResource("src_roof")
+; Source 8: Fence H (blocking)
+0:sources/8 = SubResource("src_fence_h")
+; Source 9: Fence V (blocking)
+0:sources/9 = SubResource("src_fence_v")
+; Source 10: Shadow (walkable)
+0:sources/10 = SubResource("src_shadow")
+
+[sub_resource type="TileSetAtlasSource" id="src_grass"]
+texture = ExtResource("tile_grass")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_grass_var"]
+texture = ExtResource("tile_grass_var")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_dirt"]
+texture = ExtResource("tile_dirt")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_farm"]
+texture = ExtResource("tile_farm")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_stone"]
+texture = ExtResource("tile_stone")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_water"]
+texture = ExtResource("tile_water")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = false
+
+[sub_resource type="TileSetAtlasSource" id="src_wall"]
+texture = ExtResource("tile_wall_front")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = false
+
+[sub_resource type="TileSetAtlasSource" id="src_roof"]
+texture = ExtResource("tile_roof")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = false
+
+[sub_resource type="TileSetAtlasSource" id="src_fence_h"]
+texture = ExtResource("tile_fence_h")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = false
+
+[sub_resource type="TileSetAtlasSource" id="src_fence_v"]
+texture = ExtResource("tile_fence_v")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = false
+
+[sub_resource type="TileSetAtlasSource" id="src_shadow"]
+texture = ExtResource("tile_shadow")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true

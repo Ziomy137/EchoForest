@@ -798,10 +798,10 @@ public void Animation_AllCombinations_MapCorrectly(PlayerState state, Direction 
 
 **Tasks:**
 
-- [ ] Create all tiles listed above
-- [ ] Import all tiles into Godot with correct settings (`Nearest` filter, `2D Pixel` project setting)
-- [ ] Run `PaletteValidator` against all sprites to confirm palette compliance
-- [ ] Add all tiles to `TileSet` resource for the isometric TileMap
+- [x] Create all tiles listed above
+- [x] Import all tiles into Godot with correct settings (`Nearest` filter, `2D Pixel` project setting)
+- [x] Run `PaletteValidator` against all sprites to confirm palette compliance
+- [x] Add all tiles to `TileSet` resource for the isometric TileMap
 
 **Acceptance Criteria:**
 
