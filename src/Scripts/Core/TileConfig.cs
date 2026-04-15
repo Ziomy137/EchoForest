@@ -35,10 +35,10 @@ public sealed class TileConfig
     public IReadOnlyList<string> ExpectedColorHexCodes { get; }
 
     /// <summary>Godot resource path relative to the project root.</summary>
-    public string ResourcePath => $"res://src/Assets/Sprites/Tiles/{FileName}";
+    public string ResourcePath => $"{TileImportConfig.TileSpritesResPath}/{FileName}";
 
     /// <summary>Relative filesystem path from the project root.</summary>
-    public string FilePath => $"src/Assets/Sprites/Tiles/{FileName}";
+    public string FilePath => $"{TileImportConfig.TileSpritesDirectory}/{FileName}";
 
     public TileConfig(
         string name,
