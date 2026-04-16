@@ -42,7 +42,8 @@ public partial class CottageAreaNode : Node2D
 
     private void SpawnProps()
     {
-        var propsNode = GetNode<Node2D>(CottageSceneConfig.PropsNodeName);
+        // Props are added directly to the root so they share the same Y-sorted
+        // parent as Player, enabling correct isometric depth interleaving.
         foreach (var placement in CottageSceneConfig.Props)
         {
             var config = PropRegistry.GetByFileName(placement.FileName);
@@ -60,14 +61,14 @@ public partial class CottageAreaNode : Node2D
             sprite.Position = Vector2.Zero;
 
             sorter.AddChild(sprite);
-            propsNode.AddChild(sorter);
+            AddChild(sorter);
 
             // Blocking props also get a small collision circle
             if (placement.FileName == PropRegistry.Well.FileName
                 || placement.FileName == PropRegistry.Tree.FileName
                 || placement.FileName == PropRegistry.FencePost.FileName)
             {
-                AddPropCollider(propsNode, new Vector2(wx, wy), radius: 6f);
+                AddPropCollider(this, new Vector2(wx, wy), radius: 6f);
             }
         }
     }
