@@ -75,8 +75,8 @@ public partial class CottageAreaNode : Node2D
     private static void AddPropCollider(Node2D parent, Vector2 worldPos, float radius)
     {
         var body = new StaticBody2D();
-        body.CollisionLayer = 1;
-        body.CollisionMask = 1;
+        body.CollisionLayer = 1u << (PhysicsLayers.World - 1);
+        body.CollisionMask = 1u << (PhysicsLayers.World - 1);
 
         var shape = new CollisionShape2D();
         var circle = new CircleShape2D();
