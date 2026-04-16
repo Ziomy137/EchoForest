@@ -9,4 +9,11 @@
     <!-- Exclude test project files — they are compiled by EchoForest.Tests.csproj only -->
     <Compile Remove="src/Scripts/Tests/**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Allow EchoForest.Tests to access internal members (e.g. SetVelocityForTest) -->
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>EchoForest.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>
