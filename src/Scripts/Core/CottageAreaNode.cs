@@ -51,14 +51,16 @@ public partial class CottageAreaNode : Node2D
             var wx = CottageSceneConfig.TileToWorldX(placement.Col, placement.Row);
             var wy = CottageSceneConfig.TileToWorldY(placement.Col, placement.Row);
 
+            // Y-sorter must be the parent so its ZIndex affects the rendered sprite.
+            var sorter = new IsometricYSorterNode();
+            sorter.Position = new Vector2(wx, wy);
+
             var sprite = new Sprite2D();
             sprite.Texture = GD.Load<Texture2D>(config.ResourcePath);
-            sprite.Position = new Vector2(wx, wy);
+            sprite.Position = Vector2.Zero;
 
-            // Y-sorter for correct isometric depth
-            var sorter = new IsometricYSorterNode();
-            sprite.AddChild(sorter);
-            propsNode.AddChild(sprite);
+            sorter.AddChild(sprite);
+            propsNode.AddChild(sorter);
 
             // Blocking props also get a small collision circle
             if (placement.FileName == PropRegistry.Well.FileName
