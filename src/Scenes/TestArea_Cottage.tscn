@@ -1,0 +1,46 @@
+; TestArea_Cottage.tscn — Cottage Exterior test area for EchoForest demo (S3-03).
+;
+; Scene tree structure:
+;   TestArea_Cottage     (Node2D)       — CottageAreaNode.cs script bootstraps tiles + props
+;   ├── TileMapLayer     (TileMapLayer) — references IsometricTileSet.tres; cells set by script
+;   ├── PlayerSpawnPoint (Marker2D)     — world pos (64, 416) = tile (14, 12)
+;   ├── Props            (Node2D)       — prop sprites + colliders added by script
+;   ├── Boundary         (StaticBody2D) — wall segments added by script
+;   ├── Camera           (Camera2D)     — IsometricCameraNode; follow target wired by GameBootstrap
+;   └── Player           (PackedScene)  — Player.tscn instance placed at spawn position
+;
+; Layout (30×20 isometric grid):
+;   Tiles populated programmatically from CottageSceneConfig.GetTileFileName(col, row).
+;   Props instantiated from CottageSceneConfig.Props array.
+;   Boundary walls created from CottageSceneConfig.WorldBoundary* constants.
+;
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script"      path="res://src/Scripts/Core/CottageAreaNode.cs"         id="1_area"]
+[ext_resource type="TileSet"     path="res://src/Assets/Data/IsometricTileSet.tres"        id="2_tileset"]
+[ext_resource type="PackedScene" path="res://src/Scenes/Player.tscn"                       id="3_player"]
+[ext_resource type="Script"      path="res://src/Scripts/Core/IsometricCameraNode.cs"      id="4_camera"]
+
+[node name="TestArea_Cottage" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_area")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_tileset")
+y_sort_enabled = true
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(64, 416)
+
+[node name="Props" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Boundary" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("4_camera")
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(64, 416)
