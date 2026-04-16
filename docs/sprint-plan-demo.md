@@ -950,10 +950,10 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Build complete scene with all tiles placed
-- [ ] Add all environmental props (well, trees, haybales, fence posts)
-- [ ] Set up all collision shapes
-- [ ] Place player spawn marker
+- [x] Build complete scene with all tiles placed
+- [x] Add all environmental props (well, trees, haybales, fence posts)
+- [x] Set up all collision shapes
+- [x] Place player spawn marker
 - [ ] Test manual walkthrough (can navigate entire area without getting stuck)
 - [ ] Add scene to Build autoload / test runner
 

@@ -1,21 +1,19 @@
 <Project Sdk="Godot.NET.Sdk/4.6.2">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net10.0</TargetFramework>
-    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net10.0</TargetFramework>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Nullable>enable</Nullable>
-    <RootNamespace>EchoForest</RootNamespace>
-    <AssemblyName>EchoForest</AssemblyName>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
 
-  <!-- Grant the test assembly access to internal members -->
   <ItemGroup>
-    <InternalsVisibleTo Include="EchoForest.Tests" />
+    <!-- Exclude test project files — they are compiled by EchoForest.Tests.csproj only -->
+    <Compile Remove="src/Scripts/Tests/**" />
   </ItemGroup>
 
-  <!-- Exclude test files — they belong to EchoForest.Tests.csproj only -->
   <ItemGroup>
-    <Compile Remove="src/Scripts/Tests/**/*.cs" />
+    <!-- Allow EchoForest.Tests to access internal members (e.g. SetVelocityForTest) -->
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>EchoForest.Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>
