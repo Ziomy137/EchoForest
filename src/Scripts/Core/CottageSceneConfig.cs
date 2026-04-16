@@ -91,7 +91,7 @@ public static class CottageSceneConfig
     public const int SourceIdRoof = 7;
     public const int SourceIdFenceH = 8;
     public const int SourceIdFenceV = 9;
-    public const int SourceIdShadow = 10;  // used by IsometricYSorterNode
+    public const int SourceIdShadow = 10;  // TileSet source ID for the shadow tile
 
     // ─── World boundary ───────────────────────────────────────────────────────
     // Derived from grid corners using TileToWorld formula, plus a 32 px buffer.
