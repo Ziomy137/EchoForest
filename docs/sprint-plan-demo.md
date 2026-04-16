@@ -861,11 +861,11 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Create player spritesheet with all 40 frames listed
-- [ ] Configure `AnimatedSprite2D` with all animation clips pointing to correct frames
-- [ ] Create all 5 props listed above
-- [ ] Run `PaletteValidator` against all sprites
-- [ ] Import all assets using `Nearest` filter
+- [x] Create player spritesheet with all 40 frames listed
+- [x] Configure `AnimatedSprite2D` with all animation clips pointing to correct frames
+- [x] Create all 5 props listed above
+- [x] Run `PaletteValidator` against all sprites
+- [x] Import all assets using `Nearest` filter
 
 **Acceptance Criteria:**
 
