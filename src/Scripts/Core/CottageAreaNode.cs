@@ -20,6 +20,8 @@ public partial class CottageAreaNode : Node2D
 		PopulateTiles();
 		SpawnProps();
 		SetupBoundary();
+		SpawnPlayer();
+		SetupCamera();
 	}
 
 	// ─── Tile population ──────────────────────────────────────────────────────
@@ -42,6 +44,8 @@ public partial class CottageAreaNode : Node2D
 
 	private void SpawnProps()
 	{
+		var tileMap = GetNode<TileMapLayer>(CottageSceneConfig.TileMapLayerName);
+
 		// Props are added directly to the root so they share the same Y-sorted
 		// parent as Player, enabling correct isometric depth interleaving.
 		foreach (var placement in CottageSceneConfig.Props)
@@ -49,16 +53,18 @@ public partial class CottageAreaNode : Node2D
 			var config = PropRegistry.GetByFileName(placement.FileName);
 			if (config is null) continue;
 
-			var wx = CottageSceneConfig.TileToWorldX(placement.Col, placement.Row);
-			var wy = CottageSceneConfig.TileToWorldY(placement.Col, placement.Row);
+			// Use Godot's authoritative cell→world mapping so props always land
+			// exactly on their tile regardless of tile_layout setting.
+			var worldPos = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(placement.Col, placement.Row)));
 
 			// Y-sorter must be the parent so its ZIndex affects the rendered sprite.
 			var sorter = new IsometricYSorterNode();
-			sorter.Position = new Vector2(wx, wy);
+			sorter.GlobalPosition = worldPos;
 
 			var sprite = new Sprite2D();
 			sprite.Texture = GD.Load<Texture2D>(config.ResourcePath);
-			sprite.Position = Vector2.Zero;
+			// Place sprite so its bottom edge sits at the tile centre (ground level).
+			sprite.Position = new Vector2(0, -config.Height / 2f);
 
 			sorter.AddChild(sprite);
 			AddChild(sorter);
@@ -68,7 +74,7 @@ public partial class CottageAreaNode : Node2D
 				|| placement.FileName == PropRegistry.Tree.FileName
 				|| placement.FileName == PropRegistry.FencePost.FileName)
 			{
-				AddPropCollider(this, new Vector2(wx, wy), radius: 6f);
+				AddPropCollider(this, worldPos, radius: 6f);
 			}
 		}
 	}
@@ -118,5 +124,25 @@ public partial class CottageAreaNode : Node2D
 		shape.Shape = rect;
 		shape.Position = center;
 		parent.AddChild(shape);
+	}
+
+	// ─── Player spawn ─────────────────────────────────────────────────────────
+
+	private void SpawnPlayer()
+	{
+		var tileMap = GetNode<TileMapLayer>(CottageSceneConfig.TileMapLayerName);
+		var spawnWorld = tileMap.ToGlobal(tileMap.MapToLocal(
+			new Vector2I(CottageSceneConfig.SpawnTileCol, CottageSceneConfig.SpawnTileRow)));
+		GetNode<Node2D>("Player").GlobalPosition = spawnWorld;
+	}
+
+	// ─── Camera setup ─────────────────────────────────────────────────────────
+
+	private void SetupCamera()
+	{
+		var camera = GetNode<IsometricCameraNode>(CottageSceneConfig.CameraNodeName);
+		var player = GetNode<Node2D>("Player");
+		camera.FollowTarget = player;
+		camera.SnapToTarget();
 	}
 }

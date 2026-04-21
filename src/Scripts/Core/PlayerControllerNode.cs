@@ -23,6 +23,7 @@ namespace EchoForest.Core;
 public partial class PlayerControllerNode : CharacterBody2D
 {
     private PlayerController _controller = null!;
+    private PlayerAnimationController _animController = null!;
 
     public Direction FacingDirection => _controller.FacingDirection;
     public PlayerState CurrentState => _controller.CurrentState;
@@ -32,6 +33,9 @@ public partial class PlayerControllerNode : CharacterBody2D
         var input = new InputHandler();
         var stateMachine = new PlayerStateMachine();
         _controller = new PlayerController(input, stateMachine);
+
+        var sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _animController = new PlayerAnimationController(new GodotAnimatedSprite(sprite));
     }
 
     public override void _PhysicsProcess(double delta)
@@ -39,5 +43,8 @@ public partial class PlayerControllerNode : CharacterBody2D
         _controller.SimulatePhysicsFrame((float)delta);
         Velocity = _controller.Velocity;
         MoveAndSlide();
+
+        _animController.UpdateAnimation(_controller.CurrentState, _controller.FacingDirection);
+        ZIndex = IsometricSorter.CalculateZIndex(GlobalPosition);
     }
 }

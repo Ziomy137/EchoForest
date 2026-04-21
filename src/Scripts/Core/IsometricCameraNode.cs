@@ -88,6 +88,18 @@ public partial class IsometricCameraNode : Camera2D
         _controller.ForcePosition(GlobalPosition);
     }
 
+    /// <summary>
+    /// Immediately snaps the camera to <see cref="FollowTarget"/>'s position,
+    /// bypassing the lerp. Call this after repositioning the follow target at
+    /// scene load time to avoid an initial catch-up pan.
+    /// </summary>
+    public void SnapToTarget()
+    {
+        if (FollowTarget != null)
+            _controller.ForcePosition(FollowTarget.GlobalPosition);
+        GlobalPosition = _controller.Position;
+    }
+
     public override void _Process(double delta)
     {
         if (FollowTarget != null)
