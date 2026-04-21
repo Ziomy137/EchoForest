@@ -11,9 +11,12 @@ script = ExtResource("1_area")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=2121023514]
 y_sort_enabled = true
+y_sort_origin = 16
+texture_filter = 1
 tile_set = ExtResource("2_tileset")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="." unique_id=833826968]
+position = Vector2(64, 416)
 
 [node name="Boundary" type="StaticBody2D" parent="." unique_id=1231230418]
 

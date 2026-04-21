@@ -954,17 +954,19 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 - [x] Add all environmental props (well, trees, haybales, fence posts)
 - [x] Set up all collision shapes
 - [x] Place player spawn marker
-- [ ] Test manual walkthrough (can navigate entire area without getting stuck)
-- [ ] Add scene to Build autoload / test runner
+- [x] Test manual walkthrough (can navigate entire area without getting stuck)
+- [x] Add scene to Build autoload / test runner
 
 **Acceptance Criteria:**
 
-- Scene opens and renders correctly in Godot
-- Player spawns at designated spawn point
-- Player can walk/run across all walkable tiles
-- Player cannot pass through cottage walls, fence, or trees
-- No visual gaps between adjacent tiles
-- Z-sorting renders player behind cottage wall when behind it
+- [x] Scene opens and renders correctly in Godot
+- [x] Player spawns at designated spawn point
+- [x] Player can walk/run across all walkable tiles
+- [x] Player cannot pass through cottage walls, fence, or trees
+- [x] No visual gaps between adjacent tiles
+- [x] Z-sorting renders player behind cottage wall when behind it
+
+**Status: ✅ COMPLETED — 21 April 2026**
 
 **Tests Required:**
 
