@@ -96,7 +96,7 @@ public partial class IsometricCameraNode : Camera2D
     public void SnapToTarget()
     {
         if (FollowTarget != null)
-            _controller.ForcePosition(FollowTarget.GlobalPosition);
+            _controller.ForcePosition(FollowTarget.GlobalPosition + FollowOffset);
         GlobalPosition = _controller.Position;
     }
 
