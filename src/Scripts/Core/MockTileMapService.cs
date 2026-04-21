@@ -13,35 +13,35 @@ namespace EchoForest.Core;
 /// </summary>
 public sealed class MockTileMapService : ITileMapService
 {
-    private readonly HashSet<Vector2I> _walkableTiles = new();
+	private readonly HashSet<Vector2I> _walkableTiles = new();
 
-    // ── Control API (used by tests to set up state) ───────────────────────────
+	// ── Control API (used by tests to set up state) ───────────────────────────
 
-    /// <summary>Registers a tile as walkable (<c>true</c>) or blocked (<c>false</c>).</summary>
-    public void SetWalkable(Vector2I tilePos, bool walkable)
-    {
-        if (walkable) _walkableTiles.Add(tilePos);
-        else _walkableTiles.Remove(tilePos);
-    }
+	/// <summary>Registers a tile as walkable (<c>true</c>) or blocked (<c>false</c>).</summary>
+	public void SetWalkable(Vector2I tilePos, bool walkable)
+	{
+		if (walkable) _walkableTiles.Add(tilePos);
+		else _walkableTiles.Remove(tilePos);
+	}
 
-    /// <summary>Clears all registered tile state.</summary>
-    public void Reset() => _walkableTiles.Clear();
+	/// <summary>Clears all registered tile state.</summary>
+	public void Reset() => _walkableTiles.Clear();
 
-    // ── ITileMapService ───────────────────────────────────────────────────────
+	// ── ITileMapService ───────────────────────────────────────────────────────
 
-    public Vector2I WorldToTile(Vector2 worldPos) =>
-        IsometricMath.WorldToTile(worldPos);
+	public Vector2I WorldToTile(Vector2 worldPos) =>
+		IsometricMath.WorldToTile(worldPos);
 
-    public Vector2 TileToWorld(Vector2I tilePos) =>
-        IsometricMath.TileToWorld(tilePos);
+	public Vector2 TileToWorld(Vector2I tilePos) =>
+		IsometricMath.TileToWorld(tilePos);
 
-    public bool IsWalkable(Vector2I tilePos) =>
-        _walkableTiles.Contains(tilePos);
+	public bool IsWalkable(Vector2I tilePos) =>
+		_walkableTiles.Contains(tilePos);
 
-    /// <remarks>
-    /// Always returns <c>null</c> — <c>TileData</c> cannot be constructed
-    /// outside the Godot runtime. Test null-handling logic here;
-    /// test actual tile data via GUT.
-    /// </remarks>
-    public TileData? GetTileAtPosition(Vector2 worldPos) => null;
+	/// <remarks>
+	/// Always returns <c>null</c> — <c>TileData</c> cannot be constructed
+	/// outside the Godot runtime. Test null-handling logic here;
+	/// test actual tile data via GUT.
+	/// </remarks>
+	public TileData? GetTileAtPosition(Vector2 worldPos) => null;
 }

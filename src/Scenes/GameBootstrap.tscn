@@ -1,11 +1,8 @@
-; GameBootstrap.tscn — Entry-point scene for the EchoForest demo.
-; Instances TestArea_Cottage.tscn directly as the sole playable area.
-; Camera follow-target wiring will be done here when S3-04 is implemented.
-;
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://bsks1satgrr6j"]
 
-[ext_resource type="PackedScene" path="res://src/Scenes/TestArea_Cottage.tscn" id="1_cottage"]
+[ext_resource type="PackedScene" uid="uid://dbfqaud4hkykm" path="res://src/Scenes/TestArea_Cottage.tscn" id="1_cottage"]
 
-[node name="GameBootstrap" type="Node2D"]
+[node name="GameBootstrap" type="Node2D" unique_id=1133115469]
+position = Vector2(0, -1)
 
-[node name="TestArea_Cottage" parent="." instance=ExtResource("1_cottage")]
+[node name="TestArea_Cottage" parent="." unique_id=652797037 instance=ExtResource("1_cottage")]

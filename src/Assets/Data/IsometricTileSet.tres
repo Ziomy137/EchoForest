@@ -1,57 +1,16 @@
-; IsometricTileSet.tres — TileSet resource for the isometric 64x32 grid.
-; Contains all S3-01 tile sprites as individual TileSetAtlasSource entries.
-;
-; Tile Shape: Isometric (2)
-; Tile Size: 64 x 32
-; Custom Data Layer 0: "walkable" (bool)
-; Physics Layer 0: collision mask for World (Layer 1)
-;
-[gd_resource type="TileSet" load_steps=23 format=3]
+[gd_resource type="TileSet" format=3 uid="uid://casdwwy7lo7q"]
 
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass.png" id="tile_grass"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_grass_var.png" id="tile_grass_var"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_dirt.png" id="tile_dirt"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_farm.png" id="tile_farm"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_stone.png" id="tile_stone"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_water.png" id="tile_water"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_wall_front.png" id="tile_wall_front"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_roof.png" id="tile_roof"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_fence_h.png" id="tile_fence_h"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_fence_v.png" id="tile_fence_v"]
-[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_shadow.png" id="tile_shadow"]
-
-[resource]
-tile_size = Vector2i(64, 32)
-tile_shape = 2
-tile_layout = 0
-tile_offset_axis = 0
-custom_data_layer_0/name = "walkable"
-custom_data_layer_0/type = 1
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 1
-
-; Source 0: Grass Ground (walkable)
-sources/0 = SubResource("src_grass")
-; Source 1: Grass Variation (walkable)
-sources/1 = SubResource("src_grass_var")
-; Source 2: Dirt Path (walkable)
-sources/2 = SubResource("src_dirt")
-; Source 3: Farmland (walkable)
-sources/3 = SubResource("src_farm")
-; Source 4: Stone Floor (walkable)
-sources/4 = SubResource("src_stone")
-; Source 5: Water (blocking)
-sources/5 = SubResource("src_water")
-; Source 6: Cottage Wall (blocking)
-sources/6 = SubResource("src_wall")
-; Source 7: Cottage Roof (blocking)
-sources/7 = SubResource("src_roof")
-; Source 8: Fence H (blocking)
-sources/8 = SubResource("src_fence_h")
-; Source 9: Fence V (blocking)
-sources/9 = SubResource("src_fence_v")
-; Source 10: Shadow (walkable)
-sources/10 = SubResource("src_shadow")
+[ext_resource type="Texture2D" uid="uid://6a510e6d6cdb" path="res://src/Assets/Sprites/Tiles/tile_dirt.png" id="tile_dirt"]
+[ext_resource type="Texture2D" uid="uid://c51b453f3835" path="res://src/Assets/Sprites/Tiles/tile_farm.png" id="tile_farm"]
+[ext_resource type="Texture2D" uid="uid://5d44015bb5a8" path="res://src/Assets/Sprites/Tiles/tile_fence_h.png" id="tile_fence_h"]
+[ext_resource type="Texture2D" uid="uid://bf5f70e0e8eb" path="res://src/Assets/Sprites/Tiles/tile_fence_v.png" id="tile_fence_v"]
+[ext_resource type="Texture2D" uid="uid://70dadfb2f157" path="res://src/Assets/Sprites/Tiles/tile_grass.png" id="tile_grass"]
+[ext_resource type="Texture2D" uid="uid://55a2c6bdeeb" path="res://src/Assets/Sprites/Tiles/tile_grass_var.png" id="tile_grass_var"]
+[ext_resource type="Texture2D" uid="uid://d7ea72abf8da" path="res://src/Assets/Sprites/Tiles/tile_roof.png" id="tile_roof"]
+[ext_resource type="Texture2D" uid="uid://baa140e8eb448" path="res://src/Assets/Sprites/Tiles/tile_shadow.png" id="tile_shadow"]
+[ext_resource type="Texture2D" uid="uid://b46a61ecd7a4" path="res://src/Assets/Sprites/Tiles/tile_stone.png" id="tile_stone"]
+[ext_resource type="Texture2D" uid="uid://558a6a8b27fa" path="res://src/Assets/Sprites/Tiles/tile_wall_front.png" id="tile_wall_front"]
+[ext_resource type="Texture2D" uid="uid://ea8458546c70" path="res://src/Assets/Sprites/Tiles/tile_water.png" id="tile_water"]
 
 [sub_resource type="TileSetAtlasSource" id="src_grass"]
 texture = ExtResource("tile_grass")
@@ -61,6 +20,12 @@ texture_region_size = Vector2i(64, 32)
 
 [sub_resource type="TileSetAtlasSource" id="src_grass_var"]
 texture = ExtResource("tile_grass_var")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_shadow"]
+texture = ExtResource("tile_shadow")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
@@ -87,34 +52,41 @@ texture_region_size = Vector2i(64, 32)
 texture = ExtResource("tile_water")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
-0:0/0/custom_data_0 = false
 
 [sub_resource type="TileSetAtlasSource" id="src_wall"]
 texture = ExtResource("tile_wall_front")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
-0:0/0/custom_data_0 = false
 
 [sub_resource type="TileSetAtlasSource" id="src_roof"]
 texture = ExtResource("tile_roof")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
-0:0/0/custom_data_0 = false
 
 [sub_resource type="TileSetAtlasSource" id="src_fence_h"]
 texture = ExtResource("tile_fence_h")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
-0:0/0/custom_data_0 = false
 
 [sub_resource type="TileSetAtlasSource" id="src_fence_v"]
 texture = ExtResource("tile_fence_v")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
-0:0/0/custom_data_0 = false
 
-[sub_resource type="TileSetAtlasSource" id="src_shadow"]
-texture = ExtResource("tile_shadow")
-texture_region_size = Vector2i(64, 32)
-0:0/0 = 0
-0:0/0/custom_data_0 = true
+[resource]
+tile_shape = 2
+tile_size = Vector2i(64, 32)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("src_grass")
+sources/1 = SubResource("src_grass_var")
+sources/2 = SubResource("src_dirt")
+sources/3 = SubResource("src_farm")
+sources/4 = SubResource("src_stone")
+sources/5 = SubResource("src_water")
+sources/6 = SubResource("src_wall")
+sources/7 = SubResource("src_roof")
+sources/8 = SubResource("src_fence_h")
+sources/9 = SubResource("src_fence_v")
+sources/10 = SubResource("src_shadow")
