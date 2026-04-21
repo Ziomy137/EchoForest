@@ -16,7 +16,7 @@ public sealed class GodotAnimatedSprite : IAnimatedSprite
     private readonly AnimatedSprite2D _sprite;
 
     public GodotAnimatedSprite(AnimatedSprite2D sprite) =>
-        _sprite = sprite;
+        _sprite = sprite ?? throw new System.ArgumentNullException(nameof(sprite));
 
     public string CurrentAnimation => _sprite.Animation;
 
