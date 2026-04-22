@@ -26,7 +26,7 @@ public partial class HudNode : CanvasLayer
 
     private Label _hintLabel = null!;
     private Label _debugLabel = null!;
-    private Node? _playerStateSource;
+    private PlayerControllerNode? _playerStateSource;
     private bool _hasSearchedForPlayerStateSource;
     private string? _lastPlayerStateName;
 
@@ -95,39 +95,27 @@ public partial class HudNode : CanvasLayer
         if (_playerStateSource is null && !_hasSearchedForPlayerStateSource)
         {
             var sceneRoot = GetTree().CurrentScene ?? GetTree().Root;
-            _playerStateSource = sceneRoot is null ? null : FindPlayerStateSource(sceneRoot);
+            _playerStateSource = sceneRoot is null ? null : FindPlayerControllerNode(sceneRoot);
             _hasSearchedForPlayerStateSource = true;
         }
 
         if (_playerStateSource is null) return;
 
-        var stateVariant = _playerStateSource.Get("CurrentState");
-        var stateName = stateVariant.ToString();
-        if (string.IsNullOrEmpty(stateName) || stateName == _lastPlayerStateName) return;
+        var stateName = _playerStateSource.CurrentState.ToString();
+        if (stateName == _lastPlayerStateName) return;
 
         _lastPlayerStateName = stateName;
         UpdatePlayerState(stateName);
     }
 
-    private static bool HasProperty(Node node, string propertyName)
+    private static PlayerControllerNode? FindPlayerControllerNode(Node root)
     {
-        foreach (Godot.Collections.Dictionary property in node.GetPropertyList())
-        {
-            if (property.TryGetValue("name", out var name) && name?.ToString() == propertyName)
-                return true;
-        }
-
-        return false;
-    }
-
-    private static Node? FindPlayerStateSource(Node root)
-    {
-        if (HasProperty(root, "CurrentState"))
-            return root;
+        if (root is PlayerControllerNode player)
+            return player;
 
         foreach (Node child in root.GetChildren())
         {
-            var match = FindPlayerStateSource(child);
+            var match = FindPlayerControllerNode(child);
             if (match is not null)
                 return match;
         }
