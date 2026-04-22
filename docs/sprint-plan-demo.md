@@ -1061,13 +1061,15 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Create `HUD.tscn` scene with `CanvasLayer` (always on top)
-- [ ] Elements for demo:
+- [x] Create `HUD.tscn` scene with `CanvasLayer` (always on top)
+- [x] Elements for demo:
   - **Top-left:** Static label "EchoForest — Demo Build" using `#cccccc` text
   - **Bottom-center:** Movement hint label "WASD / Arrows to move, Shift to run" (fades after 10 seconds)
   - **Top-right:** Current player state debug label (hidden in release, visible in debug mode)
-- [ ] Create `HudController.cs` to manage element visibility and text updates
-- [ ] Fade out tutorial hint with `Tween` after 10 seconds from scene start
+- [x] Create `HudController.cs` to manage element visibility and text updates
+- [x] Fade out tutorial hint with `Tween` after 10 seconds from scene start
+
+**Status: ✅ COMPLETED — 22 April 2026**
 
 **Acceptance Criteria:**
 
