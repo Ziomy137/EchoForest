@@ -70,10 +70,14 @@ public partial class HudNode : CanvasLayer
         if (!_controller.IsTutorialHintVisible) return;
 
         _controller.SimulateTimePassed((float)delta);
-        SyncLabels();
 
-        if (!_controller.IsTutorialHintVisible)
-            FadeOutHint();
+        if (_controller.IsTutorialHintVisible)
+        {
+            SyncLabels();
+            return;
+        }
+
+        FadeOutHint();
     }
 
     /// <summary>
@@ -158,6 +162,8 @@ public partial class HudNode : CanvasLayer
 
     private void FadeOutHint()
     {
+        _hintLabel.Visible = true;
+
         var tween = CreateTween();
         tween.TweenProperty(_hintLabel, "modulate:a", 0f, 1.0);
         tween.TweenCallback(Callable.From(() => _hintLabel.Visible = false));
