@@ -119,7 +119,7 @@ public static class CottageSceneConfig
     /// Pass this to <see cref="CameraController.SetBounds"/> to prevent the
     /// camera from panning into empty areas outside the tile grid.
     /// </summary>
-    public static readonly Rect2 CameraBounds = new Rect2(
+    public static Rect2 CameraBounds { get; } = new Rect2(
         WorldBoundaryLeft,
         WorldBoundaryTop,
         WorldBoundaryRight - WorldBoundaryLeft,
