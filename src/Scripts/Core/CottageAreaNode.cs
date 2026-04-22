@@ -130,10 +130,8 @@ public partial class CottageAreaNode : Node2D
 
 	private void SpawnPlayer()
 	{
-		var tileMap = GetNode<TileMapLayer>(CottageSceneConfig.TileMapLayerName);
-		var spawnWorld = tileMap.ToGlobal(tileMap.MapToLocal(
-			new Vector2I(CottageSceneConfig.SpawnTileCol, CottageSceneConfig.SpawnTileRow)));
-		GetNode<Node2D>("Player").GlobalPosition = spawnWorld;
+		var spawnPoint = GetNode<Marker2D>(CottageSceneConfig.PlayerSpawnName);
+		GetNode<Node2D>("Player").GlobalPosition = spawnPoint.GlobalPosition;
 	}
 
 	// ─── Camera setup ─────────────────────────────────────────────────────────

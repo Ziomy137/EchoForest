@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bsks1satgrr6j"]
 
-[ext_resource type="PackedScene" uid="uid://dbfqaud4hkykm" path="res://src/Scenes/TestArea_Cottage.tscn" id="1_cottage"]
+[ext_resource type="Script" path="res://src/Scripts/Core/GameBootstrapNode.cs" id="1_bootstrap"]
+[ext_resource type="Script" path="res://src/Scripts/Core/LoadingScreenNode.cs" id="2_loading"]
 
 [node name="GameBootstrap" type="Node2D" unique_id=1133115469]
-position = Vector2(0, -1)
+script = ExtResource("1_bootstrap")
 
-[node name="TestArea_Cottage" parent="." unique_id=652797037 instance=ExtResource("1_cottage")]
+[node name="LoadingScreen" type="CanvasLayer" parent="." unique_id=312475891]
+script = ExtResource("2_loading")

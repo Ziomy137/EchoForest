@@ -999,14 +999,16 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Create `SceneLoader.cs` implementing `ISceneLoader`:
+- [x] Create `SceneLoader.cs` implementing `ISceneLoader`:
   - `LoadScene(string scenePath) → void`
   - `LoadSceneAsync(string scenePath) → Task`
   - `GetCurrentScene() → Node`
-- [ ] Create `GameBootstrap.tscn` — root scene that launches on game start
-- [ ] `GameBootstrap` loads `TestArea_Cottage.tscn` directly for demo build
-- [ ] Display loading screen for async transitions (even if 1 frame for demo)
-- [ ] Ensure player node is spawned at `PlayerSpawnPoint` position during scene load
+- [x] Create `GameBootstrap.tscn` — root scene that launches on game start
+- [x] `GameBootstrap` loads `TestArea_Cottage.tscn` directly for demo build
+- [x] Display loading screen for async transitions (even if 1 frame for demo)
+- [x] Ensure player node is spawned at `PlayerSpawnPoint` position during scene load
+
+**Status: ✅ COMPLETED — 22 April 2026**
 
 **Acceptance Criteria:**
 
