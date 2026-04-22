@@ -37,30 +37,26 @@ public partial class HudNode : CanvasLayer
         _hintLabel = CreateHintLabel();
         _debugLabel = CreateDebugLabel();
 
-        // Position labels relative to the current viewport size, and reapply
-        // whenever the window is resized. Anchors are NOT used because
-        // CanvasLayer is not a Control; child Controls have no implicit parent
-        // size to resolve percentage anchors against.
-        ApplyLayout();
-        GetViewport().SizeChanged += ApplyLayout;
+        // Use anchors/offsets on the child Controls instead of manually
+        // recomputing layout from the viewport size on every resize.
+        // Hint — full-width strip 32 px tall, 16 px above the bottom edge
+        _hintLabel.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
+        _hintLabel.OffsetLeft = 0f;
+        _hintLabel.OffsetTop = -48f;
+        _hintLabel.OffsetRight = 0f;
+        _hintLabel.OffsetBottom = -16f;
+
+        // Debug — 200 px wide, 8 px from right and top
+        _debugLabel.SetAnchorsPreset(Control.LayoutPreset.TopRight);
+        _debugLabel.OffsetLeft = -208f;
+        _debugLabel.OffsetTop = 8f;
+        _debugLabel.OffsetRight = -8f;
+        _debugLabel.OffsetBottom = 40f;
 
         _controller.Initialize();
         _controller.SetDebugMode(OS.IsDebugBuild());
 
         SyncLabels();
-    }
-
-    private void ApplyLayout()
-    {
-        var vp = GetViewport().GetVisibleRect().Size;
-
-        // Hint — full-width strip 32 px tall, 16 px above the bottom edge
-        _hintLabel.Position = new Vector2(0f, vp.Y - 48f);
-        _hintLabel.Size = new Vector2(vp.X, 32f);
-
-        // Debug — 200 px wide, 8 px from right and top
-        _debugLabel.Position = new Vector2(vp.X - 208f, 8f);
-        _debugLabel.Size = new Vector2(200f, 32f);
     }
 
     public override void _Process(double delta)
