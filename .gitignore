@@ -30,6 +30,8 @@ coverage-report/
 coverage.xml
 *.coverage
 *.coveragexml
+coverage_output.txt
+*.cobertura.xml
 
 # ─── Build output ────────────────────────────────────────────────────────────
 /build/
