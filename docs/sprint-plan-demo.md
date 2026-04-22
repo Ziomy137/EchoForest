@@ -1155,8 +1155,8 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 **Tasks:**
 
 - [x] Write pure-C# integration-style tests that simulate input and verify demo system state without scene boot/loading
-  - 15 `[Test]` methods in `DemoIntegrationTest.cs` covering all 4 directions, run speed, state machine behavior, camera tracking, and system/default behaviors
-  - Current NUnit coverage for this area does not include scene boot/loading or `HudController.SimulateTimePassed` / `SetDebugMode`; keep aggregate suite totals and coverage metrics in the centralized test report
+  - 19 `[Test]` methods in `DemoIntegrationTest.cs` covering all 4 movement directions, run speed, state machine cycle, camera tracking/bounds/pixel-snap, HUD lifecycle (visible on startup, hint timeout, debug label toggle), system pre-init defaults, system post-init defaults, spawn point within bounds, camera bounds contain world boundaries, and camera boundary guard after long run
+  - Scene boot/loading is verified via the manual QA checklist and GUT tests (require the Godot engine scene tree)
 - [x] Manual QA checklist (verified manually):
   - [x] Game opens without errors on Windows, Linux, macOS
   - [x] Player spawns at correct location

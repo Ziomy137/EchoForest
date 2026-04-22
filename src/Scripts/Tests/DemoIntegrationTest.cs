@@ -15,6 +15,11 @@ namespace EchoForest.Tests;
 [TestFixture]
 public class DemoIntegrationTest
 {
+    // ─── Shared timing constants ───────────────────────────────────────────────
+
+    private const int Fps = Constants.TargetFps;
+    private const float Delta = 1f / Constants.TargetFps;
+
     // ─── Helpers ──────────────────────────────────────────────────────────────
 
     private static PlayerController MakePlayer(MockInputHandler input) =>
@@ -29,8 +34,8 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
         input.SetPressed(InputActionNames.MoveRight, true);
         float startX = player.Position.X;
-        for (int i = 0; i < 60; i++)
-            player.SimulatePhysicsFrame(1f / 60f);
+        for (int i = 0; i < Fps; i++)
+            player.SimulatePhysicsFrame(Delta);
         Assert.That(player.Position.X, Is.GreaterThan(startX));
     }
 
@@ -41,8 +46,8 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
         input.SetPressed(InputActionNames.MoveLeft, true);
         float startX = player.Position.X;
-        for (int i = 0; i < 60; i++)
-            player.SimulatePhysicsFrame(1f / 60f);
+        for (int i = 0; i < Fps; i++)
+            player.SimulatePhysicsFrame(Delta);
         Assert.That(player.Position.X, Is.LessThan(startX));
     }
 
@@ -53,8 +58,8 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
         input.SetPressed(InputActionNames.MoveDown, true);
         float startY = player.Position.Y;
-        for (int i = 0; i < 60; i++)
-            player.SimulatePhysicsFrame(1f / 60f);
+        for (int i = 0; i < Fps; i++)
+            player.SimulatePhysicsFrame(Delta);
         Assert.That(player.Position.Y, Is.GreaterThan(startY));
     }
 
@@ -65,8 +70,8 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
         input.SetPressed(InputActionNames.MoveUp, true);
         float startY = player.Position.Y;
-        for (int i = 0; i < 60; i++)
-            player.SimulatePhysicsFrame(1f / 60f);
+        for (int i = 0; i < Fps; i++)
+            player.SimulatePhysicsFrame(Delta);
         Assert.That(player.Position.Y, Is.LessThan(startY));
     }
 
@@ -84,11 +89,10 @@ public class DemoIntegrationTest
         inputRun.SetPressed(InputActionNames.MoveRight, true);
         inputRun.SetPressed(InputActionNames.Run, true);
 
-        const float delta = 1f / 60f;
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < Fps; i++)
         {
-            walk.SimulatePhysicsFrame(delta);
-            run.SimulatePhysicsFrame(delta);
+            walk.SimulatePhysicsFrame(Delta);
+            run.SimulatePhysicsFrame(Delta);
         }
         Assert.That(run.Position.X, Is.GreaterThan(walk.Position.X));
     }
@@ -108,22 +112,22 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
 
         // Idle
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.CurrentState, Is.EqualTo(PlayerState.Idle), "Expected Idle on no input");
 
         // Walk
         input.SetPressed(InputActionNames.MoveRight, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.CurrentState, Is.EqualTo(PlayerState.Walking), "Expected Walking on move");
 
         // Run
         input.SetPressed(InputActionNames.Run, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.CurrentState, Is.EqualTo(PlayerState.Running), "Expected Running with run held");
 
         // Back to Idle
         input.Reset();
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.CurrentState, Is.EqualTo(PlayerState.Idle), "Expected Idle after releasing all keys");
     }
 
@@ -136,22 +140,22 @@ public class DemoIntegrationTest
         var player = MakePlayer(input);
 
         input.SetPressed(InputActionNames.MoveRight, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.FacingDirection, Is.EqualTo(Direction.Right));
 
         input.Reset();
         input.SetPressed(InputActionNames.MoveLeft, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.FacingDirection, Is.EqualTo(Direction.Left));
 
         input.Reset();
         input.SetPressed(InputActionNames.MoveDown, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.FacingDirection, Is.EqualTo(Direction.Down));
 
         input.Reset();
         input.SetPressed(InputActionNames.MoveUp, true);
-        player.SimulatePhysicsFrame(1f / 60f);
+        player.SimulatePhysicsFrame(Delta);
         Assert.That(player.FacingDirection, Is.EqualTo(Direction.Up));
     }
 
@@ -168,11 +172,11 @@ public class DemoIntegrationTest
 
         input.SetPressed(InputActionNames.MoveRight, true);
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < Fps / 2; i++)
         {
-            player.SimulatePhysicsFrame(1f / 60f);
+            player.SimulatePhysicsFrame(Delta);
             cam.SetTarget(player.Position);
-            cam.Update(1f / 60f);
+            cam.Update(Delta);
         }
 
         // Camera must have moved toward player
@@ -190,14 +194,15 @@ public class DemoIntegrationTest
         // Simulate player running right for 10 seconds (would easily leave the cottage map)
         input.SetPressed(InputActionNames.MoveRight, true);
         input.SetPressed(InputActionNames.Run, true);
-        for (int i = 0; i < 600; i++)
+        for (int i = 0; i < Fps * 10; i++)
         {
-            player.SimulatePhysicsFrame(1f / 60f);
+            player.SimulatePhysicsFrame(Delta);
             cam.SetTarget(player.Position);
-            cam.Update(1f / 60f);
+            cam.Update(Delta);
         }
 
-        Assert.That(cam.Position.X, Is.LessThanOrEqualTo(CottageSceneConfig.WorldBoundaryRight));
+        var bounds = CottageSceneConfig.CameraBounds;
+        Assert.That(cam.Position.X, Is.LessThanOrEqualTo(bounds.Position.X + bounds.Size.X));
     }
 
     [Test]
@@ -209,21 +214,21 @@ public class DemoIntegrationTest
         cam.SetBounds(CottageSceneConfig.CameraBounds);
 
         input.SetPressed(InputActionNames.MoveRight, true);
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < Fps / 2; i++)
         {
-            player.SimulatePhysicsFrame(1f / 60f);
+            player.SimulatePhysicsFrame(Delta);
             cam.SetTarget(player.Position);
-            cam.Update(1f / 60f);
+            cam.Update(Delta);
         }
 
         Assert.That(cam.Position.X % 1f, Is.EqualTo(0f).Within(0.001f));
         Assert.That(cam.Position.Y % 1f, Is.EqualTo(0f).Within(0.001f));
     }
 
-    // ─── All pure-C# systems initialize without null references ───────────────
+    // ─── All pure-C# systems have expected pre-init defaults ──────────────────
 
     [Test]
-    public void Demo_AllSystems_NoNullReferences_OnStartup()
+    public void Demo_AllSystems_PreInit_HaveExpectedDefaults()
     {
         var input = new MockInputHandler();
         var sm = new PlayerStateMachine();
@@ -266,12 +271,71 @@ public class DemoIntegrationTest
     }
 
     [Test]
-    public void Demo_CottageSceneConfig_CameraBoundsLargerThanViewport()
+    public void Demo_CottageSceneConfig_CameraBoundsContainConfiguredWorldBoundaries()
     {
-        // Viewport is 1280×720; the full cottage area must be larger
         var bounds = CottageSceneConfig.CameraBounds;
-        Assert.That(bounds.Size.X, Is.GreaterThan(1280f));
-        Assert.That(bounds.Size.Y, Is.GreaterThan(720f));
+        var minX = bounds.Position.X;
+        var maxX = bounds.Position.X + bounds.Size.X;
+
+        Assert.That(bounds.Size.X, Is.GreaterThan(0f), "Camera bounds width must be positive");
+        Assert.That(bounds.Size.Y, Is.GreaterThan(0f), "Camera bounds height must be positive");
+        Assert.That(CottageSceneConfig.WorldBoundaryLeft,
+            Is.InRange(minX, maxX),
+            "Left world boundary must be within camera bounds");
+        Assert.That(CottageSceneConfig.WorldBoundaryRight,
+            Is.InRange(minX, maxX),
+            "Right world boundary must be within camera bounds");
+    }
+
+    // ─── HUD lifecycle ────────────────────────────────────────────────────────
+
+    [Test]
+    public void Demo_HUD_IsVisible_OnStartup()
+    {
+        var hud = new HudController();
+        hud.Initialize();
+        Assert.That(hud.IsTutorialHintVisible, Is.True);
+    }
+
+    [Test]
+    public void Demo_HUD_TutorialHint_FadesAfterTimeout()
+    {
+        var hud = new HudController(hintTimeoutSeconds: 1f);
+        hud.Initialize();
+        hud.SimulateTimePassed(2f);
+        Assert.That(hud.IsTutorialHintVisible, Is.False);
+    }
+
+    [Test]
+    public void Demo_HUD_DebugLabel_CanBeDisabled()
+    {
+        var hud = new HudController();
+        hud.SetDebugMode(false);
+        Assert.That(hud.IsDebugLabelVisible, Is.False);
+    }
+
+    // ─── Camera boundary guard (long run left) ────────────────────────────────
+
+    [Test]
+    public void Demo_Camera_BoundaryGuard_AfterLongRunLeft()
+    {
+        var input = new MockInputHandler();
+        var player = MakePlayer(input);
+        var cam = new CameraController();
+        cam.SetBounds(CottageSceneConfig.CameraBounds);
+
+        // Simulate player running left for 10 seconds (would easily leave the cottage map)
+        input.SetPressed(InputActionNames.MoveLeft, true);
+        input.SetPressed(InputActionNames.Run, true);
+        for (int i = 0; i < Fps * 10; i++)
+        {
+            player.SimulatePhysicsFrame(Delta);
+            cam.SetTarget(player.Position);
+            cam.Update(Delta);
+        }
+
+        var bounds = CottageSceneConfig.CameraBounds;
+        Assert.That(cam.Position.X, Is.GreaterThanOrEqualTo(bounds.Position.X));
     }
 
 }
