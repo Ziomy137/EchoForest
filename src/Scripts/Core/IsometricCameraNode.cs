@@ -89,6 +89,12 @@ public partial class IsometricCameraNode : Camera2D
     }
 
     /// <summary>
+    /// Restricts the camera to <paramref name="bounds"/> in world space,
+    /// preventing it from panning into empty areas beyond the tile grid.
+    /// </summary>
+    public void SetBounds(Rect2 bounds) => _controller.SetBounds(bounds);
+
+    /// <summary>
     /// Immediately snaps the camera to <see cref="FollowTarget"/>'s position,
     /// bypassing the lerp. Call this after repositioning the follow target at
     /// scene load time to avoid an initial catch-up pan.

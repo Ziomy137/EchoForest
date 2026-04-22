@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 namespace EchoForest.Core;
 
@@ -112,6 +113,17 @@ public static class CottageSceneConfig
 
     /// <summary>Bottom edge of the playable boundary in world-space pixels.</summary>
     public const float WorldBoundaryBottom = 800f;
+
+    /// <summary>
+    /// Camera position bounds derived from the world boundary constants.
+    /// Pass this to <see cref="CameraController.SetBounds"/> to prevent the
+    /// camera from panning into empty areas outside the tile grid.
+    /// </summary>
+    public static Rect2 CameraBounds { get; } = new Rect2(
+        WorldBoundaryLeft,
+        WorldBoundaryTop,
+        WorldBoundaryRight - WorldBoundaryLeft,
+        WorldBoundaryBottom - WorldBoundaryTop);
 
     // ─── TileZone ─────────────────────────────────────────────────────────────
 

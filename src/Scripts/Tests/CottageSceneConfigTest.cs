@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 using NUnit.Framework;
 using EchoForest.Core;
 
@@ -316,6 +317,33 @@ public class CottageSceneConfigConstantsTest
         float gridBottomY = CottageSceneConfig.TileToWorldY(29, 19);
         Assert.That(CottageSceneConfig.WorldBoundaryBottom, Is.GreaterThan(gridBottomY));
     }
+
+    // ─── CameraBounds ─────────────────────────────────────────────────────────
+
+    [Test]
+    public void CameraBounds_OriginX_EqualsWorldBoundaryLeft() =>
+        Assert.That(CottageSceneConfig.CameraBounds.Position.X,
+            Is.EqualTo(CottageSceneConfig.WorldBoundaryLeft));
+
+    [Test]
+    public void CameraBounds_OriginY_EqualsWorldBoundaryTop() =>
+        Assert.That(CottageSceneConfig.CameraBounds.Position.Y,
+            Is.EqualTo(CottageSceneConfig.WorldBoundaryTop));
+
+    [Test]
+    public void CameraBounds_Width_EqualsRightMinusLeft() =>
+        Assert.That(CottageSceneConfig.CameraBounds.Size.X,
+            Is.EqualTo(CottageSceneConfig.WorldBoundaryRight - CottageSceneConfig.WorldBoundaryLeft));
+
+    [Test]
+    public void CameraBounds_Height_EqualsBottomMinusTop() =>
+        Assert.That(CottageSceneConfig.CameraBounds.Size.Y,
+            Is.EqualTo(CottageSceneConfig.WorldBoundaryBottom - CottageSceneConfig.WorldBoundaryTop));
+
+    [Test]
+    public void CameraBounds_IsPositiveDimensions() =>
+        Assert.That(CottageSceneConfig.CameraBounds.Size.X > 0
+            && CottageSceneConfig.CameraBounds.Size.Y > 0, Is.True);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
