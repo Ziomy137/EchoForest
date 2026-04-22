@@ -143,7 +143,7 @@ public partial class HudNode : CanvasLayer
         label.Text = "WASD / Arrows to move, Shift to run";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
         label.HorizontalAlignment = HorizontalAlignment.Center;
-        // Position and Size are set by ApplyLayout() after creation
+        // Layout is configured later in _Ready via anchors/offsets.
         AddChild(label);
         return label;
     }
@@ -154,7 +154,7 @@ public partial class HudNode : CanvasLayer
         label.Text = "State: Idle";
         label.AddThemeColorOverride("font_color", Palette.Gold);
         label.HorizontalAlignment = HorizontalAlignment.Right;
-        // Position and Size are set by ApplyLayout() after creation
+        // Layout is configured later in _Ready via anchors/offsets.
         AddChild(label);
         return label;
     }
