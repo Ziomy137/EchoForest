@@ -32,8 +32,6 @@ public partial class HudNode : CanvasLayer
 
     public override void _Ready()
     {
-        Layer = 10; // always on top of game world
-
         CreateTitleLabel();
         _hintLabel = CreateHintLabel();
         _debugLabel = CreateDebugLabel();
