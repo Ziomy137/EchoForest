@@ -31,26 +31,34 @@ public partial class HudNode : CanvasLayer
     {
         Layer = 10; // always on top of game world
 
-        // Full-viewport Control — all labels anchor relative to this so that
-        // percentage-based anchors (e.g. bottom = 1.0) resolve to the actual
-        // viewport size rather than being treated as raw pixel offsets.
-        // CanvasLayer is not a Control, so its child Control has no implicit
-        // parent size — we must set it explicitly and update on window resize.
-        var root = new Control();
-        root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        root.MouseFilter = Control.MouseFilterEnum.Ignore;
-        AddChild(root);
-        root.Size = GetViewport().GetVisibleRect().Size;
-        GetViewport().SizeChanged += () => root.Size = GetViewport().GetVisibleRect().Size;
+        CreateTitleLabel();
+        _hintLabel = CreateHintLabel();
+        _debugLabel = CreateDebugLabel();
 
-        CreateTitleLabel(root);
-        _hintLabel = CreateHintLabel(root);
-        _debugLabel = CreateDebugLabel(root);
+        // Position labels relative to the current viewport size, and reapply
+        // whenever the window is resized. Anchors are NOT used because
+        // CanvasLayer is not a Control; child Controls have no implicit parent
+        // size to resolve percentage anchors against.
+        ApplyLayout();
+        GetViewport().SizeChanged += ApplyLayout;
 
         _controller.Initialize();
         _controller.SetDebugMode(OS.IsDebugBuild());
 
         SyncLabels();
+    }
+
+    private void ApplyLayout()
+    {
+        var vp = GetViewport().GetVisibleRect().Size;
+
+        // Hint — full-width strip 32 px tall, 16 px above the bottom edge
+        _hintLabel.Position = new Vector2(0f, vp.Y - 48f);
+        _hintLabel.Size = new Vector2(vp.X, 32f);
+
+        // Debug — 200 px wide, 8 px from right and top
+        _debugLabel.Position = new Vector2(vp.X - 208f, 8f);
+        _debugLabel.Size = new Vector2(200f, 32f);
     }
 
     public override void _Process(double delta)
@@ -75,46 +83,36 @@ public partial class HudNode : CanvasLayer
 
     // ── UI construction ───────────────────────────────────────────────────────
 
-    private void CreateTitleLabel(Control root)
+    private void CreateTitleLabel()
     {
         var label = new Label();
         label.Text = "EchoForest \u2014 Demo Build";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
-        // Top-left: all four sides anchored to top-left corner with small margins
-        label.SetAnchorAndOffset(Side.Left, 0f, 8f);
-        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
-        label.SetAnchorAndOffset(Side.Right, 0f, 300f);
-        label.SetAnchorAndOffset(Side.Bottom, 0f, 40f);
-        root.AddChild(label);
+        // Top-left: fixed position, no anchor required
+        label.Position = new Vector2(8f, 8f);
+        label.Size = new Vector2(300f, 32f);
+        AddChild(label);
     }
 
-    private Label CreateHintLabel(Control root)
+    private Label CreateHintLabel()
     {
         var label = new Label();
         label.Text = "WASD / Arrows to move, Shift to run";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
         label.HorizontalAlignment = HorizontalAlignment.Center;
-        // Bottom-center: stretch full width, sit 48→16 px above the bottom edge
-        label.SetAnchorAndOffset(Side.Left, 0f, 0f);
-        label.SetAnchorAndOffset(Side.Right, 1f, 0f);
-        label.SetAnchorAndOffset(Side.Top, 1f, -48f);
-        label.SetAnchorAndOffset(Side.Bottom, 1f, -16f);
-        root.AddChild(label);
+        // Position and Size are set by ApplyLayout() after creation
+        AddChild(label);
         return label;
     }
 
-    private Label CreateDebugLabel(Control root)
+    private Label CreateDebugLabel()
     {
         var label = new Label();
         label.Text = "State: Idle";
         label.AddThemeColorOverride("font_color", Palette.Gold);
         label.HorizontalAlignment = HorizontalAlignment.Right;
-        // Top-right: 200 px wide, anchored to the right edge with 8 px margin
-        label.SetAnchorAndOffset(Side.Left, 1f, -208f);
-        label.SetAnchorAndOffset(Side.Right, 1f, -8f);
-        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
-        label.SetAnchorAndOffset(Side.Bottom, 0f, 40f);
-        root.AddChild(label);
+        // Position and Size are set by ApplyLayout() after creation
+        AddChild(label);
         return label;
     }
 
