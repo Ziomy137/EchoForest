@@ -26,6 +26,8 @@ public partial class HudNode : CanvasLayer
 
     private Label _hintLabel = null!;
     private Label _debugLabel = null!;
+    private Node? _playerStateSource;
+    private string? _lastPlayerStateName;
 
     public override void _Ready()
     {
@@ -63,6 +65,8 @@ public partial class HudNode : CanvasLayer
 
     public override void _Process(double delta)
     {
+        TrySyncPlayerStateFromScene();
+
         if (!_controller.IsTutorialHintVisible) return;
 
         _controller.SimulateTimePassed((float)delta);
@@ -79,6 +83,34 @@ public partial class HudNode : CanvasLayer
     {
         _controller.UpdatePlayerState(stateName);
         _debugLabel.Text = $"State: {_controller.PlayerStateText}";
+    }
+
+    private void TrySyncPlayerStateFromScene()
+    {
+        _playerStateSource ??= FindPlayerStateSource(this);
+        if (_playerStateSource is null || !GodotObject.IsInstanceValid(_playerStateSource)) return;
+
+        var stateVariant = _playerStateSource.Get("CurrentState");
+        var stateName = stateVariant.ToString();
+        if (string.IsNullOrEmpty(stateName) || stateName == _lastPlayerStateName) return;
+
+        _lastPlayerStateName = stateName;
+        UpdatePlayerState(stateName);
+    }
+
+    private static Node? FindPlayerStateSource(Node root)
+    {
+        if (root.HasMethod("get_CurrentState"))
+            return root;
+
+        foreach (Node child in root.GetChildren())
+        {
+            var match = FindPlayerStateSource(child);
+            if (match is not null)
+                return match;
+        }
+
+        return null;
     }
 
     // ── UI construction ───────────────────────────────────────────────────────
