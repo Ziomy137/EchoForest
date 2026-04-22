@@ -37,7 +37,7 @@ public class StateMachineTest
     {
         string order = "";
         var sm = new StateMachine<PlayerState>(PlayerState.Idle);
-        sm.OnStateExit(PlayerState.Idle,    () => order += "exit");
+        sm.OnStateExit(PlayerState.Idle, () => order += "exit");
         sm.OnStateEnter(PlayerState.Walking, () => order += "enter");
         sm.TransitionTo(PlayerState.Walking);
         Assert.That(order, Is.EqualTo("exitenter"));
@@ -57,7 +57,7 @@ public class StateMachineTest
     public void IsValidTransition_UnrestrictedMachine_AlwaysReturnsTrue()
     {
         var sm = new StateMachine<PlayerState>(PlayerState.Idle);
-        Assert.That(sm.IsValidTransition(PlayerState.Idle,    PlayerState.Combat),  Is.True);
+        Assert.That(sm.IsValidTransition(PlayerState.Idle, PlayerState.Combat), Is.True);
         Assert.That(sm.IsValidTransition(PlayerState.Jumping, PlayerState.Running), Is.True);
     }
 
@@ -161,9 +161,9 @@ public class StateMachineTest
     public void IsValidTransition_ReturnsTrue_ForAllowedPairs()
     {
         var sm = new PlayerStateMachine();
-        Assert.That(sm.IsValidTransition(PlayerState.Idle,    PlayerState.Walking), Is.True);
+        Assert.That(sm.IsValidTransition(PlayerState.Idle, PlayerState.Walking), Is.True);
         Assert.That(sm.IsValidTransition(PlayerState.Walking, PlayerState.Running), Is.True);
-        Assert.That(sm.IsValidTransition(PlayerState.Jumping, PlayerState.Idle),    Is.True);
+        Assert.That(sm.IsValidTransition(PlayerState.Jumping, PlayerState.Idle), Is.True);
     }
 
     [Test]
@@ -171,8 +171,8 @@ public class StateMachineTest
     {
         var sm = new PlayerStateMachine();
         Assert.That(sm.IsValidTransition(PlayerState.Jumping, PlayerState.Running), Is.False);
-        Assert.That(sm.IsValidTransition(PlayerState.Running, PlayerState.Combat),  Is.False);
-        Assert.That(sm.IsValidTransition(PlayerState.Combat,  PlayerState.Walking), Is.False);
+        Assert.That(sm.IsValidTransition(PlayerState.Running, PlayerState.Combat), Is.False);
+        Assert.That(sm.IsValidTransition(PlayerState.Combat, PlayerState.Walking), Is.False);
     }
 
     [Test]
@@ -181,5 +181,41 @@ public class StateMachineTest
         var sm = new PlayerStateMachine(PlayerState.Jumping);
         try { sm.TransitionTo(PlayerState.Running); } catch (InvalidOperationException) { }
         Assert.That(sm.CurrentState, Is.EqualTo(PlayerState.Jumping));
+    }
+
+    // ── Self-transition behaviour ──────────────────────────────────────────────
+
+    [Test]
+    public void SelfTransition_UnrestrictedMachine_Succeeds()
+    {
+        // The unrestricted base class has null _allowedTransitions, so all
+        // transitions — including self-transitions — are considered valid.
+        var sm = new StateMachine<PlayerState>(PlayerState.Idle);
+        Assert.That(() => sm.TransitionTo(PlayerState.Idle), Throws.Nothing);
+        Assert.That(sm.CurrentState, Is.EqualTo(PlayerState.Idle));
+    }
+
+    [Test]
+    public void SelfTransition_UnrestrictedMachine_TriggersExitAndEnterCallbacks()
+    {
+        string order = "";
+        var sm = new StateMachine<PlayerState>(PlayerState.Idle);
+        sm.OnStateExit(PlayerState.Idle, () => order += "exit");
+        sm.OnStateEnter(PlayerState.Idle, () => order += "enter");
+
+        sm.TransitionTo(PlayerState.Idle);
+
+        Assert.That(order, Is.EqualTo("exitenter"));
+    }
+
+    [Test]
+    public void SelfTransition_PlayerStateMachine_ThrowsInvalidOperationException()
+    {
+        // PlayerStateMachine defines an explicit allowed-transition set.
+        // Self-transitions (e.g. Idle→Idle) are intentionally absent from that
+        // set and must therefore be rejected.
+        var sm = new PlayerStateMachine(PlayerState.Idle);
+        Assert.That(() => sm.TransitionTo(PlayerState.Idle),
+            Throws.TypeOf<InvalidOperationException>());
     }
 }

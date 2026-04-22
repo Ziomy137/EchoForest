@@ -20,14 +20,26 @@ public class StateMachine<TState> : IStateMachine<TState> where TState : struct,
     public StateMachine(TState initialState)
     {
         CurrentState = initialState;
-        _allowedTransitions = BuildTransitions();
     }
 
     /// <summary>
-    /// Override to return the set of allowed (from, to) transition pairs.
-    /// Return <c>null</c> to allow all transitions (default).
+    /// Called once after construction (by <see cref="Initialize"/>) to populate
+    /// the allowed-transition set.  Override to return the set of allowed
+    /// (from, to) pairs.  Return <c>null</c> to allow all transitions (default).
     /// </summary>
     protected virtual HashSet<(TState, TState)>? BuildTransitions() => null;
+
+    /// <summary>
+    /// Must be called at the end of every subclass constructor to load the
+    /// transition table produced by <see cref="BuildTransitions"/>.  Calling
+    /// <see cref="BuildTransitions"/> from here (rather than from the base-class
+    /// constructor) avoids the C# virtual-member-call-in-constructor anti-pattern
+    /// (CA2214): the subclass fields are fully initialised before this runs.
+    /// </summary>
+    protected void Initialize()
+    {
+        _allowedTransitions = BuildTransitions();
+    }
 
     public void TransitionTo(TState newState)
     {

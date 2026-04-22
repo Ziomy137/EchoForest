@@ -17,7 +17,10 @@ namespace EchoForest.Core;
 public sealed class PlayerStateMachine : StateMachine<PlayerState>
 {
     public PlayerStateMachine(PlayerState initialState = PlayerState.Idle)
-        : base(initialState) { }
+        : base(initialState)
+    {
+        Initialize();
+    }
 
     protected override HashSet<(PlayerState, PlayerState)>? BuildTransitions() =>
         new()

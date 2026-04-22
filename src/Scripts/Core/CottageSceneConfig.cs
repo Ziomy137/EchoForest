@@ -77,6 +77,7 @@ public static class CottageSceneConfig
     public const string TileRoof = "tile_roof.png";
     public const string TileFenceH = "tile_fence_h.png";
     public const string TileFenceV = "tile_fence_v.png";
+    public const string TileShadow = "tile_shadow.png";
 
     // ─── TileSet source IDs ───────────────────────────────────────────────────
     // Must match IsometricTileSet.tres source numbering (sources/0 … sources/10).
@@ -220,6 +221,7 @@ public static class CottageSceneConfig
         TileRoof => SourceIdRoof,
         TileFenceH => SourceIdFenceH,
         TileFenceV => SourceIdFenceV,
+        TileShadow => SourceIdShadow,
         _ => throw new ArgumentException($"Unknown tile file name: '{tileFileName}'", nameof(tileFileName)),
     };
 

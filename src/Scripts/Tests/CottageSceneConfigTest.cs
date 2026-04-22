@@ -229,6 +229,10 @@ public class CottageSceneConfigConstantsTest
     public void TileFenceV_MatchesTileRegistry() =>
         Assert.That(CottageSceneConfig.TileFenceV, Is.EqualTo(TileRegistry.FenceVertical.FileName));
 
+    [Test]
+    public void TileShadow_MatchesTileRegistry() =>
+        Assert.That(CottageSceneConfig.TileShadow, Is.EqualTo(TileRegistry.Shadow.FileName));
+
     // ─── Source IDs ───────────────────────────────────────────────────────────
 
     [Test]
@@ -710,6 +714,11 @@ public class CottageSceneGetSourceIdTest
     public void GetSourceId_FenceV_Returns9() =>
         Assert.That(CottageSceneConfig.GetSourceId(CottageSceneConfig.TileFenceV),
             Is.EqualTo(CottageSceneConfig.SourceIdFenceV));
+
+    [Test]
+    public void GetSourceId_Shadow_Returns10() =>
+        Assert.That(CottageSceneConfig.GetSourceId(CottageSceneConfig.TileShadow),
+            Is.EqualTo(CottageSceneConfig.SourceIdShadow));
 
     [Test]
     public void GetSourceId_UnknownTile_ThrowsArgumentException() =>
