@@ -1261,14 +1261,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status      |
-| --------- | ------------ | ------------------------------------ | -------------- | ----------- |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | Not Started |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | Not Started |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | Not Started |
-| **Total** | **10 weeks** |                                      | **106 points** |             |
+| Sprint    | Duration     | Focus                                | Story Points   | Status             |
+| --------- | ------------ | ------------------------------------ | -------------- | ------------------ |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete        |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete        |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete        |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete        |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅) |
+| **Total** | **10 weeks** |                                      | **106 points** |                    |
 
 ---
 
