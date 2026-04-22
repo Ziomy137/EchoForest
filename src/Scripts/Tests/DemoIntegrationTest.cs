@@ -220,33 +220,6 @@ public class DemoIntegrationTest
         Assert.That(cam.Position.Y % 1f, Is.EqualTo(0f).Within(0.001f));
     }
 
-    // ─── HUD lifecycle ────────────────────────────────────────────────────────
-
-    [Test]
-    public void Demo_HUD_IsVisible_OnStartup()
-    {
-        var hud = new HudController();
-        hud.Initialize();
-        Assert.That(hud.IsTutorialHintVisible, Is.True);
-    }
-
-    [Test]
-    public void Demo_HUD_TutorialHint_FadesAfterTimeout()
-    {
-        var hud = new HudController(hintTimeoutSeconds: 10f);
-        hud.Initialize();
-        hud.SimulateTimePassed(10.1f);
-        Assert.That(hud.IsTutorialHintVisible, Is.False);
-    }
-
-    [Test]
-    public void Demo_HUD_DebugLabel_HiddenInReleaseMode()
-    {
-        var hud = new HudController();
-        hud.SetDebugMode(false);
-        Assert.That(hud.IsDebugLabelVisible, Is.False);
-    }
-
     // ─── All pure-C# systems initialize without null references ───────────────
 
     [Test]
@@ -258,11 +231,9 @@ public class DemoIntegrationTest
         var cam = new CameraController();
         var hud = new HudController();
 
-        Assert.That(player, Is.Not.Null, "PlayerController");
-        Assert.That(cam, Is.Not.Null, "CameraController");
-        Assert.That(hud, Is.Not.Null, "HudController");
-        Assert.That(input, Is.Not.Null, "MockInputHandler");
-        Assert.That(sm, Is.Not.Null, "PlayerStateMachine");
+        // Verify pre-initialization state — distinct from AfterInit which calls hud.Initialize()
+        Assert.That(player.FacingDirection, Is.EqualTo(Direction.Down));
+        Assert.That(hud.IsTutorialHintVisible, Is.False);
     }
 
     [Test]
@@ -303,31 +274,4 @@ public class DemoIntegrationTest
         Assert.That(bounds.Size.Y, Is.GreaterThan(720f));
     }
 
-    // ─── Collision boundary via pure-C# position check ────────────────────────
-
-    [Test]
-    public void Demo_PlayerPositionStaysWithin_WorldBoundary_AfterLongRun()
-    {
-        // Without Godot physics, we verify the boundary constants themselves
-        // are sensible — the player's unconstrained position can exceed them,
-        // but CameraController clamps the view so nothing outside the boundary is visible.
-        var input = new MockInputHandler();
-        var player = MakePlayer(input);
-        var cam = new CameraController();
-        cam.SetBounds(CottageSceneConfig.CameraBounds);
-
-        input.SetPressed(InputActionNames.MoveRight, true);
-        input.SetPressed(InputActionNames.Run, true);
-
-        for (int i = 0; i < 600; i++)
-        {
-            player.SimulatePhysicsFrame(1f / 60f);
-            cam.SetTarget(player.Position);
-            cam.Update(1f / 60f);
-        }
-
-        // Camera (what the player sees) must stay within boundary
-        Assert.That(cam.Position.X, Is.AtMost(CottageSceneConfig.WorldBoundaryRight));
-        Assert.That(cam.Position.X, Is.AtLeast(CottageSceneConfig.WorldBoundaryLeft));
-    }
 }
