@@ -85,4 +85,31 @@ public class CameraIntegrationTest
         Assert.That(cam.Position.X % 1f, Is.EqualTo(0f).Within(0.001f));
         Assert.That(cam.Position.Y % 1f, Is.EqualTo(0f).Within(0.001f));
     }
+
+    // ─── Cottage bounds dimensions ────────────────────────────────────────────
+
+    [Test]
+    public void CottageBounds_Width_MatchesHorizontalWorldBoundarySpan()
+    {
+        float expectedWidth = CottageSceneConfig.WorldBoundaryRight - CottageSceneConfig.WorldBoundaryLeft;
+        Assert.That(CottageSceneConfig.CameraBounds.Size.X, Is.EqualTo(expectedWidth));
+    }
+
+    [Test]
+    public void CottageBounds_Height_MatchesVerticalWorldBoundarySpan()
+    {
+        float expectedHeight = CottageSceneConfig.WorldBoundaryBottom - CottageSceneConfig.WorldBoundaryTop;
+        Assert.That(CottageSceneConfig.CameraBounds.Size.Y, Is.EqualTo(expectedHeight));
+    }
+
+    [Test]
+    public void Camera_AtExactBoundaryEdge_PositionIsNotClamped()
+    {
+        var cam = new CameraController();
+        cam.SetBounds(CottageSceneConfig.CameraBounds);
+        var edgePosition = new Vector2(CottageSceneConfig.WorldBoundaryLeft, CottageSceneConfig.WorldBoundaryTop);
+        cam.ForcePosition(edgePosition);
+        Assert.That(cam.Position.X, Is.EqualTo(CottageSceneConfig.WorldBoundaryLeft));
+        Assert.That(cam.Position.Y, Is.EqualTo(CottageSceneConfig.WorldBoundaryTop));
+    }
 }
