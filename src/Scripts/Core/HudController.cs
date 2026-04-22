@@ -79,7 +79,7 @@ public sealed class HudController
     // ── Player state text ─────────────────────────────────────────────────────
 
     /// <summary>Updates the text shown in the debug player-state label.</summary>
-    public void UpdatePlayerState(string stateName)
+    public void UpdatePlayerState(string? stateName)
     {
         PlayerStateText = stateName ?? string.Empty;
     }
