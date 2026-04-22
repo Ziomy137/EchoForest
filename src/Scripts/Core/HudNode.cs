@@ -176,12 +176,22 @@ public partial class HudNode : CanvasLayer
 
     private void SyncLabels()
     {
+        if (_controller.IsTutorialHintVisible)
+        {
+            var modulate = _hintLabel.Modulate;
+            modulate.A = 1f;
+            _hintLabel.Modulate = modulate;
+        }
+
         _hintLabel.Visible = _controller.IsTutorialHintVisible;
         _debugLabel.Visible = _controller.IsDebugLabelVisible;
     }
 
     private void FadeOutHint()
     {
+        var modulate = _hintLabel.Modulate;
+        modulate.A = 1f;
+        _hintLabel.Modulate = modulate;
         _hintLabel.Visible = true;
 
         var tween = CreateTween();
