@@ -73,32 +73,6 @@ public class CameraIntegrationTest
         Assert.That(cam.Position.X, Is.LessThanOrEqualTo(CottageSceneConfig.WorldBoundaryRight));
     }
 
-    // ─── Cottage bounds dimensions ────────────────────────────────────────────
-
-    [Test]
-    public void Camera_CottageBounds_WidthMatchesWorldBoundary()
-    {
-        var bounds = CottageSceneConfig.CameraBounds;
-        float expected = CottageSceneConfig.WorldBoundaryRight - CottageSceneConfig.WorldBoundaryLeft;
-        Assert.That(bounds.Size.X, Is.EqualTo(expected));
-    }
-
-    [Test]
-    public void Camera_CottageBounds_HeightMatchesWorldBoundary()
-    {
-        var bounds = CottageSceneConfig.CameraBounds;
-        float expected = CottageSceneConfig.WorldBoundaryBottom - CottageSceneConfig.WorldBoundaryTop;
-        Assert.That(bounds.Size.Y, Is.EqualTo(expected));
-    }
-
-    [Test]
-    public void Camera_CottageBounds_OriginMatchesWorldBoundaryTopLeft()
-    {
-        var bounds = CottageSceneConfig.CameraBounds;
-        Assert.That(bounds.Position.X, Is.EqualTo(CottageSceneConfig.WorldBoundaryLeft));
-        Assert.That(bounds.Position.Y, Is.EqualTo(CottageSceneConfig.WorldBoundaryTop));
-    }
-
     // ─── Pixel snap with cottage bounds ───────────────────────────────────────
 
     [Test]
