@@ -34,10 +34,14 @@ public partial class HudNode : CanvasLayer
         // Full-viewport Control — all labels anchor relative to this so that
         // percentage-based anchors (e.g. bottom = 1.0) resolve to the actual
         // viewport size rather than being treated as raw pixel offsets.
+        // CanvasLayer is not a Control, so its child Control has no implicit
+        // parent size — we must set it explicitly and update on window resize.
         var root = new Control();
         root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         root.MouseFilter = Control.MouseFilterEnum.Ignore;
         AddChild(root);
+        root.Size = GetViewport().GetVisibleRect().Size;
+        GetViewport().SizeChanged += () => root.Size = GetViewport().GetVisibleRect().Size;
 
         CreateTitleLabel(root);
         _hintLabel = CreateHintLabel(root);
@@ -77,10 +81,10 @@ public partial class HudNode : CanvasLayer
         label.Text = "EchoForest \u2014 Demo Build";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
         // Top-left: all four sides anchored to top-left corner with small margins
-        label.SetAnchorAndOffset(Side.Left,   0f,  8f);
-        label.SetAnchorAndOffset(Side.Top,    0f,  8f);
-        label.SetAnchorAndOffset(Side.Right,  0f,  300f);
-        label.SetAnchorAndOffset(Side.Bottom, 0f,  40f);
+        label.SetAnchorAndOffset(Side.Left, 0f, 8f);
+        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
+        label.SetAnchorAndOffset(Side.Right, 0f, 300f);
+        label.SetAnchorAndOffset(Side.Bottom, 0f, 40f);
         root.AddChild(label);
     }
 
@@ -91,9 +95,9 @@ public partial class HudNode : CanvasLayer
         label.AddThemeColorOverride("font_color", Palette.LightGray);
         label.HorizontalAlignment = HorizontalAlignment.Center;
         // Bottom-center: stretch full width, sit 48→16 px above the bottom edge
-        label.SetAnchorAndOffset(Side.Left,   0f,  0f);
-        label.SetAnchorAndOffset(Side.Right,  1f,  0f);
-        label.SetAnchorAndOffset(Side.Top,    1f, -48f);
+        label.SetAnchorAndOffset(Side.Left, 0f, 0f);
+        label.SetAnchorAndOffset(Side.Right, 1f, 0f);
+        label.SetAnchorAndOffset(Side.Top, 1f, -48f);
         label.SetAnchorAndOffset(Side.Bottom, 1f, -16f);
         root.AddChild(label);
         return label;
@@ -106,10 +110,10 @@ public partial class HudNode : CanvasLayer
         label.AddThemeColorOverride("font_color", Palette.Gold);
         label.HorizontalAlignment = HorizontalAlignment.Right;
         // Top-right: 200 px wide, anchored to the right edge with 8 px margin
-        label.SetAnchorAndOffset(Side.Left,   1f, -208f);
-        label.SetAnchorAndOffset(Side.Right,  1f,  -8f);
-        label.SetAnchorAndOffset(Side.Top,    0f,   8f);
-        label.SetAnchorAndOffset(Side.Bottom, 0f,  40f);
+        label.SetAnchorAndOffset(Side.Left, 1f, -208f);
+        label.SetAnchorAndOffset(Side.Right, 1f, -8f);
+        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
+        label.SetAnchorAndOffset(Side.Bottom, 0f, 40f);
         root.AddChild(label);
         return label;
     }
