@@ -141,6 +141,8 @@ public partial class CottageAreaNode : Node2D
 		var camera = GetNode<IsometricCameraNode>(CottageSceneConfig.CameraNodeName);
 		var player = GetNode<Node2D>("Player");
 		camera.FollowTarget = player;
+		camera.SetBounds(CottageSceneConfig.CameraBounds);
+		camera.SnapToPixels = true;
 		camera.SnapToTarget();
 	}
 }

@@ -1110,10 +1110,12 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [ ] Define `Rect2` bounds for Cottage test area matching scene tile dimensions
-- [ ] Inject bounds into `CameraController` on scene load via scene initialization
-- [ ] Verify camera does not pan beyond the visible tile area at any edge
-- [ ] Pixel-perfect camera: ensure camera position snaps to integer pixels (no sub-pixel blurring)
+- [x] Define `Rect2` bounds for Cottage test area matching scene tile dimensions
+- [x] Inject bounds into `CameraController` on scene load via scene initialization
+- [x] Verify camera does not pan beyond the visible tile area at any edge
+- [x] Pixel-perfect camera: ensure camera position snaps to integer pixels (no sub-pixel blurring)
+
+**Status: ✅ COMPLETED — 22 April 2026**
 
 **Acceptance Criteria:**
 
@@ -1261,14 +1263,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status             |
-| --------- | ------------ | ------------------------------------ | -------------- | ------------------ |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete        |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete        |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete        |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete        |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅) |
-| **Total** | **10 weeks** |                                      | **106 points** |                    |
+| Sprint    | Duration     | Focus                                | Story Points   | Status                              |
+| --------- | ------------ | ------------------------------------ | -------------- | ----------------------------------- |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete                         |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete                         |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete                         |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete                         |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅, S4-02 ✅) |
+| **Total** | **10 weeks** |                                      | **106 points** |                                     |
 
 ---
 
