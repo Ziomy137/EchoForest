@@ -27,6 +27,7 @@ public partial class HudNode : CanvasLayer
     private Label _hintLabel = null!;
     private Label _debugLabel = null!;
     private Node? _playerStateSource;
+    private bool _hasSearchedForPlayerStateSource;
     private string? _lastPlayerStateName;
 
     public override void _Ready()
@@ -87,8 +88,20 @@ public partial class HudNode : CanvasLayer
 
     private void TrySyncPlayerStateFromScene()
     {
-        _playerStateSource ??= FindPlayerStateSource(this);
-        if (_playerStateSource is null || !GodotObject.IsInstanceValid(_playerStateSource)) return;
+        if (_playerStateSource is not null && !GodotObject.IsInstanceValid(_playerStateSource))
+        {
+            _playerStateSource = null;
+            _hasSearchedForPlayerStateSource = false;
+        }
+
+        if (_playerStateSource is null && !_hasSearchedForPlayerStateSource)
+        {
+            var sceneRoot = GetTree().CurrentScene ?? GetTree().Root;
+            _playerStateSource = sceneRoot is null ? null : FindPlayerStateSource(sceneRoot);
+            _hasSearchedForPlayerStateSource = true;
+        }
+
+        if (_playerStateSource is null) return;
 
         var stateVariant = _playerStateSource.Get("CurrentState");
         var stateName = stateVariant.ToString();
