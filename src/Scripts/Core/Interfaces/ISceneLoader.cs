@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Godot;
 
 namespace EchoForest.Core;
 
@@ -19,4 +20,9 @@ public interface ISceneLoader
     /// Asynchronously loads the scene at <paramref name="scenePath"/> in the background.
     /// </summary>
     Task LoadSceneAsync(string scenePath);
+
+    /// <summary>
+    /// Returns the currently active scene root node, or <c>null</c> if no scene has been loaded yet.
+    /// </summary>
+    Node? GetCurrentScene();
 }
