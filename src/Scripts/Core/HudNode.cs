@@ -31,9 +31,17 @@ public partial class HudNode : CanvasLayer
     {
         Layer = 10; // always on top of game world
 
-        CreateTitleLabel();
-        _hintLabel = CreateHintLabel();
-        _debugLabel = CreateDebugLabel();
+        // Full-viewport Control — all labels anchor relative to this so that
+        // percentage-based anchors (e.g. bottom = 1.0) resolve to the actual
+        // viewport size rather than being treated as raw pixel offsets.
+        var root = new Control();
+        root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        root.MouseFilter = Control.MouseFilterEnum.Ignore;
+        AddChild(root);
+
+        CreateTitleLabel(root);
+        _hintLabel = CreateHintLabel(root);
+        _debugLabel = CreateDebugLabel(root);
 
         _controller.Initialize();
         _controller.SetDebugMode(OS.IsDebugBuild());
@@ -63,39 +71,46 @@ public partial class HudNode : CanvasLayer
 
     // ── UI construction ───────────────────────────────────────────────────────
 
-    private void CreateTitleLabel()
+    private void CreateTitleLabel(Control root)
     {
         var label = new Label();
         label.Text = "EchoForest \u2014 Demo Build";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
-        label.SetAnchorAndOffset(Side.Left, 0f, 8f);
-        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
-        AddChild(label);
+        // Top-left: all four sides anchored to top-left corner with small margins
+        label.SetAnchorAndOffset(Side.Left,   0f,  8f);
+        label.SetAnchorAndOffset(Side.Top,    0f,  8f);
+        label.SetAnchorAndOffset(Side.Right,  0f,  300f);
+        label.SetAnchorAndOffset(Side.Bottom, 0f,  40f);
+        root.AddChild(label);
     }
 
-    private Label CreateHintLabel()
+    private Label CreateHintLabel(Control root)
     {
         var label = new Label();
         label.Text = "WASD / Arrows to move, Shift to run";
         label.AddThemeColorOverride("font_color", Palette.LightGray);
         label.HorizontalAlignment = HorizontalAlignment.Center;
-        // Anchor bottom-center
-        label.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
+        // Bottom-center: stretch full width, sit 48→16 px above the bottom edge
+        label.SetAnchorAndOffset(Side.Left,   0f,  0f);
+        label.SetAnchorAndOffset(Side.Right,  1f,  0f);
+        label.SetAnchorAndOffset(Side.Top,    1f, -48f);
         label.SetAnchorAndOffset(Side.Bottom, 1f, -16f);
-        AddChild(label);
+        root.AddChild(label);
         return label;
     }
 
-    private Label CreateDebugLabel()
+    private Label CreateDebugLabel(Control root)
     {
         var label = new Label();
         label.Text = "State: Idle";
         label.AddThemeColorOverride("font_color", Palette.Gold);
         label.HorizontalAlignment = HorizontalAlignment.Right;
-        label.SetAnchorsPreset(Control.LayoutPreset.TopRight);
-        label.SetAnchorAndOffset(Side.Right, 1f, -8f);
-        label.SetAnchorAndOffset(Side.Top, 0f, 8f);
-        AddChild(label);
+        // Top-right: 200 px wide, anchored to the right edge with 8 px margin
+        label.SetAnchorAndOffset(Side.Left,   1f, -208f);
+        label.SetAnchorAndOffset(Side.Right,  1f,  -8f);
+        label.SetAnchorAndOffset(Side.Top,    0f,   8f);
+        label.SetAnchorAndOffset(Side.Bottom, 0f,  40f);
+        root.AddChild(label);
         return label;
     }
 
