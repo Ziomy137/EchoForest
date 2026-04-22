@@ -1154,9 +1154,9 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 **Tasks:**
 
-- [x] Write integration test that boots game, loads Cottage scene, simulates input, and verifies system state
-  - 19 pure-C# integration tests in `DemoIntegrationTest.cs` covering all 4 directions, run speed, state machine, camera tracking, HUD lifecycle, and system defaults
-  - 794 total tests passing, 97.44% line coverage, 100% branch coverage
+- [x] Write pure-C# integration-style tests that simulate input and verify demo system state without scene boot/loading
+  - 15 `[Test]` methods in `DemoIntegrationTest.cs` covering all 4 directions, run speed, state machine behavior, camera tracking, and system/default behaviors
+  - Current NUnit coverage for this area does not include scene boot/loading or `HudController.SimulateTimePassed` / `SetDebugMode`; keep aggregate suite totals and coverage metrics in the centralized test report
 - [x] Manual QA checklist (verified manually):
   - [x] Game opens without errors on Windows, Linux, macOS
   - [x] Player spawns at correct location
