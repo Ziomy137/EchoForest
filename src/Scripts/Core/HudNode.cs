@@ -98,9 +98,20 @@ public partial class HudNode : CanvasLayer
         UpdatePlayerState(stateName);
     }
 
+    private static bool HasProperty(Node node, string propertyName)
+    {
+        foreach (Godot.Collections.Dictionary property in node.GetPropertyList())
+        {
+            if (property.TryGetValue("name", out var name) && name?.ToString() == propertyName)
+                return true;
+        }
+
+        return false;
+    }
+
     private static Node? FindPlayerStateSource(Node root)
     {
-        if (root.HasMethod("get_CurrentState"))
+        if (HasProperty(root, "CurrentState"))
             return root;
 
         foreach (Node child in root.GetChildren())
