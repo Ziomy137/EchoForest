@@ -89,14 +89,14 @@ public class CameraIntegrationTest
     // ─── Cottage bounds dimensions ────────────────────────────────────────────
 
     [Test]
-    public void CottageBounds_Width_MatchesHorizontalWorldBoundarySpan()
+    public void Camera_CottageBoundsWidth_MatchesHorizontalWorldBoundarySpan()
     {
         float expectedWidth = CottageSceneConfig.WorldBoundaryRight - CottageSceneConfig.WorldBoundaryLeft;
         Assert.That(CottageSceneConfig.CameraBounds.Size.X, Is.EqualTo(expectedWidth));
     }
 
     [Test]
-    public void CottageBounds_Height_MatchesVerticalWorldBoundarySpan()
+    public void Camera_CottageBoundsHeight_MatchesVerticalWorldBoundarySpan()
     {
         float expectedHeight = CottageSceneConfig.WorldBoundaryBottom - CottageSceneConfig.WorldBoundaryTop;
         Assert.That(CottageSceneConfig.CameraBounds.Size.Y, Is.EqualTo(expectedHeight));
