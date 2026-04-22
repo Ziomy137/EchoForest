@@ -21,7 +21,7 @@ config/icon="res://src/Assets/icon.png"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/handheld/orientation="landscape"
 
