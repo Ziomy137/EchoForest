@@ -16,13 +16,13 @@
 
 The demo is considered complete when:
 
-- [ ] Godot project runs on all three platforms without errors
-- [ ] Player can walk and run in 4 directions on an isometric tile grid
-- [ ] Cottage exterior test area is fully navigable with basic pixel art tiles
-- [ ] All C# game logic has ≥ 90% unit test coverage
-- [ ] CI pipeline runs all tests automatically on every commit
-- [ ] No critical runtime errors or unhandled exceptions
-- [ ] Frame rate is stable at 60 FPS on target hardware
+- [x] Godot project runs on all three platforms without errors
+- [x] Player can walk and run in 4 directions on an isometric tile grid
+- [x] Cottage exterior test area is fully navigable with basic pixel art tiles
+- [x] All C# game logic has ≥ 90% unit test coverage
+- [x] CI pipeline runs all tests automatically on every commit
+- [x] No critical runtime errors or unhandled exceptions
+- [x] Frame rate is stable at 60 FPS on target hardware
 
 ---
 

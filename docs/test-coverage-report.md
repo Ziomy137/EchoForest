@@ -64,23 +64,31 @@ Compiler-generated artifacts (for example, async state machines and coverage-rep
 
 ## Test Suite Breakdown
 
-| Test File                    | Tests   | Sprint   |
-| ---------------------------- | ------- | -------- |
-| `AnimationControllerTest.cs` | varies  | S3       |
-| `CameraControllerTest.cs`    | varies  | S1/S4-02 |
-| `CameraIntegrationTest.cs`   | 10      | S4-02    |
-| `CottageSceneConfigTest.cs`  | varies  | S3/S4-02 |
-| `DemoIntegrationTest.cs`     | 19      | S4-03    |
-| `HudControllerTest.cs`       | 17      | S4-01    |
-| `IsometricMathTest.cs`       | varies  | S1       |
-| `IsometricSorterTest.cs`     | varies  | S1       |
-| `PaletteTest.cs`             | varies  | S1       |
-| `PlayerControllerTest.cs`    | varies  | S2       |
-| `PlayerStateMachineTest.cs`  | varies  | S2       |
-| `PropRegistryTest.cs`        | varies  | S3       |
-| `SceneLoaderTest.cs`         | varies  | S0       |
-| `TileRegistryTest.cs`        | varies  | S3       |
-| **Total**                    | **794** |          |
+| Test File                      | Tests   | Sprint   | Notes                                        |
+| ------------------------------ | ------- | -------- | -------------------------------------------- |
+| `AnimationControllerTest.cs`   | varies  | S3       |                                              |
+| `CameraControllerTest.cs`      | varies  | S1/S4-02 |                                              |
+| `CameraIntegrationTest.cs`     | 10      | S4-02    |                                              |
+| `CharacterSpriteConfigTest.cs` | varies  | S3       | also covers `PropRegistry`                   |
+| `ConstantsTest.cs`             | varies  | S0       |                                              |
+| `CottageSceneConfigTest.cs`    | varies  | S3/S4-02 |                                              |
+| `DemoIntegrationTest.cs`       | 19      | S4-03    |                                              |
+| `DirectionTest.cs`             | varies  | S2       |                                              |
+| `EngineBootTest.cs`            | varies  | S0       |                                              |
+| `HudControllerTest.cs`         | 17      | S4-01    |                                              |
+| `InputHandlerTest.cs`          | varies  | S0       |                                              |
+| `IsometricSorterTest.cs`       | varies  | S1       |                                              |
+| `LoadingScreenTest.cs`         | varies  | S4-01    |                                              |
+| `PaletteTest.cs`               | varies  | S1       |                                              |
+| `PhysicsLayersTest.cs`         | varies  | S2       |                                              |
+| `PlayerCollisionConfigTest.cs` | varies  | S2       |                                              |
+| `PlayerControllerTest.cs`      | varies  | S2       |                                              |
+| `SceneLoaderTest.cs`           | varies  | S0       |                                              |
+| `StateEnumTest.cs`             | varies  | S0       |                                              |
+| `StateMachineTest.cs`          | varies  | S2       | covers `StateMachine` + `PlayerStateMachine` |
+| `TileMapServiceTest.cs`        | varies  | S1       | also covers `IsometricMath`                  |
+| `TileRegistryTest.cs`          | varies  | S3       |                                              |
+| **Total**                      | **794** |          |                                              |
 
 ---
 
