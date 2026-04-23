@@ -1,9 +1,9 @@
 name: Export
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     branches: [main]
 
 env:
@@ -11,11 +11,13 @@ env:
 
 jobs:
   # ── Godot export (all 3 platforms) ─────────────────────────────────────────
-  # NUnit tests + coverage gate run in ci.yml on every push/PR.
-  # This workflow runs only on main merges / PRs and performs the export.
+  # Triggered via workflow_run after the CI workflow succeeds on main.
   export:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Export (${{ matrix.platform }})
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
