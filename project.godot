@@ -97,3 +97,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 rendering/2d/snap/snap_2d_transforms_to_pixel=true
 rendering/2d/snap/snap_2d_vertices_to_pixel=true
+rendering/textures/vram_compression/import_etc2_astc=true
