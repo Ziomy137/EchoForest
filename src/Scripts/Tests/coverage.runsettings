@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coverage run settings for EchoForest NUnit tests.
+     Excludes Godot auto-generated plugin initializer (GodotPlugins.Game.Main)
+     which requires the Godot runtime and cannot be tested with NUnit. -->
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <!-- Exclude only the Godot-generated plugin initializer type -->
+          <Exclude>[*]GodotPlugins.Game.Main</Exclude>
+          <ExcludeByAttribute>ExcludeFromCodeCoverage,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
