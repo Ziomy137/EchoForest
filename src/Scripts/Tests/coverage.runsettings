@@ -8,8 +8,8 @@
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
           <Format>cobertura</Format>
-          <!-- Exclude the Godot-generated plugin initializer namespace -->
-          <Exclude>[*]GodotPlugins.*</Exclude>
+          <!-- Exclude only the Godot-generated plugin initializer type -->
+          <Exclude>[*]GodotPlugins.Game.Main</Exclude>
           <ExcludeByAttribute>ExcludeFromCodeCoverage,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
         </Configuration>
       </DataCollector>
