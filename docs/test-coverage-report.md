@@ -8,12 +8,12 @@
 
 ## Summary
 
-| Metric           | Value     | Gate  | Status |
-| ---------------- | --------- | ----- | ------ |
-| Line coverage    | **99.81%** | ≥ 90% | ✅ PASS |
-| Branch coverage  | **100.0%** | ≥ 90% | ✅ PASS |
-| Total tests      | **794**   | 0 fail | ✅ PASS |
-| Tests failed     | 0         | 0      | ✅ PASS |
+| Metric          | Value      | Gate   | Status  |
+| --------------- | ---------- | ------ | ------- |
+| Line coverage   | **99.81%** | ≥ 90%  | ✅ PASS |
+| Branch coverage | **100.0%** | ≥ 90%  | ✅ PASS |
+| Total tests     | **794**    | 0 fail | ✅ PASS |
+| Tests failed    | 0          | 0      | ✅ PASS |
 
 ---
 
@@ -22,65 +22,65 @@
 All production classes are at 100% line and branch coverage.  
 `GodotPlugins.Game.Main` (Godot auto-generated plugin initializer) is excluded from measurement — it requires the Godot runtime and cannot be exercised by NUnit.
 
-| Class | Lines | Branches | Notes |
-|---|---|---|---|
-| `EchoForest.Core.AnimationClipConfig` | 100% | 100% | |
-| `EchoForest.Core.AnimationNames` | 100% | 100% | |
-| `EchoForest.Core.CameraController` | 100% | 100% | |
-| `EchoForest.Core.CharacterSpriteConfig` | 100% | 100% | |
-| `EchoForest.Core.Constants/Layers` | 100% | 100% | |
-| `EchoForest.Core.CottageSceneConfig` | 100% | 100% | |
-| `EchoForest.Core.CottageSceneConfig/TileZone` | 100% | 100% | |
-| `EchoForest.Core.CottageSceneConfig/PropPlacement` | 100% | 100% | |
-| `EchoForest.Core.HudController` | 100% | 100% | |
-| `EchoForest.Core.IsometricMath` | 100% | 100% | |
-| `EchoForest.Core.IsometricSorter` | 100% | 100% | |
-| `EchoForest.Core.LoadingScreen` | 100% | 100% | |
-| `EchoForest.Core.MockAnimatedSprite` | 100% | 100% | |
-| `EchoForest.Core.MockInputHandler` | 100% | 100% | |
-| `EchoForest.Core.MockTileMapService` | 100% | 100% | |
-| `EchoForest.Core.Palette` | 100% | 100% | |
-| `EchoForest.Core.PaletteValidator` | 100% | 100% | |
-| `EchoForest.Core.PhysicsLayers` | 100% | 100% | |
-| `EchoForest.Core.PlayerAnimationController` | 100% | 100% | |
-| `EchoForest.Core.PlayerController` | 100% | 100% | |
-| `EchoForest.Core.PlayerStateMachine` | 100% | 100% | |
-| `EchoForest.Core.PropConfig` | 100% | 100% | |
-| `EchoForest.Core.PropRegistry` | 100% | 100% | |
-| `EchoForest.Core.SceneLoader` | 100% | 100% | |
-| `EchoForest.Core.SceneLoader/<LoadSceneAsync>d__2` | 100% | 100% | async state machine |
-| `EchoForest.Core.StateMachine<1>` | 97.4% | 100% | above 90% gate |
-| `EchoForest.Core.TileConfig` | 100% | 100% | |
-| `EchoForest.Core.TileRegistry` | 100% | 100% | |
+| Class                                              | Lines | Branches | Notes               |
+| -------------------------------------------------- | ----- | -------- | ------------------- |
+| `EchoForest.Core.AnimationClipConfig`              | 100%  | 100%     |                     |
+| `EchoForest.Core.AnimationNames`                   | 100%  | 100%     |                     |
+| `EchoForest.Core.CameraController`                 | 100%  | 100%     |                     |
+| `EchoForest.Core.CharacterSpriteConfig`            | 100%  | 100%     |                     |
+| `EchoForest.Core.Constants/Layers`                 | 100%  | 100%     |                     |
+| `EchoForest.Core.CottageSceneConfig`               | 100%  | 100%     |                     |
+| `EchoForest.Core.CottageSceneConfig/TileZone`      | 100%  | 100%     |                     |
+| `EchoForest.Core.CottageSceneConfig/PropPlacement` | 100%  | 100%     |                     |
+| `EchoForest.Core.HudController`                    | 100%  | 100%     |                     |
+| `EchoForest.Core.IsometricMath`                    | 100%  | 100%     |                     |
+| `EchoForest.Core.IsometricSorter`                  | 100%  | 100%     |                     |
+| `EchoForest.Core.LoadingScreen`                    | 100%  | 100%     |                     |
+| `EchoForest.Core.MockAnimatedSprite`               | 100%  | 100%     |                     |
+| `EchoForest.Core.MockInputHandler`                 | 100%  | 100%     |                     |
+| `EchoForest.Core.MockTileMapService`               | 100%  | 100%     |                     |
+| `EchoForest.Core.Palette`                          | 100%  | 100%     |                     |
+| `EchoForest.Core.PaletteValidator`                 | 100%  | 100%     |                     |
+| `EchoForest.Core.PhysicsLayers`                    | 100%  | 100%     |                     |
+| `EchoForest.Core.PlayerAnimationController`        | 100%  | 100%     |                     |
+| `EchoForest.Core.PlayerController`                 | 100%  | 100%     |                     |
+| `EchoForest.Core.PlayerStateMachine`               | 100%  | 100%     |                     |
+| `EchoForest.Core.PropConfig`                       | 100%  | 100%     |                     |
+| `EchoForest.Core.PropRegistry`                     | 100%  | 100%     |                     |
+| `EchoForest.Core.SceneLoader`                      | 100%  | 100%     |                     |
+| `EchoForest.Core.SceneLoader/<LoadSceneAsync>d__2` | 100%  | 100%     | async state machine |
+| `EchoForest.Core.StateMachine<1>`                  | 97.4% | 100%     | above 90% gate      |
+| `EchoForest.Core.TileConfig`                       | 100%  | 100%     |                     |
+| `EchoForest.Core.TileRegistry`                     | 100%  | 100%     |                     |
 
 ### Excluded from measurement
 
-| Class | Reason |
-|---|---|
-| `GodotPlugins.Game.Main` | Auto-generated by `GodotPluginsInitializerGenerator`. Requires Godot runtime. Excluded via `coverage.runsettings`. |
+| Class                                   | Reason                                                                                                                                                                   |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GodotPlugins.Game.Main`                | Auto-generated by `GodotPluginsInitializerGenerator`. Requires Godot runtime. Excluded via `coverage.runsettings`.                                                       |
 | All `[ExcludeFromCodeCoverage]` classes | Godot node wrappers (`IsometricCameraNode`, `CottageAreaNode`, `PlayerControllerNode`, `HudNode`, etc.). Require the Godot scene tree. Tested via GUT inside the editor. |
 
 ---
 
 ## Test Suite Breakdown
 
-| Test File | Tests | Sprint |
-|---|---|---|
-| `AnimationControllerTest.cs` | varies | S3 |
-| `CameraControllerTest.cs` | varies | S1/S4-02 |
-| `CameraIntegrationTest.cs` | 10 | S4-02 |
-| `CottageSceneConfigTest.cs` | varies | S3/S4-02 |
-| `DemoIntegrationTest.cs` | 19 | S4-03 |
-| `HudControllerTest.cs` | 17 | S4-01 |
-| `IsometricMathTest.cs` | varies | S1 |
-| `IsometricSorterTest.cs` | varies | S1 |
-| `PaletteTest.cs` | varies | S1 |
-| `PlayerControllerTest.cs` | varies | S2 |
-| `PlayerStateMachineTest.cs` | varies | S2 |
-| `PropRegistryTest.cs` | varies | S3 |
-| `SceneLoaderTest.cs` | varies | S0 |
-| `TileRegistryTest.cs` | varies | S3 |
-| **Total** | **794** | |
+| Test File                    | Tests   | Sprint   |
+| ---------------------------- | ------- | -------- |
+| `AnimationControllerTest.cs` | varies  | S3       |
+| `CameraControllerTest.cs`    | varies  | S1/S4-02 |
+| `CameraIntegrationTest.cs`   | 10      | S4-02    |
+| `CottageSceneConfigTest.cs`  | varies  | S3/S4-02 |
+| `DemoIntegrationTest.cs`     | 19      | S4-03    |
+| `HudControllerTest.cs`       | 17      | S4-01    |
+| `IsometricMathTest.cs`       | varies  | S1       |
+| `IsometricSorterTest.cs`     | varies  | S1       |
+| `PaletteTest.cs`             | varies  | S1       |
+| `PlayerControllerTest.cs`    | varies  | S2       |
+| `PlayerStateMachineTest.cs`  | varies  | S2       |
+| `PropRegistryTest.cs`        | varies  | S3       |
+| `SceneLoaderTest.cs`         | varies  | S0       |
+| `TileRegistryTest.cs`        | varies  | S3       |
+| **Total**                    | **794** |          |
 
 ---
 
