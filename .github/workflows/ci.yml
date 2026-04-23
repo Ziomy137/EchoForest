@@ -50,11 +50,10 @@ jobs:
         run: |
           dotnet test src/Scripts/Tests/EchoForest.Tests.csproj \
             --configuration Debug \
+            --settings src/Scripts/Tests/coverage.runsettings \
             --logger "trx;LogFileName=test-results.trx" \
             --results-directory ./TestResults \
-            --collect:"XPlat Code Coverage" \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
-               DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByFile=**/.godot/**/*.cs
+            --collect:"XPlat Code Coverage"
 
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool

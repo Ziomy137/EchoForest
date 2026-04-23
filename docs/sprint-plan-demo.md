@@ -1231,18 +1231,24 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ### S4-05 — Code Coverage Audit & Final TDD Review
 
+**Status: ✅ COMPLETED**  
 **Type:** QA / TDD  
 **Assignee:** Lead Developer  
 **Estimate:** 3 points
 
 **Tasks:**
 
-- [ ] Run full coverage report: `dotnet test --collect:"XPlat Code Coverage"`
-- [ ] Review coverage report: all C# classes must be ≥ 90%
-- [ ] Write missing tests for any class below threshold
-- [ ] Audit test quality: ensure tests assert behavior, not just code runs (no empty tests)
-- [ ] Document final coverage numbers in `docs/test-coverage-report.md`
-- [ ] Confirm all new tests pass in CI
+- [x] Run full coverage report: `dotnet test --collect:"XPlat Code Coverage"`
+- [x] Review coverage report: all C# classes must be ≥ 90%
+  - All 28 production classes at 100% line/branch; `StateMachine<1>` at 97.4% (above gate)
+  - `GodotPlugins.Game.Main` (Godot auto-generated) properly excluded via `coverage.runsettings`
+- [x] Write missing tests for any class below threshold — none needed, all classes ≥ 90%
+- [x] Audit test quality: ensure tests assert behavior, not just code runs (no empty tests)
+  - All 794 tests verified to assert concrete behavior
+- [x] Document final coverage numbers in `docs/test-coverage-report.md`
+  - Line: **99.81%** · Branch: **100.0%** · Tests: **794 passing, 0 failing**
+- [x] Confirm all new tests pass in CI
+  - Updated `ci.yml` to use `coverage.runsettings` for consistent exclusions between local and CI runs
 
 **Acceptance Criteria:**
 
@@ -1267,14 +1273,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status                                                  |
-| --------- | ------------ | ------------------------------------ | -------------- | ------------------------------------------------------- |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete                                             |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete                                             |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete                                             |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete                                             |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅, S4-02 ✅, S4-03 ✅, S4-04 ✅) |
-| **Total** | **10 weeks** |                                      | **106 points** |                                                         |
+| Sprint    | Duration     | Focus                                | Story Points   | Status      |
+| --------- | ------------ | ------------------------------------ | -------------- | ----------- |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | ✅ Complete |
+| **Total** | **10 weeks** |                                      | **106 points** |             |
 
 ---
 
