@@ -17,11 +17,12 @@
 
 ---
 
-## Per-Class Coverage
+## Per-Class Coverage Highlights
 
-All source-defined production classes are at 100% line and branch coverage.  
-This table excludes compiler-generated artifacts (for example, async state machines and coverage-reporter-specific type spellings) so it matches what `coverage.runsettings` measures in CI.  
-`GodotPlugins.Game.Main` (Godot auto-generated plugin initializer) is excluded from measurement — it requires the Godot runtime and cannot be exercised by NUnit.
+Overall CI-measured coverage for this run is **99.81% line coverage** and **100.0% branch coverage**, as reported in the summary above.  
+The table below lists source-defined production classes that achieved **100% line and branch coverage** in this report; it should not be read as a complete inventory of every production type under `src/Scripts/Core/`.  
+Compiler-generated artifacts (for example, async state machines and coverage-reporter-specific type spellings) are excluded so the report matches what `coverage.runsettings` measures in CI.  
+`GodotPlugins.Game.Main` (Godot auto-generated plugin initializer) is excluded from measurement because it requires the Godot runtime and cannot be exercised by NUnit.
 
 | Class                                              | Lines | Branches | Notes |
 | -------------------------------------------------- | ----- | -------- | ----- |
