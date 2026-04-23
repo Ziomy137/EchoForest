@@ -10,7 +10,7 @@
 .mono/
 
 # Export templates cache
-/export_presets.cfg
+# export_presets.cfg tracked intentionally — no signing credentials configured
 
 # ─── C# / .NET ───────────────────────────────────────────────────────────────
 bin/

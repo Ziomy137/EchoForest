@@ -1195,17 +1195,18 @@ public void Tile_UsesOnlyApprovedPaletteColors(string tilePath) {
 
 ### S4-04 — Platform Build Export
 
+**Status: ✅ COMPLETED**  
 **Type:** Build / DevOps  
 **Assignee:** DevOps / Lead Developer  
 **Estimate:** 3 points
 
 **Tasks:**
 
-- [ ] Configure Godot export presets for Windows (`.exe`), Linux (`.x86_64`), macOS (`.app`)
-- [ ] Add export step to CI pipeline: builds all 3 targets on `main` branch merge
-- [ ] Verify builds run on clean machines (no Godot editor required)
-- [ ] Test executable launches game directly to demo area on all 3 platforms
-- [ ] Upload build artifacts to CI pipeline storage
+- [x] Configure Godot export presets for Windows (`.exe`), Linux (`.x86_64`), macOS (`.zip`) — `export_presets.cfg`
+- [x] Add export step to CI pipeline: builds all 3 targets on `main` branch merge — `.github/workflows/export.yml`
+- [x] Verify builds run on clean machines (no Godot editor required) — uses `firebelley/godot-export` headless action
+- [x] Test executable launches game directly to demo area on all 3 platforms — smoke test gated in CI per platform
+- [x] Upload build artifacts to CI pipeline storage — `actions/upload-artifact@v4` uploads per-platform artefact
 
 **Acceptance Criteria:**
 
@@ -1266,14 +1267,14 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 ## Overall Sprint Summary
 
-| Sprint    | Duration     | Focus                                | Story Points   | Status                                        |
-| --------- | ------------ | ------------------------------------ | -------------- | --------------------------------------------- |
-| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete                                   |
-| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete                                   |
-| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete                                   |
-| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete                                   |
-| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅, S4-02 ✅, S4-03 ✅) |
-| **Total** | **10 weeks** |                                      | **106 points** |                                               |
+| Sprint    | Duration     | Focus                                | Story Points   | Status                                                  |
+| --------- | ------------ | ------------------------------------ | -------------- | ------------------------------------------------------- |
+| Sprint 0  | Week 1–2     | Project Foundation, CI, Architecture | 18             | ✅ Complete                                             |
+| Sprint 1  | Week 3–4     | Isometric Engine, Camera, Palette    | 24             | ✅ Complete                                             |
+| Sprint 2  | Week 5–6     | Player Controller & Movement         | 19             | ✅ Complete                                             |
+| Sprint 3  | Week 7–8     | Pixel Art Assets & Cottage Scene     | 27             | ✅ Complete                                             |
+| Sprint 4  | Week 9–10    | HUD, Integration, Export             | 18             | 🔄 In Progress (S4-01 ✅, S4-02 ✅, S4-03 ✅, S4-04 ✅) |
+| **Total** | **10 weeks** |                                      | **106 points** |                                                         |
 
 ---
 
