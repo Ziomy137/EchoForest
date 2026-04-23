@@ -21,13 +21,10 @@ jobs:
       matrix:
         include:
           - platform: windows
-            preset: "Windows Desktop"
             artifact: export/windows/EchoForest.exe
           - platform: linux
-            preset: "Linux/X11"
             artifact: export/linux/EchoForest.x86_64
           - platform: macos
-            preset: macOS
             artifact: export/macos/EchoForest.zip
 
     steps:
