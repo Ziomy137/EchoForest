@@ -87,7 +87,7 @@ Compiler-generated artifacts (for example, async state machines and coverage-rep
 ## How to Reproduce
 
 ```bash
-# Run with coverage exclusions (excludes GodotPlugins.Game.* and [ExcludeFromCodeCoverage] classes)
+# Run with coverage exclusions (excludes GodotPlugins.Game.Main and [ExcludeFromCodeCoverage] classes)
 dotnet test src/Scripts/Tests/EchoForest.Tests.csproj \
   --settings src/Scripts/Tests/coverage.runsettings \
   --collect:"XPlat Code Coverage" \
