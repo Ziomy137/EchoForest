@@ -1,0 +1,55 @@
+name: Export
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+
+env:
+  GODOT_VERSION: "4.6.2"
+
+jobs:
+  # ── Godot export (all 3 platforms) ─────────────────────────────────────────
+  # Triggered via workflow_run after the CI workflow succeeds on main.
+  export:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Export (${{ matrix.platform }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows
+          - platform: linux
+          - platform: macos
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Export ${{ matrix.platform }}
+        uses: firebelley/godot-export@v6.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
+          relative_project_path: ./
+          export_debug: false
+          cache: true
+          use_preset_export_path: true
+
+      - name: Smoke test — artefact exists
+        run: bash scripts/build-test.sh ${{ matrix.platform }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EchoForest-${{ matrix.platform }}
+          path: export/${{ matrix.platform }}/
+          if-no-files-found: error
