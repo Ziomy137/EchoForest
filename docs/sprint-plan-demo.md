@@ -1240,7 +1240,7 @@ assert_file_exists "export/macos/EchoForest.app/Contents/MacOS/EchoForest"
 
 - [x] Run full coverage report: `dotnet test --collect:"XPlat Code Coverage"`
 - [x] Review coverage report: all C# classes must be ≥ 90%
-  - All 28 production classes are ≥ 90% coverage; 27 reached 100% line/branch, and `StateMachine<1>` is at 97.4% (above gate)
+  - All 28 production classes are ≥ 90% coverage; 27 reached 100% line/branch, and `StateMachine<TState>` is at 97.4% (above gate)
   - `GodotPlugins.Game.Main` (Godot auto-generated) properly excluded via `coverage.runsettings`
 - [x] Write missing tests for any class below threshold — none needed, all classes ≥ 90%
 - [x] Audit test quality: ensure tests assert behavior, not just code runs (no empty tests)
