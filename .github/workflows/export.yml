@@ -24,10 +24,13 @@ jobs:
         include:
           - platform: windows
             export_preset: "Windows Desktop"
+            sanitized_preset: "Windows Desktop"
           - platform: linux
             export_preset: "Linux/X11"
+            sanitized_preset: "LinuxX11"
           - platform: macos
             export_preset: "macOS"
+            sanitized_preset: "macOS"
 
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +41,7 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Export ${{ matrix.platform }}
+        id: godot-export
         uses: firebelley/godot-export@v6.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux_x86_64.zip
@@ -45,8 +49,12 @@ jobs:
           relative_project_path: ./
           export_debug: false
           cache: true
-          use_preset_export_path: true
           presets_to_export: ${{ matrix.export_preset }}
+
+      - name: Move exports to output directory
+        run: |
+          mkdir -p export/${{ matrix.platform }}
+          cp -r "${{ steps.godot-export.outputs.build_directory }}/${{ matrix.sanitized_preset }}/." export/${{ matrix.platform }}/
 
       - name: Smoke test — artefact exists
         run: bash scripts/build-test.sh ${{ matrix.platform }}
