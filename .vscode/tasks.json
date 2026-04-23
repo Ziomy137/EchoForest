@@ -96,7 +96,7 @@
     {
       "label": "test-coverage",
       "type": "shell",
-      "command": "dotnet test src/Scripts/Tests/EchoForest.Tests.csproj --collect:\"XPlat Code Coverage\" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura",
+      "command": "dotnet test src/Scripts/Tests/EchoForest.Tests.csproj --settings src/Scripts/Tests/coverage.runsettings --collect:\"XPlat Code Coverage\" --results-directory ./TestResults",
       "group": "test",
       "dependsOn": "build-tests",
       "presentation": {
