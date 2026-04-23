@@ -1,19 +1,15 @@
 name: Export
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
 
 env:
   GODOT_VERSION: "4.6.2"
 
 jobs:
   # ── Godot export (all 3 platforms) ─────────────────────────────────────────
-  # Triggered via workflow_run after the CI workflow succeeds on main.
+  # Triggered manually via workflow_dispatch.
   export:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Export (${{ matrix.platform }})
     runs-on: ubuntu-latest
     permissions:
