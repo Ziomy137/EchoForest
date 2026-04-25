@@ -163,7 +163,7 @@ public partial class SettingsScreenNode : CanvasLayer
         if (FindChild("MonitorRow") is Control monRow)
             monRow.Visible = _ctrl.IsMonitorDropdownVisible;
 
-        if (FindChild("MonitorOption") is OptionButton monOpt)
+        if (FindChild("MonitorOption") is OptionButton monOpt && monOpt.ItemCount > 0)
             monOpt.Selected = System.Math.Clamp(_ctrl.MonitorIndex, 0, monOpt.ItemCount - 1);
 
         if (FindChild("BrightnessSlider") is HSlider bSlider)
