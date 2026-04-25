@@ -91,7 +91,7 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Tasks:**
 
-- [ ] Create `MainMenu.tscn` with `CanvasLayer` root _(requires Godot Editor — deferred)_
+- [x] Create `MainMenu.tscn` with `CanvasLayer` root
 - [x] Implement all 6 buttons from UI/UX spec using palette colors:
   - **New Game** → transitions to game bootstrap (new playthrough)
   - **Continue** → loads most recent save file (grayed out if none exists)
@@ -108,9 +108,9 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 - [x] Create `NullSaveService` (placeholder until S5-04 save system)
 - [x] Create `GodotApplicationController` (Godot quit wrapper, excluded from coverage)
 - [x] Create `MainMenuNode.cs` Godot `CanvasLayer` wrapper (excluded from coverage)
-- [ ] Background: static image — cottage exterior scene as panoramic (placeholder pixel art)
-- [ ] Button hover, press, disabled visual states (as per UI/UX spec)
-- [ ] Main menu background music placeholder (silence or placeholder audio bus)
+- [x] Background: static image — cottage exterior scene as panoramic (placeholder — Deep Black #1a1a1a ColorRect)
+- [x] Button hover, press, disabled visual states (StyleBoxFlat per palette; Gold #ffd700 highlight on hover/press)
+- [x] Main menu background music placeholder (`AudioStreamPlayer` node — no stream, wired to Master bus)
 
 **Acceptance Criteria:**
 

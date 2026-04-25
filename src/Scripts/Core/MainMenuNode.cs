@@ -32,13 +32,13 @@ public partial class MainMenuNode : CanvasLayer
         WireButton("ExitButton", _controller.OnExit);
 
         // Reflect initial state of Continue button
-        if (HasNode("ContinueButton"))
-            GetNode<Button>("ContinueButton").Disabled = !_controller.IsContinueEnabled;
+        if (FindChild("ContinueButton") is Button continueBtn)
+            continueBtn.Disabled = !_controller.IsContinueEnabled;
     }
 
     private void WireButton(string nodeName, System.Action action)
     {
-        if (!HasNode(nodeName)) return;
-        GetNode<Button>(nodeName).Pressed += action;
+        if (FindChild(nodeName) is not Button btn) return;
+        btn.Pressed += action;
     }
 }
