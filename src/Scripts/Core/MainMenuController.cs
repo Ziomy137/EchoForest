@@ -43,8 +43,15 @@ public sealed class MainMenuController : IMainMenuController
         _sceneLoader?.LoadScene(MainMenuConfig.GameBootstrapScenePath);
 
     /// <inheritdoc/>
-    public void OnContinue() =>
+    public void OnContinue()
+    {
+        if (!IsContinueEnabled)
+        {
+            return;
+        }
+
         _sceneLoader?.LoadScene(MainMenuConfig.GameBootstrapScenePath);
+    }
 
     /// <inheritdoc/>
     public void OnLoadGame() =>
