@@ -30,6 +30,7 @@ public partial class SettingsScreenNode : CanvasLayer
         WireWindowModeOption();
         WireVSyncToggle();
         WireFpsLimitOption();
+        WireMonitorOption();
         WireBrightnessSlider();
         WireGammaSlider();
         WireButtons();
@@ -75,7 +76,9 @@ public partial class SettingsScreenNode : CanvasLayer
         if (FindChild("WindowModeOption") is not OptionButton opt) return;
         opt.ItemSelected += idx =>
         {
-            _ctrl.SetWindowMode(idx == 1 ? WindowMode.BorderlessFullscreen : WindowMode.Windowed);
+            var mode = idx == 1 ? WindowMode.BorderlessFullscreen : WindowMode.Windowed;
+            _ctrl.SetWindowMode(mode);
+            _display.ApplyWindowMode(mode); // apply immediately
             RefreshUI();
         };
     }
@@ -86,6 +89,9 @@ public partial class SettingsScreenNode : CanvasLayer
         cb.Toggled += enabled =>
         {
             _ctrl.SetVSync(enabled);
+            _display.ApplyVSync(enabled); // apply immediately
+            // restore fps cap when vsync is turned off
+            if (!enabled) _display.ApplyFpsLimit(_ctrl.FpsLimit);
             RefreshUI();
         };
     }
@@ -97,7 +103,21 @@ public partial class SettingsScreenNode : CanvasLayer
         {
             int[] values = { 30, 60, 120, 144, 0 }; // 0 = Unlimited
             if (idx >= 0 && idx < values.Length)
+            {
                 _ctrl.SetFpsLimit(values[idx]);
+                if (_ctrl.IsFpsLimitEnabled)
+                    _display.ApplyFpsLimit(values[idx]); // apply immediately
+            }
+        };
+    }
+
+    private void WireMonitorOption()
+    {
+        if (FindChild("MonitorOption") is not OptionButton opt) return;
+        opt.ItemSelected += idx =>
+        {
+            _ctrl.SetMonitor((int)idx);
+            _display.ApplyMonitor((int)idx); // apply immediately
         };
     }
 
