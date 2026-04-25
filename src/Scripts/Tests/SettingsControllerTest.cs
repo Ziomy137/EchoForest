@@ -328,7 +328,7 @@ public class SettingsControllerTest
     // ── WindowMode enum ───────────────────────────────────────────────────────
 
     [Test]
-    public void WindowMode_WindwedAndBorderlessFullscreen_AreDefined()
+    public void WindowMode_WindowedAndBorderlessFullscreen_AreDefined()
     {
         Assert.That(System.Enum.IsDefined(typeof(WindowMode), WindowMode.Windowed), Is.True);
         Assert.That(System.Enum.IsDefined(typeof(WindowMode), WindowMode.BorderlessFullscreen), Is.True);

@@ -63,21 +63,15 @@ public sealed class GodotDisplayServer : IDisplayServer
 
     public void ApplyBrightness(float value)
     {
-        LastBrightness = value;
         GetOrCreateMaterial()?.SetShaderParameter("brightness", value / 100f);
     }
 
     public void ApplyGamma(float value)
     {
-        LastGamma = value;
         GetOrCreateMaterial()?.SetShaderParameter("gamma", value / 100f);
     }
 
     public int GetScreenCount() => DisplayServer.GetScreenCount();
-
-    // Retained for any SettingsScreenNode code that reads them directly.
-    public float LastBrightness { get; private set; } = 100f;
-    public float LastGamma { get; private set; } = 100f;
 
     // ── Overlay management ────────────────────────────────────────────────────
 
@@ -95,7 +89,9 @@ public sealed class GodotDisplayServer : IDisplayServer
         _sharedMat.SetShaderParameter("brightness", SettingsCache.Brightness / 100f);
         _sharedMat.SetShaderParameter("gamma", SettingsCache.Gamma / 100f);
 
-        var rect = new ColorRect { Name = "Rect", Color = Colors.White, Material = _sharedMat }; rect.MouseFilter = Control.MouseFilterEnum.Ignore; // must not block input        rect.AnchorLeft = 0f;
+        var rect = new ColorRect { Name = "Rect", Color = Colors.White, Material = _sharedMat };
+        rect.MouseFilter = Control.MouseFilterEnum.Ignore; // must not block input
+        rect.AnchorLeft = 0f;
         rect.AnchorTop = 0f;
         rect.AnchorRight = 1f;
         rect.AnchorBottom = 1f;
