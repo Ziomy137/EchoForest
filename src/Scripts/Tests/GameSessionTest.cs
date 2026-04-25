@@ -110,4 +110,30 @@ public class GameSessionTest
             Assert.That(GameSession.LastPlayerY, Is.EqualTo(88f).Within(0.001f));
         });
     }
+
+    // ── GodotSessionSaveService ───────────────────────────────────────────────
+
+    [Test]
+    public void GodotSessionSaveService_NoSession_HasSaveFile_ReturnsFalse()
+    {
+        var svc = new GodotSessionSaveService();
+        Assert.That(svc.HasSaveFile(), Is.False);
+    }
+
+    [Test]
+    public void GodotSessionSaveService_AfterStart_HasSaveFile_ReturnsTrue()
+    {
+        GameSession.Start();
+        var svc = new GodotSessionSaveService();
+        Assert.That(svc.HasSaveFile(), Is.True);
+    }
+
+    [Test]
+    public void GodotSessionSaveService_AfterClear_HasSaveFile_ReturnsFalse()
+    {
+        GameSession.Start();
+        GameSession.Clear();
+        var svc = new GodotSessionSaveService();
+        Assert.That(svc.HasSaveFile(), Is.False);
+    }
 }

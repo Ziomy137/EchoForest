@@ -18,6 +18,11 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
 public partial class SettingsScreenNode : CanvasLayer
 {
+    // FPS limit values that mirror the items added in PopulateDropdowns().
+    // Shared between WireFpsLimitOption() and RefreshUI() so a single change
+    // here keeps both paths in sync.
+    private static readonly int[] FpsLimitValues = { 30, 60, 120, 144, 0 }; // 0 = Unlimited
+
     private SettingsController _ctrl = null!;
     private GodotDisplayServer _display = null!;
 
@@ -101,12 +106,11 @@ public partial class SettingsScreenNode : CanvasLayer
         if (FindChild("FpsLimitOption") is not OptionButton opt) return;
         opt.ItemSelected += idx =>
         {
-            int[] values = { 30, 60, 120, 144, 0 }; // 0 = Unlimited
-            if (idx >= 0 && idx < values.Length)
+            if (idx >= 0 && idx < FpsLimitValues.Length)
             {
-                _ctrl.SetFpsLimit(values[idx]);
+                _ctrl.SetFpsLimit(FpsLimitValues[idx]);
                 if (_ctrl.IsFpsLimitEnabled)
-                    _display.ApplyFpsLimit(values[idx]); // apply immediately
+                    _display.ApplyFpsLimit(FpsLimitValues[idx]); // apply immediately
             }
         };
     }
@@ -155,8 +159,7 @@ public partial class SettingsScreenNode : CanvasLayer
         if (FindChild("FpsLimitOption") is OptionButton fpsOpt)
         {
             fpsOpt.Disabled = !_ctrl.IsFpsLimitEnabled;
-            int[] values = { 30, 60, 120, 144, 0 };
-            int idx = System.Array.IndexOf(values, _ctrl.FpsLimit);
+            int idx = System.Array.IndexOf(FpsLimitValues, _ctrl.FpsLimit);
             fpsOpt.Selected = idx >= 0 ? idx : 1; // default 60
         }
 
