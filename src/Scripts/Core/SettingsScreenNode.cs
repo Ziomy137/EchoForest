@@ -35,6 +35,10 @@ public partial class SettingsScreenNode : CanvasLayer
         WireButtons();
 
         RefreshUI();
+
+        // Create the screen overlay and initialise it with cached values so
+        // brightness/gamma take effect as soon as the Settings screen opens.
+        ApplyPostProcess();
     }
 
     // ── Dropdown population ───────────────────────────────────────────────────
