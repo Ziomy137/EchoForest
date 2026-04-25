@@ -36,6 +36,15 @@ public sealed class SettingsController : ISettingsController
     public SettingsController(IDisplayServer displayServer)
     {
         _display = displayServer ?? throw new ArgumentNullException(nameof(displayServer));
+
+        // Restore last committed values from the in-process cache so the UI
+        // shows previously applied settings instead of hard-coded defaults.
+        _windowMode = _cWindowMode = SettingsCache.WindowMode;
+        _monitorIndex = _cMonitorIndex = SettingsCache.MonitorIndex;
+        _fpsLimit = _cFpsLimit = SettingsCache.FpsLimit;
+        _vSync = _cVSync = SettingsCache.VSync;
+        _brightness = _cBrightness = SettingsCache.Brightness;
+        _gamma = _cGamma = SettingsCache.Gamma;
     }
 
     // ── ISettingsController — state ───────────────────────────────────────────
@@ -77,6 +86,10 @@ public sealed class SettingsController : ISettingsController
         _cVSync = _vSync;
         _cBrightness = _brightness;
         _cGamma = _gamma;
+
+        // Persist to static cache so the next SettingsController instance
+        // (after scene reload) starts from these committed values.
+        SettingsCache.Save(_windowMode, _monitorIndex, _fpsLimit, _vSync, _brightness, _gamma);
     }
 
     /// <inheritdoc/>

@@ -12,6 +12,12 @@ public class SettingsControllerTest
 {
     // ── Helpers ───────────────────────────────────────────────────────────────
 
+    [SetUp]
+    public void SetUp() => SettingsCache.Reset();
+
+    [TearDown]
+    public void TearDown() => SettingsCache.Reset();
+
     private static SettingsController Make() => new(new MockDisplayServer());
     private static (SettingsController ctrl, MockDisplayServer display) MakeWithDisplay()
     {
