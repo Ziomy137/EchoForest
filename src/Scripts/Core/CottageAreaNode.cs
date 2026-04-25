@@ -145,4 +145,12 @@ public partial class CottageAreaNode : Node2D
 		camera.SnapToPixels = true;
 		camera.SnapToTarget();
 	}
+
+	// ─── Input ────────────────────────────────────────────────────────────────
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("ui_cancel"))
+			GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+	}
 }
