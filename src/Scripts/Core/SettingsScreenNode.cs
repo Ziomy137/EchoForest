@@ -63,7 +63,7 @@ public partial class SettingsScreenNode : CanvasLayer
 
         if (FindChild("MonitorOption") is OptionButton mon)
         {
-            int count = Godot.DisplayServer.GetScreenCount();
+            int count = _display.GetScreenCount();
             for (int i = 0; i < count; i++)
                 mon.AddItem($"Monitor {i + 1}", i);
         }
