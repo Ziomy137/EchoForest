@@ -1,0 +1,240 @@
+[gd_scene format=3 uid="uid://bo8rkoid8h8s4"]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/SettingsScreenNode.cs" id="1_script"]
+
+; ── Shared button styles (reuse palette from MainMenu) ───────────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.176, 0.141, 0.086, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.239, 0.184, 0.094, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.102, 0.102, 0.102, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
+bg_color = Color(0.239, 0.239, 0.239, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="Theme" id="Theme_ui"]
+Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
+Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+Button/styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_pressed_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_disabled_color = Color(0.353, 0.353, 0.353, 1)
+
+; ── Scene tree ────────────────────────────────────────────────────────────────
+
+[node name="SettingsScreen" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_script")
+
+; Full-screen dark background
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.102, 0.102, 0.102, 1)
+
+; Centred column
+[node name="MenuContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ui")
+
+[node name="Layout" type="VBoxContainer" parent="MenuContainer"]
+custom_minimum_size = Vector2(480, 0)
+theme_override_constants/separation = 16
+
+; Title
+[node name="TitleLabel" type="Label" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="TitleSpacer" type="Control" parent="MenuContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 12)
+
+; ── Window Mode ───────────────────────────────────────────────────────────────
+[node name="WindowModeRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="WindowModeLabel" type="Label" parent="MenuContainer/Layout/WindowModeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window Mode"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="WindowModeOption" type="OptionButton" parent="MenuContainer/Layout/WindowModeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+; ── Monitor (hidden unless Borderless Fullscreen) ─────────────────────────────
+[node name="MonitorRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+visible = false
+
+[node name="MonitorLabel" type="Label" parent="MenuContainer/Layout/MonitorRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Monitor"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="MonitorOption" type="OptionButton" parent="MenuContainer/Layout/MonitorRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+; ── FPS Limit ─────────────────────────────────────────────────────────────────
+[node name="FpsLimitRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="FpsLimitLabel" type="Label" parent="MenuContainer/Layout/FpsLimitRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FPS Limit"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="FpsLimitOption" type="OptionButton" parent="MenuContainer/Layout/FpsLimitRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+; ── VSync ─────────────────────────────────────────────────────────────────────
+[node name="VSyncRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VSyncLabel" type="Label" parent="MenuContainer/Layout/VSyncRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "VSync"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="VSyncCheckBox" type="CheckBox" parent="MenuContainer/Layout/VSyncRow"]
+layout_mode = 2
+
+; ── Brightness ────────────────────────────────────────────────────────────────
+[node name="BrightnessRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BrightnessLabel" type="Label" parent="MenuContainer/Layout/BrightnessRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Brightness"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="BrightnessSlider" type="HSlider" parent="MenuContainer/Layout/BrightnessRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 200.0
+value = 100.0
+step = 1.0
+
+; ── Gamma ─────────────────────────────────────────────────────────────────────
+[node name="GammaRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="GammaLabel" type="Label" parent="MenuContainer/Layout/GammaRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gamma"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="GammaSlider" type="HSlider" parent="MenuContainer/Layout/GammaRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 200.0
+value = 100.0
+step = 1.0
+
+; ── Spacer before action buttons ──────────────────────────────────────────────
+[node name="ActionSpacer" type="Control" parent="MenuContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 16)
+
+; ── Action buttons ────────────────────────────────────────────────────────────
+[node name="ActionRow" type="HBoxContainer" parent="MenuContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BackButton" type="Button" parent="MenuContainer/Layout/ActionRow"]
+layout_mode = 2
+text = "Back"
+
+[node name="CancelButton" type="Button" parent="MenuContainer/Layout/ActionRow"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="ApplyButton" type="Button" parent="MenuContainer/Layout/ActionRow"]
+layout_mode = 2
+text = "Apply"
