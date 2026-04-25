@@ -139,7 +139,7 @@ public partial class SettingsScreenNode : CanvasLayer
             apply.Pressed += () => { _ctrl.Apply(); RefreshUI(); };
 
         if (FindChild("CancelButton") is Button cancel)
-            cancel.Pressed += () => { _ctrl.Cancel(); RefreshUI(); };
+            cancel.Pressed += () => { _ctrl.Cancel(); RevertDisplay(); RefreshUI(); };
 
         if (FindChild("BackButton") is Button back)
             back.Pressed += OnBack;
@@ -184,9 +184,26 @@ public partial class SettingsScreenNode : CanvasLayer
         _display.ApplyGamma(_ctrl.Gamma);
     }
 
+    /// <summary>
+    /// Re-applies all committed settings to the display server after
+    /// <see cref="ISettingsController.Cancel"/> reverts pending state.
+    /// Mirrors the <see cref="ISettingsController.Apply"/> call-through so that
+    /// runtime display state matches the controller's committed snapshot.
+    /// </summary>
+    private void RevertDisplay()
+    {
+        _display.ApplyWindowMode(_ctrl.WindowMode);
+        _display.ApplyVSync(_ctrl.VSync);
+        _display.ApplyFpsLimit(_ctrl.VSync ? 0 : _ctrl.FpsLimit);
+        _display.ApplyMonitor(_ctrl.MonitorIndex);
+        _display.ApplyBrightness(_ctrl.Brightness);
+        _display.ApplyGamma(_ctrl.Gamma);
+    }
+
     private void OnBack()
     {
         _ctrl.Cancel();
+        RevertDisplay();
         var loader = new GodotSceneLoader();
         loader.LoadScene(MainMenuConfig.SceneResPath);
     }
