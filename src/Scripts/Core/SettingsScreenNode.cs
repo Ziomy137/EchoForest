@@ -26,6 +26,7 @@ public partial class SettingsScreenNode : CanvasLayer
         _display = new GodotDisplayServer();
         _ctrl = new SettingsController(_display);
 
+        PopulateDropdowns();
         WireWindowModeOption();
         WireVSyncToggle();
         WireFpsLimitOption();
@@ -34,6 +35,33 @@ public partial class SettingsScreenNode : CanvasLayer
         WireButtons();
 
         RefreshUI();
+    }
+
+    // ── Dropdown population ───────────────────────────────────────────────────
+
+    private void PopulateDropdowns()
+    {
+        if (FindChild("WindowModeOption") is OptionButton wm)
+        {
+            wm.AddItem("Windowed", 0);
+            wm.AddItem("Borderless Fullscreen", 1);
+        }
+
+        if (FindChild("FpsLimitOption") is OptionButton fps)
+        {
+            fps.AddItem("30", 0);
+            fps.AddItem("60", 1);
+            fps.AddItem("120", 2);
+            fps.AddItem("144", 3);
+            fps.AddItem("Unlimited", 4);
+        }
+
+        if (FindChild("MonitorOption") is OptionButton mon)
+        {
+            int count = Godot.DisplayServer.GetScreenCount();
+            for (int i = 0; i < count; i++)
+                mon.AddItem($"Monitor {i + 1}", i);
+        }
     }
 
     // ── Signal wiring ─────────────────────────────────────────────────────────
@@ -97,11 +125,22 @@ public partial class SettingsScreenNode : CanvasLayer
 
     private void RefreshUI()
     {
+        if (FindChild("WindowModeOption") is OptionButton wmOpt)
+            wmOpt.Selected = _ctrl.WindowMode == WindowMode.BorderlessFullscreen ? 1 : 0;
+
         if (FindChild("FpsLimitOption") is OptionButton fpsOpt)
+        {
             fpsOpt.Disabled = !_ctrl.IsFpsLimitEnabled;
+            int[] values = { 30, 60, 120, 144, 0 };
+            int idx = System.Array.IndexOf(values, _ctrl.FpsLimit);
+            fpsOpt.Selected = idx >= 0 ? idx : 1; // default 60
+        }
 
         if (FindChild("MonitorRow") is Control monRow)
             monRow.Visible = _ctrl.IsMonitorDropdownVisible;
+
+        if (FindChild("MonitorOption") is OptionButton monOpt)
+            monOpt.Selected = System.Math.Clamp(_ctrl.MonitorIndex, 0, monOpt.ItemCount - 1);
 
         if (FindChild("BrightnessSlider") is HSlider bSlider)
             bSlider.Value = _ctrl.Brightness;
