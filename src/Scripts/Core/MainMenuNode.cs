@@ -19,7 +19,7 @@ public partial class MainMenuNode : CanvasLayer
 
     public override void _Ready()
     {
-        var sceneLoader = new SceneLoader();
+        var sceneLoader = new GodotSceneLoader();
         var appCtrl = new GodotApplicationController();
         var saveService = new NullSaveService();
         _controller = new MainMenuController(saveService, sceneLoader, appCtrl);

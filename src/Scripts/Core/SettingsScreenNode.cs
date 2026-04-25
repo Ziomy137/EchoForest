@@ -124,7 +124,7 @@ public partial class SettingsScreenNode : CanvasLayer
     private void OnBack()
     {
         _ctrl.Cancel();
-        var loader = new SceneLoader();
+        var loader = new GodotSceneLoader();
         loader.LoadScene(MainMenuConfig.SceneResPath);
     }
 }
