@@ -95,8 +95,7 @@ public sealed class GodotDisplayServer : IDisplayServer
         _sharedMat.SetShaderParameter("brightness", SettingsCache.Brightness / 100f);
         _sharedMat.SetShaderParameter("gamma", SettingsCache.Gamma / 100f);
 
-        var rect = new ColorRect { Name = "Rect", Color = Colors.White, Material = _sharedMat };
-        rect.AnchorLeft = 0f;
+        var rect = new ColorRect { Name = "Rect", Color = Colors.White, Material = _sharedMat }; rect.MouseFilter = Control.MouseFilterEnum.Ignore; // must not block input        rect.AnchorLeft = 0f;
         rect.AnchorTop = 0f;
         rect.AnchorRight = 1f;
         rect.AnchorBottom = 1f;
