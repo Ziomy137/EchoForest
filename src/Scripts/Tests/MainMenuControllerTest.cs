@@ -65,12 +65,12 @@ public class MainMenuControllerTest
     }
 
     [Test]
-    public void MainMenu_OnContinue_LoadsGameBootstrapScene()
+    public void MainMenu_OnContinue_LoadsContinueScene()
     {
         var sceneLoader = new MockSceneLoader();
         var ctrl = new MainMenuController(new MockSaveService(hasSave: true), sceneLoader);
         ctrl.OnContinue();
-        Assert.That(sceneLoader.LastRequestedPath, Is.EqualTo(MainMenuConfig.GameBootstrapScenePath));
+        Assert.That(sceneLoader.LastRequestedPath, Is.EqualTo(MainMenuConfig.ContinueScenePath));
     }
 
     // ── OnLoadGame ────────────────────────────────────────────────────────────
