@@ -46,11 +46,10 @@ public sealed class MainMenuController : IMainMenuController
     public void OnContinue()
     {
         if (!IsContinueEnabled)
-        {
             return;
-        }
 
-        _sceneLoader?.LoadScene(MainMenuConfig.GameBootstrapScenePath);
+        // Skip the bootstrap/loading screen — go directly to the game scene.
+        _sceneLoader?.LoadScene(MainMenuConfig.ContinueScenePath);
     }
 
     /// <inheritdoc/>

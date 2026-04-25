@@ -58,7 +58,7 @@ public sealed class SceneLoader : ISceneLoader
     /// <exception cref="ArgumentException">
     /// Path does not start with <c>res://</c> or does not end with <c>.tscn</c>.
     /// </exception>
-    private static void ValidatePath(string scenePath)
+    internal static void ValidatePath(string scenePath)
     {
         if (scenePath is null)
             throw new ArgumentNullException(nameof(scenePath), "Scene path must not be null.");

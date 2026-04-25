@@ -23,6 +23,8 @@ public partial class GameBootstrapNode : Node2D
 
     public override void _Ready()
     {
+        GameSession.Start();
+
         var loadingScreen = GetNodeOrNull<LoadingScreenNode>("LoadingScreen");
         loadingScreen?.Show();
 

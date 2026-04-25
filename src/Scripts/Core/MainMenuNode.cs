@@ -19,9 +19,9 @@ public partial class MainMenuNode : CanvasLayer
 
     public override void _Ready()
     {
-        var sceneLoader = new SceneLoader();
+        var sceneLoader = new GodotSceneLoader();
         var appCtrl = new GodotApplicationController();
-        var saveService = new NullSaveService();
+        var saveService = new GodotSessionSaveService();
         _controller = new MainMenuController(saveService, sceneLoader, appCtrl);
 
         WireButton("NewGameButton", _controller.OnNewGame);

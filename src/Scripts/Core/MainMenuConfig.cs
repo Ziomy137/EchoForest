@@ -8,8 +8,11 @@ public static class MainMenuConfig
     /// <summary>Main Menu scene resource path.</summary>
     public const string SceneResPath = "res://src/Scenes/MainMenu.tscn";
 
-    /// <summary>Game bootstrap scene loaded when starting or continuing a playthrough.</summary>
+    /// <summary>Game bootstrap scene loaded when starting a NEW playthrough.</summary>
     public const string GameBootstrapScenePath = "res://src/Scenes/GameBootstrap.tscn";
+
+    /// <summary>Game scene loaded directly when continuing an existing session (skips bootstrap).</summary>
+    public const string ContinueScenePath = "res://src/Scenes/TestArea_Cottage.tscn";
 
     /// <summary>Load Game screen scene resource path.</summary>
     public const string LoadGameScenePath = "res://src/Scenes/LoadGameScreen.tscn";

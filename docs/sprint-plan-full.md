@@ -151,29 +151,35 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 ### S5-02 — Settings Screen
 
+**Status: ✅ COMPLETED**
+
 **Type:** UI / Engine  
 **Assignee:** Developer  
 **Estimate:** 8 points
 
 **Tasks:**
 
-- [ ] Create `SettingsScreen.tscn` with all options from TDD §3.4:
+- [x] Create `SettingsScreen.tscn` with all options from TDD §3.4:
   - **Window Mode:** Windowed / Borderless Fullscreen (default: Windowed)
   - **Monitor:** dropdown (visible only in Borderless Fullscreen mode)
   - **FPS Limit:** 30 / 60 / 120 / 144 / Unlimited (grayed out when VSync active)
   - **VSync:** toggle (when enabled, FPS Limit is grayed out)
   - **Brightness:** slider 0–200% (default 100%)
   - **Gamma:** slider 0–200% (default 100%)
-- [ ] Create `SettingsController.cs` implementing `ISettingsController`:
-  - `ApplyWindowMode(WindowMode mode)` — calls `DisplayServer` APIs
-  - `ApplyFpsLimit(int fps)` — sets `Engine.MaxFps`
-  - `ApplyVSync(bool enabled)` — calls `DisplayServer.WindowSetVsyncMode()`
-  - `ApplyBrightness(float value)` — updates `ColorRect` shader uniform
-  - `ApplyGamma(float value)` — updates `ColorRect` shader uniform
-  - `ApplyMonitor(int index)` — applies display position for borderless
-- [ ] "Apply" button applies all pending changes; "Cancel" reverts to saved values
-- [ ] "Back" button returns to Main Menu or Pause Menu (context-aware)
-- [ ] All settings are immediately previewed in real-time as sliders move
+- [x] Create `WindowMode.cs` enum (`Windowed`, `BorderlessFullscreen`)
+- [x] Create `IDisplayServer` + `ISettingsController` interfaces
+- [x] Create `SettingsController.cs` implementing `ISettingsController`:
+  - `SetWindowMode`, `SetVSync`, `SetFpsLimit`, `SetMonitor`, `SetBrightness`, `SetGamma`
+  - `IsFpsLimitEnabled` — false when VSync on
+  - `IsMonitorDropdownVisible` — true when Borderless Fullscreen
+  - `Apply()` commits pending changes via `IDisplayServer`
+  - `Cancel()` reverts to last committed snapshot
+- [x] Create `MockDisplayServer` test double
+- [x] Create `GodotDisplayServer` Godot wrapper (excluded from coverage)
+- [x] Create `SettingsScreenNode.cs` Godot CanvasLayer wrapper (excluded from coverage)
+- [x] "Apply" button applies all pending changes; "Cancel" reverts to saved values
+- [x] "Back" button returns to Main Menu
+- [x] Brightness/Gamma sliders apply post-process in real-time via `GodotDisplayServer`
 
 **Acceptance Criteria:**
 
@@ -387,7 +393,7 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 | Story                    | Points | Owner     |
 | ------------------------ | ------ | --------- |
 | S5-01 Main Menu ✅       | 5      | Developer |
-| S5-02 Settings Screen    | 8      | Developer |
+| S5-02 Settings Screen ✅ | 8      | Developer |
 | S5-03 Config Persistence | 3      | Developer |
 | S5-04 Save/Load System   | 8      | Developer |
 | S5-05 Credits Screen     | 2      | Developer |

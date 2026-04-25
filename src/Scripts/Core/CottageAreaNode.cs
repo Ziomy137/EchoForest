@@ -130,8 +130,19 @@ public partial class CottageAreaNode : Node2D
 
 	private void SpawnPlayer()
 	{
-		var spawnPoint = GetNode<Marker2D>(CottageSceneConfig.PlayerSpawnName);
-		GetNode<Node2D>("Player").GlobalPosition = spawnPoint.GlobalPosition;
+		var player = GetNode<Node2D>("Player");
+
+		if (GameSession.HasPlayerPosition)
+		{
+			// Continue: restore last saved position instead of using spawn point.
+			player.GlobalPosition = new Vector2(GameSession.LastPlayerX, GameSession.LastPlayerY);
+		}
+		else
+		{
+			// New Game (or first load): place player at the scene spawn marker.
+			var spawnPoint = GetNode<Marker2D>(CottageSceneConfig.PlayerSpawnName);
+			player.GlobalPosition = spawnPoint.GlobalPosition;
+		}
 	}
 
 	// ─── Camera setup ─────────────────────────────────────────────────────────
@@ -144,5 +155,20 @@ public partial class CottageAreaNode : Node2D
 		camera.SetBounds(CottageSceneConfig.CameraBounds);
 		camera.SnapToPixels = true;
 		camera.SnapToTarget();
+	}
+
+	// ─── Input ────────────────────────────────────────────────────────────────
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			// Persist position so Continue restores the player here.
+			var player = GetNodeOrNull<Node2D>("Player");
+			if (player is not null)
+				GameSession.SavePlayerPosition(player.GlobalPosition.X, player.GlobalPosition.Y);
+
+			GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+		}
 	}
 }

@@ -12,5 +12,9 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot SceneTree wrapper — requires scene tree")]
 public sealed class GodotApplicationController : IApplicationController
 {
-    public void Quit() => Engine.GetMainLoop()?.Notification((int)Node.NotificationWMCloseRequest);
+    public void Quit()
+    {
+        if (Engine.GetMainLoop() is SceneTree tree)
+            tree.Quit();
+    }
 }
