@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://bgb5c42sm3k73"]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/MainMenuNode.cs" id="1_script"]
+
+; ── Shared button StyleBoxFlat resources ─────────────────────────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
+bg_color = Color(0.176, 0.141, 0.086, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
+bg_color = Color(0.239, 0.184, 0.094, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
+bg_color = Color(0.102, 0.102, 0.102, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 12.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disabled"]
+bg_color = Color(0.239, 0.239, 0.239, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+; ── Shared theme applied to the menu container ───────────────────────────────
+
+[sub_resource type="Theme" id="Theme_menu"]
+Button/styles/normal = SubResource("StyleBoxFlat_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_hover")
+Button/styles/pressed = SubResource("StyleBoxFlat_pressed")
+Button/styles/disabled = SubResource("StyleBoxFlat_disabled")
+Button/styles/focus = SubResource("StyleBoxFlat_focus")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_pressed_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_disabled_color = Color(0.353, 0.353, 0.353, 1)
+Button/constants/h_separation = 4
+
+; ── Scene tree ────────────────────────────────────────────────────────────────
+
+[node name="MainMenu" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_script")
+
+; Full-screen dark background — Deep Black #1a1a1a
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.102, 0.102, 0.102, 1)
+
+; Centered column with title + buttons
+[node name="MenuContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_menu")
+
+[node name="Layout" type="VBoxContainer" parent="MenuContainer"]
+custom_minimum_size = Vector2(320, 0)
+theme_override_constants/separation = 12
+
+; Game title — Gold #ffd700
+[node name="TitleLabel" type="Label" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Echo Forest"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 52
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+; Spacer between title and buttons
+[node name="TitleSpacer" type="Control" parent="MenuContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
+
+[node name="NewGameButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "New Game"
+
+; Continue is initially disabled — enabled by MainMenuNode when save exists
+[node name="ContinueButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Continue"
+disabled = true
+
+[node name="LoadGameButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="SettingsButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Credits"
+
+; Small visual separator before Exit
+[node name="ExitSpacer" type="Control" parent="MenuContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 8)
+
+[node name="ExitButton" type="Button" parent="MenuContainer/Layout"]
+layout_mode = 2
+text = "Exit"
+
+; ── Background music placeholder ──────────────────────────────────────────────
+; No stream assigned — wire a real track here in S5 audio sprint.
+; The node is named "BackgroundMusic" so MainMenuNode can start/stop it.
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+bus = "Master"
+autoplay = false
