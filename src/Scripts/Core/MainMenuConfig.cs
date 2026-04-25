@@ -1,0 +1,22 @@
+namespace EchoForest.Core;
+
+/// <summary>
+/// Scene path constants for the Main Menu and its sub-screens.
+/// </summary>
+public static class MainMenuConfig
+{
+    /// <summary>Main Menu scene resource path.</summary>
+    public const string SceneResPath = "res://src/Scenes/MainMenu.tscn";
+
+    /// <summary>Game bootstrap scene loaded when starting or continuing a playthrough.</summary>
+    public const string GameBootstrapScenePath = "res://src/Scenes/GameBootstrap.tscn";
+
+    /// <summary>Load Game screen scene resource path.</summary>
+    public const string LoadGameScenePath = "res://src/Scenes/LoadGameScreen.tscn";
+
+    /// <summary>Settings screen scene resource path.</summary>
+    public const string SettingsScenePath = "res://src/Scenes/SettingsScreen.tscn";
+
+    /// <summary>Credits screen scene resource path.</summary>
+    public const string CreditsScenePath = "res://src/Scenes/CreditsScreen.tscn";
+}
