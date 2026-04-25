@@ -178,8 +178,8 @@ public partial class SettingsScreenNode : CanvasLayer
 
     private void ApplyPostProcess()
     {
-        // Brightness/Gamma are stored in GodotDisplayServer; hook a ColorRect
-        // shader or Environment here in a future audio/post-process sprint.
+        // GodotDisplayServer already applies brightness/gamma through its
+        // persistent screen-overlay shader; keep it in sync with controller state.
         _display.ApplyBrightness(_ctrl.Brightness);
         _display.ApplyGamma(_ctrl.Gamma);
     }
