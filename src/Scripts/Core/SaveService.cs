@@ -58,6 +58,7 @@ public sealed class SaveService : ISaveDataService
     public void Save(SaveData data, int slot)
     {
         if (data is null) throw new ArgumentNullException(nameof(data));
+        data.SaveTimestamp = DateTime.UtcNow;
         var json = JsonSerializer.Serialize(data, JsonOpts);
         _fs.WriteText(PathForSlot(slot), json);
     }
