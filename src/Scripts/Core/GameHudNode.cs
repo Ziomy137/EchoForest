@@ -103,7 +103,7 @@ public partial class GameHudNode : CanvasLayer
 
     private void RefreshHealthBar()
     {
-        _healthBar.Value = _ctrl.HealthFillRatio * 100f;
+        _healthBar.Value = _ctrl.HealthFillRatio * _healthBar.MaxValue;
         _healthLabel.Text = $"{(int)_ctrl.CurrentHealth}/{(int)_ctrl.MaxHealth}";
     }
 
