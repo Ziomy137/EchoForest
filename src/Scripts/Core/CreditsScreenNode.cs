@@ -18,6 +18,13 @@ public partial class CreditsScreenNode : CanvasLayer
 {
     public override void _Ready()
     {
+        GD.Print("[Credits] _Ready() called");
+        GD.Print($"[Credits] Children: {GetChildCount()}");
+
+        // List all direct and nested children for debugging
+        foreach (var child in GetChildren())
+            GD.Print($"[Credits] Child: {child.Name}");
+
         WireBackButton();
     }
 
