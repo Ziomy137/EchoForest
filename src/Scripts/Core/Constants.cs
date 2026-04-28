@@ -55,4 +55,12 @@ public static class Constants
 
     /// <summary>Camera lerp speed for smooth follow behaviour.</summary>
     public const float CameraFollowSpeed = 5f;
+
+    // ── Save ──────────────────────────────────────────────────────────────────
+
+    /// <summary>Number of available save slots.</summary>
+    public const int SaveSlotCount = 5;
+
+    /// <summary>Default player health at the start of a new game or when loading a save without health data.</summary>
+    public const float DefaultPlayerHealth = 100f;
 }

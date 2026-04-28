@@ -18,7 +18,14 @@ public class SaveServiceTest
     private static SaveService Make(MockFileSystem fs) => new(fs);
 
     private static MockFileSystem EmptyFs() => new();                         // no file
-    private static MockFileSystem CorruptFs() => new(content: "{{corrupted}}"); // exists but invalid
+
+    private static MockFileSystem CorruptFs()
+    {
+        var files = new Dictionary<string, string>();
+        for (int i = 1; i <= Constants.SaveSlotCount; i++)
+            files[$"user://save_slot_{i}.json"] = "{{corrupted}}";
+        return new MockFileSystem(files);
+    }
 
     // ── Save ──────────────────────────────────────────────────────────────────
 
@@ -36,7 +43,7 @@ public class SaveServiceTest
         var svc = Make(fs);
         svc.Save(new SaveData { PlayerX = 100f, PlayerY = 200f }, 1);
 
-        Assert.That(fs.WrittenContent, Is.Not.Null.And.Contains("100"));
+        Assert.That(fs.GetContent("user://save_slot_1.json"), Is.Not.Null.And.Contains("100"));
     }
 
     // ── Load — round-trip ─────────────────────────────────────────────────────
@@ -202,7 +209,6 @@ public class SaveServiceTest
     [Test]
     public void SaveService_GetSaveSlots_SavedSlotIsNotEmpty()
     {
-        // MockFileSystem shares one storage slot, so only slot 1 can be verified.
         var fs = EmptyFs();
         var svc = Make(fs);
         svc.Save(new SaveData { CurrentArea = "res://Cottage.tscn", PlaytimeTotalSeconds = 120 }, 1);

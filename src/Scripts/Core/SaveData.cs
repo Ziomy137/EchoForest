@@ -24,7 +24,7 @@ public sealed class SaveData
     public string CurrentArea { get; set; } = string.Empty;
 
     /// <summary>Player health at save time.</summary>
-    public float PlayerHealth { get; set; } = 100f;
+    public float PlayerHealth { get; set; } = Constants.DefaultPlayerHealth;
 
     // ── Quests ────────────────────────────────────────────────────────────────
 

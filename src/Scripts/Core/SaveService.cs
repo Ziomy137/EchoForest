@@ -21,8 +21,6 @@ public sealed class SaveService : ISaveDataService
     private readonly IFileSystem _fs;
     private readonly string _basePath;
 
-    private const int SlotCount = 5;
-
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         WriteIndented = true,
@@ -100,7 +98,7 @@ public sealed class SaveService : ISaveDataService
     public List<SaveSlotInfo> GetSaveSlots()
     {
         var result = new List<SaveSlotInfo>();
-        for (int slot = 1; slot <= SlotCount; slot++)
+        for (int slot = 1; slot <= Constants.SaveSlotCount; slot++)
         {
             var path = PathForSlot(slot);
             if (!_fs.Exists(path))
@@ -139,7 +137,7 @@ public sealed class SaveService : ISaveDataService
     /// </summary>
     public bool HasSaveFile()
     {
-        for (int slot = 1; slot <= SlotCount; slot++)
+        for (int slot = 1; slot <= Constants.SaveSlotCount; slot++)
             if (HasSave(slot))
                 return true;
         return false;

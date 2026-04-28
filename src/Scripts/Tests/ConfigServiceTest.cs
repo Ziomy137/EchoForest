@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 using EchoForest.Core;
 
@@ -42,7 +43,7 @@ public class ConfigServiceTest
         var svc = Make(fs);
         svc.Save(new UserConfig { Brightness = 150f });
 
-        Assert.That(fs.WrittenContent, Is.Not.Null.And.Contains("150"));
+        Assert.That(fs.GetContent("user://settings.json"), Is.Not.Null.And.Contains("150"));
     }
 
     [Test]
@@ -100,7 +101,7 @@ public class ConfigServiceTest
     [Test]
     public void ConfigService_MissingFile_ReturnsDefaults()
     {
-        var svc = Make(new MockFileSystem(simulateMissingFile: true));
+        var svc = Make(new MockFileSystem());
         var cfg = svc.Load();
 
         Assert.Multiple(() =>
@@ -116,7 +117,7 @@ public class ConfigServiceTest
     [Test]
     public void ConfigService_CorruptFile_ReturnsDefaults()
     {
-        var fs = new MockFileSystem(content: "not valid json{{{{");
+        var fs = new MockFileSystem(new Dictionary<string, string> { ["user://settings.json"] = "not valid json{{{{" });
         var svc = Make(fs);
 
         var cfg = svc.Load();
@@ -133,7 +134,7 @@ public class ConfigServiceTest
     [Test]
     public void ConfigService_EmptyFile_ReturnsDefaults()
     {
-        var fs = new MockFileSystem(content: "");
+        var fs = new MockFileSystem(new Dictionary<string, string> { ["user://settings.json"] = "" });
         var svc = Make(fs);
 
         var cfg = svc.Load();
@@ -181,7 +182,7 @@ public class ConfigServiceTest
     [Test]
     public void MockFileSystem_BeforeWrite_ExistsReturnsFalse()
     {
-        var fs = new MockFileSystem(); // simulateMissingFile=false but no content yet
+        var fs = new MockFileSystem(); // empty dictionary — no files yet
         Assert.That(fs.Exists("any"), Is.False);
     }
 
@@ -196,16 +197,16 @@ public class ConfigServiceTest
     [Test]
     public void MockFileSystem_FileExistsFalse_ReadThrows()
     {
-        var fs = new MockFileSystem(simulateMissingFile: true);
+        var fs = new MockFileSystem(); // empty — file does not exist
         Assert.Throws<System.IO.FileNotFoundException>(() => fs.ReadText("any"));
     }
 
     [Test]
     public void MockFileSystem_PreseededContent_ExistsTrue()
     {
-        var fs = new MockFileSystem(content: "{\"FpsLimit\":30}");
-        Assert.That(fs.Exists("any"), Is.True);
-        Assert.That(fs.ReadText("any"), Does.Contain("FpsLimit"));
+        var fs = new MockFileSystem(new Dictionary<string, string> { ["user://settings.json"] = "{\"FpsLimit\":30}" });
+        Assert.That(fs.Exists("user://settings.json"), Is.True);
+        Assert.That(fs.ReadText("user://settings.json"), Does.Contain("FpsLimit"));
     }
 
     // ── Null constructor guard ────────────────────────────────────────────────
