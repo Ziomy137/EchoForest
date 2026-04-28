@@ -60,84 +60,115 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_color = Color(1.0, 0.843, 0.0, 1)
 Button/colors/font_pressed_color = Color(1.0, 0.843, 0.0, 1)
 
-; ── RichTextLabel style (dark semi-transparent background) ───────────────────
+; ── Panel background style ────────────────────────────────────────────────────
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_credits_bg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.063, 0.043, 0.024, 0.92)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-content_margin_left = 32.0
-content_margin_right = 32.0
-content_margin_top = 24.0
-content_margin_bottom = 24.0
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 20.0
+content_margin_bottom = 20.0
 
 ; ── Scene tree ────────────────────────────────────────────────────────────────
 
 [node name="CreditsScreen" type="CanvasLayer" script=ExtResource("1_script")]
 
+; Full-screen dark background
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.055, 0.039, 0.02, 1)
 
+; Root VBox — full screen with comfortable margins
 [node name="VBox" type="VBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 40.0
+offset_right = -80.0
+offset_bottom = -40.0
 theme = SubResource("Theme_ui")
+theme_override_constants/separation = 20
 
+; Screen title
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
-text = "Echo Forest"
+text = "Credits"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 40
 theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+; Two-column content area — expands to fill available height
+[node name="Columns" type="HBoxContainer" parent="VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-vertical_scroll_mode = 0
+theme_override_constants/separation = 24
 
-[node name="CreditsLabel" type="RichTextLabel" parent="VBox/ScrollContainer"]
+; ── Left column ───────────────────────────────────────────────────────────────
+
+[node name="LeftPanel" type="PanelContainer" parent="VBox/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
-fit_content = true
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="LeftLabel" type="RichTextLabel" parent="VBox/Columns/LeftPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
-theme_override_styles/normal = SubResource("StyleBoxFlat_credits_bg")
+fit_content = true
+scroll_active = false
 theme_override_colors/default_color = Color(0.878, 0.863, 0.824, 1)
-text = "[center][b]Studio[/b]
+text = "[b][color=#ffd700]Studio[/color][/b]
 Ziomy137 Studio
 
-[b]Lead Developer[/b]
+[b][color=#ffd700]Lead Developer[/color][/b]
 Filip Klos
 
-[b]Developer[/b]
-Filip Klos
-
-[b]Artist[/b]
+[b][color=#ffd700]Artist[/color][/b]
 [Placeholder]
 
-[b]Level Designer[/b]
+[b][color=#ffd700]Level Designer[/color][/b]
+[Placeholder]"
+
+; ── Right column ──────────────────────────────────────────────────────────────
+
+[node name="RightPanel" type="PanelContainer" parent="VBox/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="RightLabel" type="RichTextLabel" parent="VBox/Columns/RightPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+theme_override_colors/default_color = Color(0.878, 0.863, 0.824, 1)
+text = "[b][color=#ffd700]QA & Testing[/color][/b]
 [Placeholder]
 
-[b]QA & Testing[/b]
-[Placeholder]
-
-[b]Tools & Technologies[/b]
+[b][color=#ffd700]Tools & Technologies[/color][/b]
 Godot 4
 NUnit
 GUT
 GitHub Actions
 
-[b]Special Thanks[/b]
+[b][color=#ffd700]Special Thanks[/color][/b]
 The open-source community
 
-[i]Thank you for playing Echo Forest.[/i][/center]"
+[i]Thank you for playing Echo Forest.[/i]"
+
+; ── Back button — always visible at the bottom ────────────────────────────────
 
 [node name="BackButton" type="Button" parent="VBox"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Back"
+text = "Back to Main Menu"

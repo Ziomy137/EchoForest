@@ -161,14 +161,15 @@ public partial class CottageAreaNode : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event.IsActionPressed("ui_cancel"))
+		if (@event.IsActionPressed("pause") && !GetTree().Paused)
 		{
-			// Persist position so Continue restores the player here.
-			var player = GetNodeOrNull<Node2D>("Player");
-			if (player is not null)
-				GameSession.SavePlayerPosition(player.GlobalPosition.X, player.GlobalPosition.Y);
-
-			GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+			GetViewport().SetInputAsHandled();
+			// Add the node first so _Ready() and signal wiring complete before the
+			// tree is paused. SetDeferred applies the pause at end-of-frame,
+			// which is the standard Godot pattern for pause menus.
+			GetTree().Root.AddChild(
+				GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate());
+			GetTree().SetDeferred("paused", true);
 		}
 	}
 }

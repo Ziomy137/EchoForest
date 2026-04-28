@@ -22,4 +22,7 @@ public static class MainMenuConfig
 
     /// <summary>Credits screen scene resource path.</summary>
     public const string CreditsScenePath = "res://src/Scenes/CreditsScreen.tscn";
+
+    /// <summary>Pause menu overlay scene resource path.</summary>
+    public const string PauseMenuScenePath = "res://src/Scenes/PauseMenu.tscn";
 }
