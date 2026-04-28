@@ -81,6 +81,7 @@ process_mode = 3
 
 ; Semi-transparent dark overlay covering the full viewport.
 [node name="Overlay" type="ColorRect" parent="."]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -88,14 +89,17 @@ color = Color(0, 0, 0, 0.6)
 
 ; Centred panel container holding the menu buttons.
 [node name="Center" type="CenterContainer" parent="."]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Panel" type="PanelContainer" parent="Center"]
+process_mode = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+process_mode = 3
 theme = SubResource("Theme_ui")
 custom_minimum_size = Vector2(280, 0)
 
@@ -111,17 +115,21 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 16)
 
 [node name="ResumeButton" type="Button" parent="Center/Panel/VBox"]
+process_mode = 3
 layout_mode = 2
 text = "Resume"
 
 [node name="SettingsButton" type="Button" parent="Center/Panel/VBox"]
+process_mode = 3
 layout_mode = 2
 text = "Settings"
 
 [node name="SaveGameButton" type="Button" parent="Center/Panel/VBox"]
+process_mode = 3
 layout_mode = 2
 text = "Save Game"
 
 [node name="MainMenuButton" type="Button" parent="Center/Panel/VBox"]
+process_mode = 3
 layout_mode = 2
 text = "Return to Main Menu"
