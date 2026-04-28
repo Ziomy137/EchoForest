@@ -156,19 +156,4 @@ public partial class CottageAreaNode : Node2D
 		camera.SnapToPixels = true;
 		camera.SnapToTarget();
 	}
-
-	// ─── Input ────────────────────────────────────────────────────────────────
-
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (@event.IsActionPressed("ui_cancel"))
-		{
-			// Persist position so Continue restores the player here.
-			var player = GetNodeOrNull<Node2D>("Player");
-			if (player is not null)
-				GameSession.SavePlayerPosition(player.GlobalPosition.X, player.GlobalPosition.Y);
-
-			GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
-		}
-	}
 }
