@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://bgmhud01ef26"]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/GameHudNode.cs" id="1_script"]
+
+; ── Shared styles ─────────────────────────────────────────────────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.545, 0.0, 0.0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.1, 0.1, 0.1, 0.85)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bg"]
+bg_color = Color(0.063, 0.043, 0.024, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+
+; ── Scene tree ────────────────────────────────────────────────────────────────
+
+[node name="GameHUD" type="CanvasLayer" script=ExtResource("1_script")]
+layer = 10
+
+; ── Top-left: health + quest objective ───────────────────────────────────────
+
+[node name="TopLeft" type="VBoxContainer" parent="."]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 280.0
+offset_bottom = 200.0
+
+[node name="HealthBar" type="ProgressBar" parent="TopLeft"]
+layout_mode = 2
+custom_minimum_size = Vector2(260, 18)
+max_value = 100.0
+value = 100.0
+show_percentage = false
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+
+[node name="HealthLabel" type="Label" parent="TopLeft"]
+layout_mode = 2
+text = "0/0"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+
+[node name="QuestPanel" type="PanelContainer" parent="TopLeft"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bg")
+
+[node name="QuestVBox" type="VBoxContainer" parent="TopLeft/QuestPanel"]
+layout_mode = 2
+
+[node name="QuestNameLabel" type="Label" parent="TopLeft/QuestPanel/QuestVBox"]
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="QuestObjectiveLabel" type="Label" parent="TopLeft/QuestPanel/QuestVBox"]
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+autowrap_mode = 2
+
+[node name="QuestProgressLabel" type="Label" parent="TopLeft/QuestPanel/QuestVBox"]
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+; ── Top-right: equipment display ─────────────────────────────────────────────
+
+[node name="TopRight" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 48.0
+
+[node name="WeaponLabel" type="Label" parent="TopRight"]
+layout_mode = 2
+text = "—"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+horizontal_alignment = 2
+
+; ── Bottom-center: interaction prompt ────────────────────────────────────────
+
+[node name="BottomCenter" type="CenterContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+
+[node name="InteractionPromptLabel" type="Label" parent="BottomCenter"]
+layout_mode = 2
+text = ""
+visible = false
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+; ── Bottom-right: minimap placeholder ────────────────────────────────────────
+
+[node name="MinimapPlaceholder" type="ColorRect" parent="."]
+anchors_preset = 4
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -120.0
+offset_right = -12.0
+offset_bottom = -12.0
+color = Color(0.063, 0.043, 0.024, 0.7)
+
+[node name="MinimapLabel" type="Label" parent="MinimapPlaceholder"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Map"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
