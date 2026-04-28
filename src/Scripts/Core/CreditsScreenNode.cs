@@ -17,8 +17,6 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
 public partial class CreditsScreenNode : CanvasLayer
 {
-    private const float ScrollDuration = 20f; // seconds for full scroll
-
     private CreditsController _ctrl = null!;
 
     public override void _Ready()
@@ -32,16 +30,19 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void StartAutoScroll()
     {
+        if (FindChild("ScrollContainer") is not ScrollContainer scrollContainer)
+            return;
         if (FindChild("CreditsLabel") is not RichTextLabel label)
             return;
 
-        // Tween scrolls the RichTextLabel from position 0 to fully off-screen.
+        // Scroll the container from top (0) to bottom of content.
+        scrollContainer.ScrollVertical = 0;
         var tween = CreateTween();
         tween.TweenProperty(
-            label,
-            "position:y",
-            -label.Size.Y,
-            ScrollDuration);
+            scrollContainer,
+            "scroll_vertical",
+            label.GetContentHeight(),
+            Constants.CreditsScrollDuration);
     }
 
     // ── Button wiring ─────────────────────────────────────────────────────────

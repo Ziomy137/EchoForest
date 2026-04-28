@@ -112,4 +112,10 @@ public class ConstantsTest
     [Test]
     public void DefaultPlayerHealth_IsOneHundred() =>
         Assert.That(Constants.DefaultPlayerHealth, Is.EqualTo(100f).Within(0.001f));
+
+    // ── Credits ───────────────────────────────────────────────────────────────
+
+    [Test]
+    public void CreditsScrollDuration_IsPositive() =>
+        Assert.That(Constants.CreditsScrollDuration, Is.GreaterThan(0f));
 }
