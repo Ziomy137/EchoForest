@@ -52,15 +52,14 @@ public partial class LoadGameScreenNode : CanvasLayer
         {
             btn.Disabled = info.IsEmpty;
             if (!info.IsEmpty)
-                WireLoadButton(displayNum, info);
+                WireLoadButton(btn, displayNum, info);
         }
     }
 
     // ── Signal wiring ─────────────────────────────────────────────────────────
 
-    private void WireLoadButton(int slot, SaveSlotInfo info)
+    private void WireLoadButton(Button btn, int slot, SaveSlotInfo info)
     {
-        if (FindChild($"LoadButton{slot}") is not Button btn) return;
         var loader = new GodotSceneLoader();
         btn.Pressed += () =>
         {

@@ -21,6 +21,8 @@ public sealed class SaveService : ISaveDataService
     private readonly IFileSystem _fs;
     private readonly string _basePath;
 
+    private const int SlotCount = 5;
+
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         WriteIndented = true,
@@ -90,8 +92,7 @@ public sealed class SaveService : ISaveDataService
     public List<SaveSlotInfo> GetSaveSlots()
     {
         var result = new List<SaveSlotInfo>();
-        // Scan slots 1–5 (matching the 5-slot UI from S5-03 SaveGameScreen).
-        for (int slot = 1; slot <= 5; slot++)
+        for (int slot = 1; slot <= SlotCount; slot++)
         {
             var path = PathForSlot(slot);
             if (!_fs.Exists(path))
@@ -130,7 +131,7 @@ public sealed class SaveService : ISaveDataService
     /// </summary>
     public bool HasSaveFile()
     {
-        for (int slot = 1; slot <= 5; slot++)
+        for (int slot = 1; slot <= SlotCount; slot++)
             if (HasSave(slot))
                 return true;
         return false;
