@@ -35,9 +35,9 @@ public partial class GameHudNode : CanvasLayer
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
         _healthLabel = GetNode<Label>("TopLeft/HealthLabel");
-        _questNameLabel = GetNode<Label>("TopLeft/QuestPanel/QuestNameLabel");
-        _questObjectiveLabel = GetNode<Label>("TopLeft/QuestPanel/QuestObjectiveLabel");
-        _questProgressLabel = GetNode<Label>("TopLeft/QuestPanel/QuestProgressLabel");
+        _questNameLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestNameLabel");
+        _questObjectiveLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestObjectiveLabel");
+        _questProgressLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestProgressLabel");
         _interactionPromptLabel = GetNode<Label>("BottomCenter/InteractionPromptLabel");
         _weaponLabel = GetNode<Label>("TopRight/WeaponLabel");
 
