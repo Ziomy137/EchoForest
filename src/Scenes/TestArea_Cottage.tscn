@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://casdwwy7lo7q" path="res://src/Assets/Data/IsometricTileSet.tres" id="2_tileset"]
 [ext_resource type="PackedScene" path="res://src/Scenes/Player.tscn" id="3_player"]
 [ext_resource type="Script" uid="uid://bp5oa24oojjch" path="res://src/Scripts/Core/IsometricCameraNode.cs" id="4_camera"]
-[ext_resource type="PackedScene" uid="uid://cqhud1demo001" path="res://src/Scenes/HUD.tscn" id="5_hud"]
+[ext_resource type="PackedScene" uid="uid://bgmhud01ef26" path="res://src/Scenes/GameHUD.tscn" id="5_hud"]
 
 [node name="TestArea_Cottage" type="Node2D" unique_id=424375799]
 y_sort_enabled = true
