@@ -37,6 +37,8 @@ public sealed class MockFileSystem : IFileSystem
 
     public void WriteText(string path, string content) => _content = content;
 
+    public void Delete(string path) => _content = null;
+
     /// <summary>Returns the last value written via <see cref="WriteText"/>.</summary>
     public string? WrittenContent => _content;
 }

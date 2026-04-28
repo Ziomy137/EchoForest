@@ -287,11 +287,12 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Type:** System  
 **Assignee:** Developer  
-**Estimate:** 8 points
+**Estimate:** 8 points  
+**Status: ✅ COMPLETED** (save triggers at area transitions deferred to gameplay sprint)
 
 **Tasks:**
 
-- [ ] Define `SaveData.cs` — serializable data class containing:
+- [x] Define `SaveData.cs` — serializable data class containing:
   - `PlayerPosition` (Vector2 as float pair)
   - `CurrentArea` (enum or string scene path)
   - `QuestStates` (dictionary: quest ID → `QuestState` enum)
@@ -300,15 +301,18 @@ Coverage gate: PRs blocked if coverage drops below 90%.
   - `PlayerHealth` (float)
   - `SaveTimestamp` (DateTime, UTC)
   - `PlaytimeTotalSeconds` (double)
-- [ ] Create `SaveService.cs` implementing `ISaveService`:
+- [x] Create `SaveService.cs` implementing `ISaveDataService` (extends `ISaveService`):
   - `Save(SaveData data, int slot)` — writes to `user://save_slot_{slot}.json`
   - `Load(int slot) → SaveData` — reads from disk
   - `Delete(int slot)` — removes save file
   - `GetSaveSlots() → List<SaveSlotInfo>` — returns metadata for all slots
   - `HasSave(int slot) → bool`
-- [ ] Create `LoadGameScreen.tscn` — displays up to 3 save slots with timestamp, area, playtime
-- [ ] Integrate save trigger at: area transitions, dialogue completions, rest points
-- [ ] Apply loaded data to game systems on scene start
+  - `HasSaveFile() → bool` — scans slots 1–5; satisfies `ISaveService` compat for Continue button
+- [x] Create `LoadGameScreen.tscn` — displays 5 save slots with area, playtime, date; Load buttons disabled for empty slots
+- [x] `QuestState` enum, `SaveSlotInfo` metadata record, `SaveDataException` custom exception
+- [x] `IFileSystem.Delete()` added; `MainMenuNode` wired to real `SaveService`
+- [ ] Integrate save trigger at: area transitions, dialogue completions, rest points *(deferred — requires gameplay systems)*
+- [ ] Apply loaded data to game systems on scene start *(deferred)*
 
 **Acceptance Criteria:**
 
@@ -397,7 +401,7 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 | S5-01 Main Menu ✅       | 5      | Developer |
 | S5-02 Settings Screen ✅ | 8      | Developer |
 | S5-03 Config Persistence | 3      | Developer |
-| S5-04 Save/Load System   | 8      | Developer |
+| S5-04 Save/Load System ✅ | 8      | Developer |
 | S5-05 Credits Screen     | 2      | Developer |
 | **Total**                | **26** |           |
 

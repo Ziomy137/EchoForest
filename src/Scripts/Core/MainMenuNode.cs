@@ -26,7 +26,8 @@ public partial class MainMenuNode : CanvasLayer
 
         var sceneLoader = new GodotSceneLoader();
         var appCtrl = new GodotApplicationController();
-        var saveService = new GodotSessionSaveService();
+        // Use the real SaveService (S5-04) so the Continue button reflects actual save files.
+        var saveService = new SaveService(new GodotFileSystem());
         _controller = new MainMenuController(saveService, sceneLoader, appCtrl);
 
         WireButton("NewGameButton", _controller.OnNewGame);

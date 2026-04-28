@@ -156,4 +156,38 @@ public class SaveGameControllerTest
         var slot = new SaveSlot(Index: 0, SavedAt: DateTime.Now);
         Assert.That(slot.IsEmpty, Is.False);
     }
+
+    [Test]
+    public void SaveSlot_OptionalProperties_DefaultToNull()
+    {
+        var slot = new SaveSlot(Index: 2);
+        Assert.Multiple(() =>
+        {
+            Assert.That(slot.CharacterLevel, Is.Null);
+            Assert.That(slot.Location, Is.Null);
+            Assert.That(slot.PlayTime, Is.Null);
+        });
+    }
+
+    [Test]
+    public void SaveSlot_AllProperties_PreservedInRecord()
+    {
+        var playTime = TimeSpan.FromMinutes(90);
+        var slot = new SaveSlot(
+            Index: 1,
+            SaveName: "Run 1",
+            CharacterLevel: 5,
+            Location: "Cottage",
+            PlayTime: playTime,
+            SavedAt: new DateTime(2026, 4, 28));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(slot.Index, Is.EqualTo(1));
+            Assert.That(slot.SaveName, Is.EqualTo("Run 1"));
+            Assert.That(slot.CharacterLevel, Is.EqualTo(5));
+            Assert.That(slot.Location, Is.EqualTo("Cottage"));
+            Assert.That(slot.PlayTime, Is.EqualTo(playTime));
+        });
+    }
 }
