@@ -135,7 +135,7 @@ public partial class GameHudNode : CanvasLayer
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event.IsActionPressed("pause"))
+        if (@event.IsActionPressed("pause") && !GetTree().Paused)
             GetTree().Root.AddChild(
                 GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate());
     }

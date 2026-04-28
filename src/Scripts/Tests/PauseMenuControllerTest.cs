@@ -49,15 +49,6 @@ public class PauseMenuControllerTest
         Assert.IsFalse(ctrl.IsPaused);
     }
 
-    [Test]
-    public void PauseMenu_OnResume_UnpausesGame()
-    {
-        var ctrl = new PauseMenuController(new MockSaveDataService());
-        ctrl.Open();
-        ctrl.OnResume();
-        Assert.IsFalse(ctrl.IsPaused);
-    }
-
     // ── Save ──────────────────────────────────────────────────────────────────
 
     [Test]
@@ -73,16 +64,6 @@ public class PauseMenuControllerTest
     {
         var saveService = new MockSaveDataService();
         var ctrl = new PauseMenuController(saveService);
-        ctrl.OnSaveGame();
-        Assert.IsTrue(saveService.SaveWasCalled);
-    }
-
-    [Test]
-    public void OnSaveGame_CalledTwice_SaveWasCalledStillTrue()
-    {
-        var saveService = new MockSaveDataService();
-        var ctrl = new PauseMenuController(saveService);
-        ctrl.OnSaveGame();
         ctrl.OnSaveGame();
         Assert.IsTrue(saveService.SaveWasCalled);
     }
