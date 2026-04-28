@@ -25,10 +25,17 @@ public partial class SettingsScreenNode : CanvasLayer
 
     private SettingsController _ctrl = null!;
     private GodotDisplayServer _display = null!;
+    private IConfigService _config = null!;
 
     public override void _Ready()
     {
         _display = new GodotDisplayServer();
+        _config = new ConfigService(new GodotFileSystem());
+
+        // Load persisted settings and push them into SettingsCache so the
+        // controller initialises from the last saved values.
+        ApplyConfigToCache(_config.Load());
+
         _ctrl = new SettingsController(_display);
 
         PopulateDropdowns();
@@ -140,7 +147,7 @@ public partial class SettingsScreenNode : CanvasLayer
     private void WireButtons()
     {
         if (FindChild("ApplyButton") is Button apply)
-            apply.Pressed += () => { _ctrl.Apply(); RefreshUI(); };
+            apply.Pressed += () => { _ctrl.Apply(); SaveConfig(); RefreshUI(); };
 
         if (FindChild("CancelButton") is Button cancel)
             cancel.Pressed += () => { _ctrl.Cancel(); RevertDisplay(); RefreshUI(); };
@@ -209,5 +216,31 @@ public partial class SettingsScreenNode : CanvasLayer
         RevertDisplay();
         var loader = new GodotSceneLoader();
         loader.LoadScene(MainMenuConfig.SceneResPath);
+    }
+
+    // ── Config persistence ────────────────────────────────────────────────────
+
+    private static void ApplyConfigToCache(UserConfig cfg)
+    {
+        SettingsCache.Save(
+            cfg.WindowMode,
+            cfg.MonitorIndex,
+            cfg.FpsLimit,
+            cfg.VSync,
+            cfg.Brightness,
+            cfg.Gamma);
+    }
+
+    private void SaveConfig()
+    {
+        _config.Save(new UserConfig
+        {
+            WindowMode = _ctrl.WindowMode,
+            MonitorIndex = _ctrl.MonitorIndex,
+            FpsLimit = _ctrl.FpsLimit,
+            VSync = _ctrl.VSync,
+            Brightness = _ctrl.Brightness,
+            Gamma = _ctrl.Gamma,
+        });
     }
 }
