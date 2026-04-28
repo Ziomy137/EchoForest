@@ -22,6 +22,9 @@ public partial class PauseMenuNode : CanvasLayer
 
     public override void _Ready()
     {
+        // Must be Always so this node continues processing while the tree is paused.
+        ProcessMode = ProcessModeEnum.Always;
+
         _ctrl = new PauseMenuController(
             new SaveService(new GodotFileSystem()),
             new GodotSceneLoader());
