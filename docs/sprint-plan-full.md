@@ -421,7 +421,7 @@ These are prerequisites for all quest and story content.
 **Type:** UI  
 **Assignee:** Developer  
 **Estimate:** 8 points  
-**Status: ✅ COMPLETED** (Tween damage flash and pause menu wiring deferred to gameplay sprint)
+**Status: ✅ COMPLETED** (damage flash → S7-01; quest fade-in → S7-03; pause toggle → S6-02)
 
 **Tasks:**
 
@@ -438,9 +438,9 @@ These are prerequisites for all quest and story content.
   - `ShowInteractionPrompt(string action)` / `HideInteractionPrompt()`
   - `UpdateMinimap(float playerX, float playerY, string areaId)`
 - [x] `GameHudNode.cs` — Godot CanvasLayer wrapper (`[ExcludeFromCodeCoverage]`)
-- [ ] Health bar damage flash (Tween) _(deferred — requires gameplay damage events)_
-- [ ] Quest objective fade-in Tween _(deferred)_
-- [ ] Pause menu accessible from HUD via `pause` input action _(deferred — S6-02)_
+- [ ] Health bar damage flash (Tween) → **moved to S7-01** (subscribe to `PlayerHealthChangedEvent`)
+- [ ] Quest objective fade-in Tween → **moved to S7-03** (driven by quest events)
+- [ ] Pause menu toggle via `pause` input action → **moved to S6-02**
 
 **Acceptance Criteria:**
 
@@ -497,7 +497,8 @@ These are prerequisites for all quest and story content.
 
 - [ ] Create `PauseMenu.tscn` — overlay on `CanvasLayer` (highest Z-order)
 - [ ] Pause menu options: **Resume**, **Settings**, **Save Game**, **Return to Main Menu**
-- [ ] Toggle on `pause` input action; `get_tree().paused = true` halts game loop
+- [ ] Toggle on `pause` input action; `get_tree().paused = true` halts game loop _(moved from S6-01)_
+- [ ] Wire `GameHudNode` to detect `pause` input action and show `PauseMenu` overlay
 - [ ] Create `PauseMenuController.cs`:
   - `OnResume()` — unpauses
   - `OnSettings()` — opens Settings screen (shared with main menu)
@@ -734,6 +735,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - `PlayerDiedEvent`
   - `ItemPickedUpEvent(string itemId, int quantity)`
 - [ ] All game systems communicate exclusively through EventBus (no direct references between systems)
+- [ ] `GameHudNode` subscribes to `PlayerHealthChangedEvent` and triggers a red damage-flash Tween on the health bar _(moved from S6-01)_
 
 **Acceptance Criteria:**
 
@@ -876,6 +878,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - Subscribes to `QuestStartedEvent`, `QuestObjectiveCompletedEvent`, `QuestCompletedEvent`
   - Refreshes display automatically when events arrive
 - [ ] Pause game while journal is open
+- [ ] Quest objective HUD panel fades in via Tween when `SetQuestObjective` is called _(moved from S6-01)_
 
 **Acceptance Criteria:**
 
