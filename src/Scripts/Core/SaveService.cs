@@ -39,11 +39,18 @@ public sealed class SaveService : ISaveDataService
     public SaveService(IFileSystem fileSystem, string basePath = "user://")
     {
         _fs = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        _basePath = basePath;
+        _basePath = NormaliseBasePath(basePath);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
+    private static string NormaliseBasePath(string basePath)
+    {
+        if (string.IsNullOrWhiteSpace(basePath))
+            throw new ArgumentException("Base path must not be null, empty, or whitespace.", nameof(basePath));
+
+        return basePath.EndsWith("/", StringComparison.Ordinal) ? basePath : $"{basePath}/";
+    }
     private string PathForSlot(int slot) => $"{_basePath}save_slot_{slot}.json";
 
     // ── ISaveDataService ──────────────────────────────────────────────────────
