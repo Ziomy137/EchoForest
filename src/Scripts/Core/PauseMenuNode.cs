@@ -22,12 +22,16 @@ public partial class PauseMenuNode : CanvasLayer
 
     public override void _Ready()
     {
+        // Ensure this node (and children) process input while the tree is paused.
+        // This is set here in code in addition to the .tscn so it cannot be lost
+        // by scene re-import or editor overrides.
+        ProcessMode = ProcessModeEnum.Always;
+
         _ctrl = new PauseMenuController(
             new SaveService(new GodotFileSystem()),
             new GodotSceneLoader());
 
         _ctrl.Open();
-        // Tree is already paused by CottageAreaNode before AddChild was called.
         WireButtons();
     }
 

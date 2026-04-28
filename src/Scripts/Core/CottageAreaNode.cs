@@ -164,9 +164,12 @@ public partial class CottageAreaNode : Node2D
 		if (@event.IsActionPressed("pause") && !GetTree().Paused)
 		{
 			GetViewport().SetInputAsHandled();
-			GetTree().Paused = true;
+			// Add the node first so _Ready() and signal wiring complete before the
+			// tree is paused. SetDeferred applies the pause at end-of-frame,
+			// which is the standard Godot pattern for pause menus.
 			GetTree().Root.AddChild(
 				GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate());
+			GetTree().SetDeferred("paused", true);
 		}
 	}
 }
