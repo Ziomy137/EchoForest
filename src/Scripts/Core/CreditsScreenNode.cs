@@ -25,11 +25,14 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void WireBackButton()
     {
-        // Use GetTree() directly — more reliable than Engine.GetMainLoop() inside
-        // a signal handler on a CanvasLayer root scene.
         if (FindChild("BackButton") is Button btn)
-            btn.Pressed += () => GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+            btn.Pressed += OnBack;
         else
             GD.PrintErr("[CreditsScreenNode] BackButton not found in scene tree");
+    }
+
+    private void OnBack()
+    {
+        new GodotSceneLoader().LoadScene(MainMenuConfig.SceneResPath);
     }
 }

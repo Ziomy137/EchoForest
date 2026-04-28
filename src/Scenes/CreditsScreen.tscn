@@ -171,4 +171,4 @@ The open-source community
 [node name="BackButton" type="Button" parent="VBox"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "← Back to Main Menu"
+text = "Back to Main Menu"
