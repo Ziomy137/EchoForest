@@ -63,4 +63,9 @@ public static class Constants
 
     /// <summary>Default player health at the start of a new game or when loading a save without health data.</summary>
     public const float DefaultPlayerHealth = 100f;
+
+    // ── Credits ───────────────────────────────────────────────────────────────
+
+    /// <summary>Duration in seconds for the credits screen auto-scroll to complete.</summary>
+    public const float CreditsScrollDuration = 20f;
 }

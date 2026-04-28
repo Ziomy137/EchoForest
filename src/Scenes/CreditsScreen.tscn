@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://bcrdtscr01ef"]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/CreditsScreenNode.cs" id="1_script"]
+
+; ── Button styles (palette-compliant, matches other menu screens) ─────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.176, 0.141, 0.086, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.239, 0.184, 0.094, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.102, 0.102, 0.102, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="Theme" id="Theme_ui"]
+Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
+Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_pressed_color = Color(1.0, 0.843, 0.0, 1)
+
+; ── RichTextLabel style (dark semi-transparent background) ───────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_credits_bg"]
+bg_color = Color(0.063, 0.043, 0.024, 0.92)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 32.0
+content_margin_right = 32.0
+content_margin_top = 24.0
+content_margin_bottom = 24.0
+
+; ── Scene tree ────────────────────────────────────────────────────────────────
+
+[node name="CreditsScreen" type="CanvasLayer" script=ExtResource("1_script")]
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.055, 0.039, 0.02, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_ui")
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Echo Forest"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="CreditsLabel" type="RichTextLabel" parent="VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+fit_content = true
+bbcode_enabled = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_credits_bg")
+theme_override_colors/default_color = Color(0.878, 0.863, 0.824, 1)
+text = "[center][b]Studio[/b]
+Ziomy137 Studio
+
+[b]Lead Developer[/b]
+Filip Klos
+
+[b]Developer[/b]
+Filip Klos
+
+[b]Artist[/b]
+[Placeholder]
+
+[b]Level Designer[/b]
+[Placeholder]
+
+[b]QA & Testing[/b]
+[Placeholder]
+
+[b]Tools & Technologies[/b]
+Godot 4
+NUnit
+GUT
+GitHub Actions
+
+[b]Special Thanks[/b]
+The open-source community
+
+[i]Thank you for playing Echo Forest.[/i][/center]"
+
+[node name="BackButton" type="Button" parent="VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back"
