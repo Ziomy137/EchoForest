@@ -173,7 +173,12 @@ public class SaveServiceTest
         var fs = EmptyFs();
         var svc = Make(fs);
         svc.Save(new SaveData(), 3);
+
         Assert.That(svc.HasSaveFile(), Is.True);
+
+        var slots = svc.GetSaveSlots();
+        Assert.That(slots[0].IsEmpty, Is.True, "Saving to slot 3 should not populate slot 1");
+        Assert.That(slots[2].IsEmpty, Is.False, "Saving to slot 3 should populate slot 3");
     }
 
     // ── GetSaveSlots ──────────────────────────────────────────────────────────
