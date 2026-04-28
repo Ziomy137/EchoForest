@@ -77,6 +77,7 @@ content_margin_bottom = 32.0
 
 [node name="PauseMenu" type="CanvasLayer" script=ExtResource("1_script")]
 layer = 100
+process_mode = 3
 
 ; Semi-transparent dark overlay covering the full viewport.
 [node name="Overlay" type="ColorRect" parent="."]

@@ -22,9 +22,6 @@ public partial class PauseMenuNode : CanvasLayer
 
     public override void _Ready()
     {
-        // Must be Always so this node continues processing while the tree is paused.
-        ProcessMode = ProcessModeEnum.Always;
-
         _ctrl = new PauseMenuController(
             new SaveService(new GodotFileSystem()),
             new GodotSceneLoader());
@@ -43,13 +40,23 @@ public partial class PauseMenuNode : CanvasLayer
             resume.Pressed += OnResume;
 
         if (FindChild("SettingsButton") is Button settings)
-            settings.Pressed += _ctrl.OnSettings;
+            settings.Pressed += () =>
+            {
+                GetTree().Paused = false;
+                _ctrl.OnSettings();
+                QueueFree();
+            };
 
         if (FindChild("SaveGameButton") is Button save)
             save.Pressed += OnSaveGame;
 
         if (FindChild("MainMenuButton") is Button mainMenu)
-            mainMenu.Pressed += _ctrl.OnMainMenu;
+            mainMenu.Pressed += () =>
+            {
+                GetTree().Paused = false;
+                _ctrl.OnMainMenu();
+                QueueFree();
+            };
     }
 
     // ── Handlers that also update tree state ──────────────────────────────────
