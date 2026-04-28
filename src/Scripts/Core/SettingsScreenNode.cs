@@ -220,16 +220,7 @@ public partial class SettingsScreenNode : CanvasLayer
 
     // ── Config persistence ────────────────────────────────────────────────────
 
-    private static void ApplyConfigToCache(UserConfig cfg)
-    {
-        SettingsCache.Save(
-            cfg.WindowMode,
-            cfg.MonitorIndex,
-            cfg.FpsLimit,
-            cfg.VSync,
-            cfg.Brightness,
-            cfg.Gamma);
-    }
+    private static void ApplyConfigToCache(UserConfig cfg) => SettingsCache.Save(cfg);
 
     private void SaveConfig()
     {

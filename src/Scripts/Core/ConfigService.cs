@@ -51,7 +51,9 @@ public sealed class ConfigService : IConfigService
             var json = _fs.ReadText(_path);
             return JsonSerializer.Deserialize<UserConfig>(json, JsonOpts) ?? GetDefaults();
         }
-        catch (Exception)
+        catch (Exception e) when (e is System.Text.Json.JsonException
+                                      or System.IO.IOException
+                                      or UnauthorizedAccessException)
         {
             // Corrupt or unreadable file — fall back to defaults gracefully.
             return GetDefaults();

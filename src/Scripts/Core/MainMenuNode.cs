@@ -56,13 +56,7 @@ public partial class MainMenuNode : CanvasLayer
 
         // Push loaded values into SettingsCache so any subsequent
         // SettingsController construction starts from persisted values.
-        SettingsCache.Save(
-            cfg.WindowMode,
-            cfg.MonitorIndex,
-            cfg.FpsLimit,
-            cfg.VSync,
-            cfg.Brightness,
-            cfg.Gamma);
+        SettingsCache.Save(cfg);
 
         // Apply display settings immediately so the window mode, FPS cap,
         // and brightness/gamma are correct from the very first frame.

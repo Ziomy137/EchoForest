@@ -49,6 +49,15 @@ public static class SettingsCache
     }
 
     /// <summary>
+    /// Persists settings from a <see cref="UserConfig"/> instance.
+    /// Centralises the UserConfig → SettingsCache field mapping so callers
+    /// (e.g. <see cref="MainMenuNode"/>, <see cref="SettingsScreenNode"/>)
+    /// don't each duplicate the mapping.
+    /// </summary>
+    public static void Save(UserConfig cfg) =>
+        Save(cfg.WindowMode, cfg.MonitorIndex, cfg.FpsLimit, cfg.VSync, cfg.Brightness, cfg.Gamma);
+
+    /// <summary>
     /// Resets to factory defaults. Useful in tests and on first launch.
     /// </summary>
     public static void Reset()

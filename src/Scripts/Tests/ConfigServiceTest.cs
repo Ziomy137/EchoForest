@@ -100,7 +100,7 @@ public class ConfigServiceTest
     [Test]
     public void ConfigService_MissingFile_ReturnsDefaults()
     {
-        var svc = Make(new MockFileSystem(fileExists: false));
+        var svc = Make(new MockFileSystem(simulateMissingFile: true));
         var cfg = svc.Load();
 
         Assert.Multiple(() =>
@@ -181,7 +181,7 @@ public class ConfigServiceTest
     [Test]
     public void MockFileSystem_BeforeWrite_ExistsReturnsFalse()
     {
-        var fs = new MockFileSystem(fileExists: true); // fileExists=true but no content yet
+        var fs = new MockFileSystem(); // simulateMissingFile=false but no content yet
         Assert.That(fs.Exists("any"), Is.False);
     }
 
@@ -196,7 +196,7 @@ public class ConfigServiceTest
     [Test]
     public void MockFileSystem_FileExistsFalse_ReadThrows()
     {
-        var fs = new MockFileSystem(fileExists: false);
+        var fs = new MockFileSystem(simulateMissingFile: true);
         Assert.Throws<System.IO.FileNotFoundException>(() => fs.ReadText("any"));
     }
 
