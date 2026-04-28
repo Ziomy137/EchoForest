@@ -27,7 +27,9 @@ public sealed class ConfigService : IConfigService
     public ConfigService(IFileSystem fileSystem, string path = "user://settings.json")
     {
         _fs = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        _path = path;
+        _path = string.IsNullOrWhiteSpace(path)
+            ? throw new ArgumentException("Path cannot be null, empty, or whitespace.", nameof(path))
+            : path;
     }
 
     // ── IConfigService ────────────────────────────────────────────────────────
