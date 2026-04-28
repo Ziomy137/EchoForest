@@ -30,13 +30,17 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void StartAutoScroll()
     {
-        if (FindChild("ScrollContainer") is not ScrollContainer scrollContainer)
-            return;
-        if (FindChild("CreditsLabel") is not RichTextLabel label)
-            return;
+        var scrollContainer = GetNode<ScrollContainer>("VBox/ScrollContainer");
+        var label = GetNode<RichTextLabel>("VBox/ScrollContainer/CreditsLabel");
 
         // Scroll the container from top (0) to bottom of content.
         scrollContainer.ScrollVertical = 0;
+        // Defer tween start so layout is complete and GetContentHeight() is accurate.
+        CallDeferred(nameof(BeginScrollTween), scrollContainer, label);
+    }
+
+    private void BeginScrollTween(ScrollContainer scrollContainer, RichTextLabel label)
+    {
         var tween = CreateTween();
         tween.TweenProperty(
             scrollContainer,
@@ -49,7 +53,6 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void WireBackButton()
     {
-        if (FindChild("BackButton") is Button btn)
-            btn.Pressed += _ctrl.OnBack;
+        GetNode<Button>("VBox/BackButton").Pressed += _ctrl.OnBack;
     }
 }
