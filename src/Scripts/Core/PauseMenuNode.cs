@@ -1,0 +1,66 @@
+using System.Diagnostics.CodeAnalysis;
+using Godot;
+
+namespace EchoForest.Core;
+
+/// <summary>
+/// Godot <c>CanvasLayer</c> node for the Pause Menu overlay.
+///
+/// Wires Resume / Settings / Save Game / Return to Main Menu buttons to
+/// <see cref="PauseMenuController"/> and applies <c>GetTree().Paused</c>
+/// after each action.
+///
+/// All logic lives in the pure-C# <see cref="PauseMenuController"/> so it
+/// can be unit-tested independently of the Godot runtime.
+///
+/// Excluded from NUnit code coverage — requires the Godot scene tree.
+/// </summary>
+[ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
+public partial class PauseMenuNode : CanvasLayer
+{
+    private PauseMenuController _ctrl = null!;
+
+    public override void _Ready()
+    {
+        _ctrl = new PauseMenuController(
+            new SaveService(new GodotFileSystem()),
+            new GodotSceneLoader());
+
+        _ctrl.Open();
+        GetTree().Paused = true;
+
+        WireButtons();
+    }
+
+    // ── Button wiring ─────────────────────────────────────────────────────────
+
+    private void WireButtons()
+    {
+        if (FindChild("ResumeButton") is Button resume)
+            resume.Pressed += OnResume;
+
+        if (FindChild("SettingsButton") is Button settings)
+            settings.Pressed += _ctrl.OnSettings;
+
+        if (FindChild("SaveGameButton") is Button save)
+            save.Pressed += OnSaveGame;
+
+        if (FindChild("MainMenuButton") is Button mainMenu)
+            mainMenu.Pressed += _ctrl.OnMainMenu;
+    }
+
+    // ── Handlers that also update tree state ──────────────────────────────────
+
+    private void OnResume()
+    {
+        _ctrl.OnResume();
+        GetTree().Paused = false;
+        QueueFree();
+    }
+
+    private void OnSaveGame()
+    {
+        _ctrl.OnSaveGame();
+        // Pause state remains — player stays in pause menu after saving.
+    }
+}
