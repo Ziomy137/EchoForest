@@ -56,6 +56,9 @@ public interface IGameHudController
     /// <summary>Hides the interaction prompt and clears its text.</summary>
     void HideInteractionPrompt();
 
-    /// <summary>Records the player's minimap position and current area identifier.</summary>
-    void UpdateMinimap(float playerX, float playerY, string areaId);
+    /// <summary>
+    /// Records the player's minimap position and current area identifier.
+    /// <paramref name="areaId"/> may be <see langword="null"/> and is treated as an empty string.
+    /// </summary>
+    void UpdateMinimap(float playerX, float playerY, string? areaId);
 }
