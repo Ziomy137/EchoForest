@@ -232,20 +232,22 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 ### S5-03 — User Config Persistence
 
+**Status: ✅ COMPLETED**
+
 **Type:** System  
 **Assignee:** Developer  
 **Estimate:** 3 points
 
 **Tasks:**
 
-- [ ] Create `UserConfig.cs` — plain data class holding all settings:
+- [x] Create `UserConfig.cs` — plain data class holding all settings:
   - `WindowMode`, `MonitorIndex`, `FpsLimit`, `VSync`, `Brightness`, `Gamma`
-- [ ] Create `ConfigService.cs` implementing `IConfigService`:
+- [x] Create `ConfigService.cs` implementing `IConfigService`:
   - `Save(UserConfig config)` — serializes to JSON at `user://settings.json`
   - `Load() → UserConfig` — deserializes from disk; returns defaults if file absent
   - `GetDefaults() → UserConfig` — returns factory defaults
-- [ ] Load config on game start; apply before first frame renders
-- [ ] Settings screen calls `ConfigService.Save()` on "Apply"
+- [x] Load config on game start; apply before first frame renders
+- [x] Settings screen calls `ConfigService.Save()` on "Apply"
 
 **Acceptance Criteria:**
 

@@ -19,6 +19,11 @@ public partial class MainMenuNode : CanvasLayer
 
     public override void _Ready()
     {
+        // Load persisted settings on every launch so display state is restored
+        // before the first frame renders. Uses SettingsCache as the in-process
+        // bridge between ConfigService and SettingsController.
+        ApplyPersistedSettings();
+
         var sceneLoader = new GodotSceneLoader();
         var appCtrl = new GodotApplicationController();
         var saveService = new GodotSessionSaveService();
@@ -40,5 +45,27 @@ public partial class MainMenuNode : CanvasLayer
     {
         if (FindChild(nodeName) is not Button btn) return;
         btn.Pressed += action;
+    }
+
+    // ── Config persistence ────────────────────────────────────────────────────
+
+    private static void ApplyPersistedSettings()
+    {
+        var svc = new ConfigService(new GodotFileSystem());
+        var cfg = svc.Load();
+
+        // Push loaded values into SettingsCache so any subsequent
+        // SettingsController construction starts from persisted values.
+        SettingsCache.Save(cfg);
+
+        // Apply display settings immediately so the window mode, FPS cap,
+        // and brightness/gamma are correct from the very first frame.
+        var display = new GodotDisplayServer();
+        display.ApplyWindowMode(cfg.WindowMode);
+        display.ApplyVSync(cfg.VSync);
+        display.ApplyFpsLimit(cfg.VSync ? 0 : cfg.FpsLimit);
+        display.ApplyMonitor(cfg.MonitorIndex);
+        display.ApplyBrightness(cfg.Brightness);
+        display.ApplyGamma(cfg.Gamma);
     }
 }
