@@ -8,25 +8,25 @@ namespace EchoForest.Core;
 public sealed class MockFileSystem : IFileSystem
 {
     private string? _content;
-    private readonly bool _fileExists;
+    private readonly bool _simulateMissingFile;
 
-    /// <param name="fileExists">
-    ///   When <c>false</c>, <see cref="Exists"/> always returns <c>false</c>
-    ///   and <see cref="ReadText"/> throws (simulates missing file).
-    ///   When <c>true</c> (default), the file "exists" once written, or
+    /// <param name="simulateMissingFile">
+    ///   When <c>true</c>, <see cref="Exists"/> always returns <c>false</c>
+    ///   and <see cref="ReadText"/> throws (simulates a missing file).
+    ///   When <c>false</c> (default), the file "exists" once written, or
     ///   immediately if <paramref name="content"/> is provided.
     /// </param>
     /// <param name="content">
     ///   Optional pre-seeded file content. When provided the file is
     ///   treated as already existing (useful for corrupt-file tests).
     /// </param>
-    public MockFileSystem(bool fileExists = true, string? content = null)
+    public MockFileSystem(bool simulateMissingFile = false, string? content = null)
     {
-        _fileExists = fileExists;
+        _simulateMissingFile = simulateMissingFile;
         _content = content;
     }
 
-    public bool Exists(string path) => _fileExists && _content is not null;
+    public bool Exists(string path) => !_simulateMissingFile && _content is not null;
 
     public string ReadText(string path)
     {
