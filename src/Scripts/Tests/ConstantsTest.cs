@@ -102,4 +102,14 @@ public class ConstantsTest
     [Test]
     public void CameraFollowSpeed_IsPositive() =>
         Assert.That(Constants.CameraFollowSpeed, Is.GreaterThan(0f));
+
+    // ── Save ──────────────────────────────────────────────────────────────────
+
+    [Test]
+    public void SaveSlotCount_IsFive() =>
+        Assert.That(Constants.SaveSlotCount, Is.EqualTo(5));
+
+    [Test]
+    public void DefaultPlayerHealth_IsOneHundred() =>
+        Assert.That(Constants.DefaultPlayerHealth, Is.EqualTo(100f).Within(0.001f));
 }

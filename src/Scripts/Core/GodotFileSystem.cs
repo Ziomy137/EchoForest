@@ -26,4 +26,10 @@ public sealed class GodotFileSystem : IFileSystem
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
         file.StoreString(content);
     }
+
+    public void Delete(string path)
+    {
+        if (FileAccess.FileExists(path))
+            DirAccess.RemoveAbsolute(ProjectSettings.GlobalizePath(path));
+    }
 }

@@ -1,42 +1,46 @@
+using System.Collections.Generic;
+
 namespace EchoForest.Core;
 
 /// <summary>
 /// In-memory <see cref="IFileSystem"/> test double.
-/// Stores a single file's content as a string so tests can verify Save/Load
-/// round-trips without touching the real file system.
+/// Stores file contents in a <see cref="Dictionary{TKey,TValue}"/> keyed by path,
+/// so tests can verify per-path Save/Load round-trips and slot isolation
+/// without touching the real file system.
 /// </summary>
 public sealed class MockFileSystem : IFileSystem
 {
-    private string? _content;
-    private readonly bool _simulateMissingFile;
+    private readonly Dictionary<string, string> _files;
 
-    /// <param name="simulateMissingFile">
-    ///   When <c>true</c>, <see cref="Exists"/> always returns <c>false</c>
-    ///   and <see cref="ReadText"/> throws (simulates a missing file).
-    ///   When <c>false</c> (default), the file "exists" once written, or
-    ///   immediately if <paramref name="content"/> is provided.
-    /// </param>
-    /// <param name="content">
-    ///   Optional pre-seeded file content. When provided the file is
-    ///   treated as already existing (useful for corrupt-file tests).
-    /// </param>
-    public MockFileSystem(bool simulateMissingFile = false, string? content = null)
+    /// <summary>Creates an empty file system (no files exist).</summary>
+    public MockFileSystem()
     {
-        _simulateMissingFile = simulateMissingFile;
-        _content = content;
+        _files = new Dictionary<string, string>();
     }
 
-    public bool Exists(string path) => !_simulateMissingFile && _content is not null;
+    /// <param name="files">
+    ///   Pre-seeded path-to-content map. When provided, the corresponding paths
+    ///   are treated as already existing (useful for corrupt-file tests).
+    ///   The dictionary is copied so the caller's copy is not mutated.
+    /// </param>
+    public MockFileSystem(Dictionary<string, string> files)
+    {
+        _files = new Dictionary<string, string>(files);
+    }
+
+    public bool Exists(string path) => _files.ContainsKey(path);
 
     public string ReadText(string path)
     {
-        if (!Exists(path))
+        if (!_files.TryGetValue(path, out var content))
             throw new System.IO.FileNotFoundException($"Mock file not found: {path}");
-        return _content!;
+        return content;
     }
 
-    public void WriteText(string path, string content) => _content = content;
+    public void WriteText(string path, string content) => _files[path] = content;
 
-    /// <summary>Returns the last value written via <see cref="WriteText"/>.</summary>
-    public string? WrittenContent => _content;
+    public void Delete(string path) => _files.Remove(path);
+
+    /// <summary>Returns the content written to <paramref name="path"/>, or <c>null</c> if absent.</summary>
+    public string? GetContent(string path) => _files.TryGetValue(path, out var c) ? c : null;
 }

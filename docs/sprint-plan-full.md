@@ -287,11 +287,12 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Type:** System  
 **Assignee:** Developer  
-**Estimate:** 8 points
+**Estimate:** 8 points  
+**Status: ✅ COMPLETED** (save triggers at area transitions deferred to gameplay sprint)
 
 **Tasks:**
 
-- [ ] Define `SaveData.cs` — serializable data class containing:
+- [x] Define `SaveData.cs` — serializable data class containing:
   - `PlayerPosition` (Vector2 as float pair)
   - `CurrentArea` (enum or string scene path)
   - `QuestStates` (dictionary: quest ID → `QuestState` enum)
@@ -300,15 +301,16 @@ Coverage gate: PRs blocked if coverage drops below 90%.
   - `PlayerHealth` (float)
   - `SaveTimestamp` (DateTime, UTC)
   - `PlaytimeTotalSeconds` (double)
-- [ ] Create `SaveService.cs` implementing `ISaveService`:
+- [x] Create `SaveService.cs` implementing `ISaveDataService` (extends `ISaveService`):
   - `Save(SaveData data, int slot)` — writes to `user://save_slot_{slot}.json`
   - `Load(int slot) → SaveData` — reads from disk
   - `Delete(int slot)` — removes save file
   - `GetSaveSlots() → List<SaveSlotInfo>` — returns metadata for all slots
   - `HasSave(int slot) → bool`
-- [ ] Create `LoadGameScreen.tscn` — displays up to 3 save slots with timestamp, area, playtime
-- [ ] Integrate save trigger at: area transitions, dialogue completions, rest points
-- [ ] Apply loaded data to game systems on scene start
+  - `HasSaveFile() → bool` — scans slots 1–5; satisfies `ISaveService` compat for Continue button
+- [x] Create `LoadGameScreen.tscn` — displays 5 save slots with area, playtime, date; Load buttons disabled for empty slots
+- [x] `QuestState` enum, `SaveSlotInfo` metadata record, `SaveDataException` custom exception
+- [x] `IFileSystem.Delete()` added; `MainMenuNode` wired to real `SaveService`
 
 **Acceptance Criteria:**
 
@@ -392,14 +394,14 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Sprint 5 Summary:**
 
-| Story                    | Points | Owner     |
-| ------------------------ | ------ | --------- |
-| S5-01 Main Menu ✅       | 5      | Developer |
-| S5-02 Settings Screen ✅ | 8      | Developer |
-| S5-03 Config Persistence | 3      | Developer |
-| S5-04 Save/Load System   | 8      | Developer |
-| S5-05 Credits Screen     | 2      | Developer |
-| **Total**                | **26** |           |
+| Story                     | Points | Owner     |
+| ------------------------- | ------ | --------- |
+| S5-01 Main Menu ✅        | 5      | Developer |
+| S5-02 Settings Screen ✅  | 8      | Developer |
+| S5-03 Config Persistence  | 3      | Developer |
+| S5-04 Save/Load System ✅ | 8      | Developer |
+| S5-05 Credits Screen      | 2      | Developer |
+| **Total**                 | **26** |           |
 
 ---
 
@@ -628,6 +630,7 @@ These are prerequisites for all quest and story content.
 - [ ] Typewriter effect: characters appear one-by-one at configurable speed; pressing `interact` skips to full line
 - [ ] Dialogue boxes use approved palette colors
 - [ ] Game world does NOT pause during dialogue (unless quest cutscene)
+- [ ] Trigger auto-save on `OnConversationEnded` for story-critical NPC dialogues (calls `ISaveDataService.Save`)
 
 **Acceptance Criteria:**
 
@@ -805,6 +808,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - Publishes appropriate `EventBus` events on state changes
 - [ ] Create `QuestDatabase.cs` — loads all quest JSON files from `res://Assets/Data/Quests/`
 - [ ] Implement all 5 main quests as JSON data files (stubs — full dialogue content in Sprint 14)
+- [ ] Apply loaded `SaveData.QuestStates` to `QuestService` on game load (load-game integration)
 
 **Acceptance Criteria:**
 
@@ -1007,6 +1011,7 @@ player can walk from Cottage → Farm → Forest Path.
 - [ ] Add `SpawnPoint` nodes (named `Area2D` markers) to all scenes
 - [ ] Wire Cottage scene southern boundary → Forest Path scene northern entrance
 - [ ] Wire Cottage scene eastern boundary → Farm scene western entrance
+- [ ] Apply `SaveData.PlayerX` / `SaveData.PlayerY` to override default spawn point when starting from a loaded save
 
 **Acceptance Criteria:**
 
