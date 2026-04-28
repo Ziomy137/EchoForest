@@ -363,14 +363,17 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Type:** UI  
 **Assignee:** Developer  
-**Estimate:** 2 points
+**Estimate:** 2 points  
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Create `CreditsScreen.tscn` — scrolling credits using `RichTextLabel` or animated labels
-- [ ] Credit sections: Studio name, Lead Developer, Developer(s), Artist, Level Designer, QA, Tools used (Godot, NUnit, GUT, GitHub Actions)
-- [ ] Auto-scrolls from bottom to top; "Back" button returns to main menu at any point
-- [ ] Uses palette-compliant colors
+- [x] Create `CreditsScreen.tscn` — scrolling credits using `RichTextLabel`
+- [x] Credit sections: Studio name, Lead Developer, Developer(s), Artist, Level Designer, QA, Tools used (Godot, NUnit, GUT, GitHub Actions)
+- [x] Auto-scrolls via Tween; "Back" button returns to main menu at any point
+- [x] Uses palette-compliant colors
+- [x] `ICreditsController` interface + `CreditsController` pure-C# class
+- [x] `CreditsScreenNode.cs` Godot CanvasLayer wrapper (`[ExcludeFromCodeCoverage]`)
 
 **Acceptance Criteria:**
 
@@ -400,7 +403,7 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 | S5-02 Settings Screen ✅  | 8      | Developer |
 | S5-03 Config Persistence  | 3      | Developer |
 | S5-04 Save/Load System ✅ | 8      | Developer |
-| S5-05 Credits Screen      | 2      | Developer |
+| S5-05 Credits Screen ✅   | 2      | Developer |
 | **Total**                 | **26** |           |
 
 ---
