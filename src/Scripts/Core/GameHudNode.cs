@@ -66,14 +66,14 @@ public partial class GameHudNode : CanvasLayer
     }
 
     /// <summary>Updates the quest objective panel.</summary>
-    public void SetQuestObjective(string questName, string objectiveText, int current, int total)
+    public void SetQuestObjective(string? questName, string? objectiveText, int current, int total)
     {
         _ctrl.SetQuestObjective(questName, objectiveText, current, total);
         RefreshQuestPanel();
     }
 
     /// <summary>Shows the context-sensitive interaction prompt.</summary>
-    public void ShowInteractionPrompt(string action)
+    public void ShowInteractionPrompt(string? action)
     {
         _ctrl.ShowInteractionPrompt(action);
         RefreshInteractionPrompt();
@@ -87,7 +87,7 @@ public partial class GameHudNode : CanvasLayer
     }
 
     /// <summary>Updates the minimap player dot position.</summary>
-    public void UpdateMinimap(float playerX, float playerY, string areaId)
+    public void UpdateMinimap(float playerX, float playerY, string? areaId)
     {
         _ctrl.UpdateMinimap(playerX, playerY, areaId);
         // Minimap rendering is placeholder — future sprint will add minimap nodes.

@@ -81,7 +81,7 @@ public sealed class GameHudController : IGameHudController
         ActiveWeaponId = weaponId ?? string.Empty;
 
     /// <inheritdoc/>
-    public void SetQuestObjective(string questName, string objectiveText, int current, int total)
+    public void SetQuestObjective(string? questName, string? objectiveText, int current, int total)
     {
         CurrentQuestName = questName ?? string.Empty;
         CurrentObjectiveText = objectiveText ?? string.Empty;
@@ -89,7 +89,7 @@ public sealed class GameHudController : IGameHudController
     }
 
     /// <inheritdoc/>
-    public void ShowInteractionPrompt(string action)
+    public void ShowInteractionPrompt(string? action)
     {
         IsInteractionPromptVisible = true;
         InteractionPromptText = action ?? string.Empty;
@@ -103,7 +103,7 @@ public sealed class GameHudController : IGameHudController
     }
 
     /// <inheritdoc/>
-    public void UpdateMinimap(float playerX, float playerY, string areaId)
+    public void UpdateMinimap(float playerX, float playerY, string? areaId)
     {
         MinimapPlayerX = playerX;
         MinimapPlayerY = playerY;
