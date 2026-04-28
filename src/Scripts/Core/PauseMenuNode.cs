@@ -31,7 +31,7 @@ public partial class PauseMenuNode : CanvasLayer
         WireButtons();
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("pause"))
         {
@@ -44,27 +44,23 @@ public partial class PauseMenuNode : CanvasLayer
 
     private void WireButtons()
     {
-        if (FindChild("ResumeButton") is Button resume)
-            resume.Pressed += OnResume;
+        GetNode<Button>("Center/Panel/VBox/ResumeButton").Pressed += OnResume;
 
-        if (FindChild("SettingsButton") is Button settings)
-            settings.Pressed += () =>
-            {
-                GetTree().Paused = false;
-                _ctrl.OnSettings();
-                QueueFree();
-            };
+        GetNode<Button>("Center/Panel/VBox/SettingsButton").Pressed += () =>
+        {
+            GetTree().Paused = false;
+            _ctrl.OnSettings();
+            QueueFree();
+        };
 
-        if (FindChild("SaveGameButton") is Button save)
-            save.Pressed += OnSaveGame;
+        GetNode<Button>("Center/Panel/VBox/SaveGameButton").Pressed += OnSaveGame;
 
-        if (FindChild("MainMenuButton") is Button mainMenu)
-            mainMenu.Pressed += () =>
-            {
-                GetTree().Paused = false;
-                _ctrl.OnMainMenu();
-                QueueFree();
-            };
+        GetNode<Button>("Center/Panel/VBox/MainMenuButton").Pressed += () =>
+        {
+            GetTree().Paused = false;
+            _ctrl.OnMainMenu();
+            QueueFree();
+        };
     }
 
     // ── Handlers that also update tree state ──────────────────────────────────
