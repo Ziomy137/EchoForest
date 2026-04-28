@@ -121,8 +121,13 @@ public class ConfigServiceTest
 
         var cfg = svc.Load();
 
-        Assert.That(cfg, Is.Not.Null);
-        Assert.That(cfg.Brightness, Is.EqualTo(100f).Within(0.001f));
+        Assert.Multiple(() =>
+        {
+            Assert.That(cfg.WindowMode, Is.EqualTo(WindowMode.Windowed));
+            Assert.That(cfg.FpsLimit, Is.EqualTo(60));
+            Assert.That(cfg.Brightness, Is.EqualTo(100f).Within(0.001f));
+            Assert.That(cfg.Gamma, Is.EqualTo(100f).Within(0.001f));
+        });
     }
 
     [Test]
@@ -133,8 +138,13 @@ public class ConfigServiceTest
 
         var cfg = svc.Load();
 
-        Assert.That(cfg, Is.Not.Null);
-        Assert.That(cfg.FpsLimit, Is.EqualTo(60));
+        Assert.Multiple(() =>
+        {
+            Assert.That(cfg.WindowMode, Is.EqualTo(WindowMode.Windowed));
+            Assert.That(cfg.FpsLimit, Is.EqualTo(60));
+            Assert.That(cfg.Brightness, Is.EqualTo(100f).Within(0.001f));
+            Assert.That(cfg.Gamma, Is.EqualTo(100f).Within(0.001f));
+        });
     }
 
     // ── Save overwrites previous ──────────────────────────────────────────────
