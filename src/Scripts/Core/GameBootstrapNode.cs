@@ -25,6 +25,14 @@ public partial class GameBootstrapNode : Node2D
     {
         GameSession.Start();
 
+        // Auto-save slot 1 with an empty initial state so the Main Menu
+        // "Continue" button is enabled immediately after starting a new game.
+        var saveService = new SaveService(new GodotFileSystem());
+        saveService.Save(new SaveData
+        {
+            CurrentArea = CottageSceneConfig.SceneResPath,
+        }, slot: 1);
+
         var loadingScreen = GetNodeOrNull<LoadingScreenNode>("LoadingScreen");
         loadingScreen?.Show();
 
