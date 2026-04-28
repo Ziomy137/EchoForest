@@ -54,7 +54,7 @@ public class GameHudControllerTest
     {
         var ctrl = new GameHudController();
         ctrl.UpdateHealth(150f, 100f);
-        Assert.That(ctrl.HealthFillRatio, Is.LessThanOrEqualTo(1f));
+        Assert.That(ctrl.HealthFillRatio, Is.EqualTo(1f));
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class GameHudControllerTest
     {
         var ctrl = new GameHudController();
         ctrl.UpdateHealth(-10f, 100f);
-        Assert.That(ctrl.HealthFillRatio, Is.GreaterThanOrEqualTo(0f));
+        Assert.That(ctrl.HealthFillRatio, Is.EqualTo(0f));
     }
 
     [Test]
