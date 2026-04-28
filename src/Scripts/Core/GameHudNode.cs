@@ -131,12 +131,6 @@ public partial class GameHudNode : CanvasLayer
             : _ctrl.ActiveWeaponId;
     }
 
-    // ── Pause input ───────────────────────────────────────────────────────────
-
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event.IsActionPressed("pause") && !GetTree().Paused)
-            GetTree().Root.AddChild(
-                GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate());
-    }
+    // Pause input is handled by CottageAreaNode (root Node2D) — CanvasLayer
+    // nodes do not reliably receive _UnhandledInput in Godot 4.
 }
