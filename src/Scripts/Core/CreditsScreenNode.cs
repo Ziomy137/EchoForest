@@ -25,14 +25,15 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void WireBackButton()
     {
-        if (FindChild("BackButton") is Button btn)
+        var btn = FindChild("BackButton") as Button;
+        GD.Print($"[Credits] BackButton found: {btn != null}");
+        if (btn != null)
             btn.Pressed += OnBack;
-        else
-            GD.PrintErr("[CreditsScreenNode] BackButton not found in scene tree");
     }
 
     private void OnBack()
     {
-        new GodotSceneLoader().LoadScene(MainMenuConfig.SceneResPath);
+        GD.Print("[Credits] OnBack called, navigating to MainMenu");
+        GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
     }
 }
