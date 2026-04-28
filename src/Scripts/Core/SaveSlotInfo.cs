@@ -18,6 +18,17 @@ public sealed record SaveSlotInfo(
     public bool IsEmpty => SavedAt is null;
 
     /// <summary>Formatted play time as <c>h:mm:ss</c>.</summary>
-    public string PlaytimeDisplay =>
-        IsEmpty ? "—" : TimeSpan.FromSeconds(PlaytimeTotalSeconds).ToString(@"h\:mm\:ss");
+    public string PlaytimeDisplay
+    {
+        get
+        {
+            if (IsEmpty)
+            {
+                return "—";
+            }
+
+            var playtime = TimeSpan.FromSeconds(PlaytimeTotalSeconds);
+            return $"{(int)playtime.TotalHours}:{playtime.Minutes:D2}:{playtime.Seconds:D2}";
+        }
+    }
 }
