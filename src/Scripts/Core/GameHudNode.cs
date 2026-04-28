@@ -6,9 +6,11 @@ namespace EchoForest.Core;
 /// <summary>
 /// Godot <c>CanvasLayer</c> node for the full Game HUD.
 ///
-/// Reads state from <see cref="GameHudController"/> every process frame and
-/// updates scene-tree child nodes: health bar, health label, quest objective
-/// panel, interaction prompt, active weapon slot, and minimap placeholder.
+/// Reads state from <see cref="GameHudController"/> during the initial
+/// <see cref="_Ready"/> refresh and when explicit update methods are called,
+/// then updates scene-tree child nodes: health bar, health label, quest
+/// objective panel, interaction prompt, active weapon slot, and minimap
+/// placeholder.
 ///
 /// All HUD logic lives in the pure-C# <see cref="GameHudController"/> so it
 /// can be unit-tested independently of the Godot runtime.
