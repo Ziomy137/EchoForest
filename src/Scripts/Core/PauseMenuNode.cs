@@ -27,9 +27,17 @@ public partial class PauseMenuNode : CanvasLayer
             new GodotSceneLoader());
 
         _ctrl.Open();
-        GetTree().Paused = true;
-
+        // Tree is already paused by CottageAreaNode before AddChild was called.
         WireButtons();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("pause"))
+        {
+            GetViewport().SetInputAsHandled();
+            OnResume();
+        }
     }
 
     // ── Button wiring ─────────────────────────────────────────────────────────

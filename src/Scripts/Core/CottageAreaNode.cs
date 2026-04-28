@@ -162,7 +162,11 @@ public partial class CottageAreaNode : Node2D
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event.IsActionPressed("pause") && !GetTree().Paused)
+		{
+			GetViewport().SetInputAsHandled();
+			GetTree().Paused = true;
 			GetTree().Root.AddChild(
 				GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate());
+		}
 	}
 }
