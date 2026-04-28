@@ -49,6 +49,14 @@ public sealed class SaveService : ISaveDataService
 
         return basePath.EndsWith("/", StringComparison.Ordinal) ? basePath : $"{basePath}/";
     }
+
+    private static void ValidateSlot(int slot)
+    {
+        if (slot < 1 || slot > Constants.SaveSlotCount)
+            throw new ArgumentOutOfRangeException(nameof(slot),
+                $"Slot must be between 1 and {Constants.SaveSlotCount} (got {slot}).");
+    }
+
     private string PathForSlot(int slot) => $"{_basePath}save_slot_{slot}.json";
 
     // ── ISaveDataService ──────────────────────────────────────────────────────
@@ -56,6 +64,7 @@ public sealed class SaveService : ISaveDataService
     public void Save(SaveData data, int slot)
     {
         if (data is null) throw new ArgumentNullException(nameof(data));
+        ValidateSlot(slot);
         data.SaveTimestamp = DateTime.UtcNow;
         var json = JsonSerializer.Serialize(data, JsonOpts);
         _fs.WriteText(PathForSlot(slot), json);
@@ -63,6 +72,7 @@ public sealed class SaveService : ISaveDataService
 
     public SaveData Load(int slot)
     {
+        ValidateSlot(slot);
         var path = PathForSlot(slot);
         if (!_fs.Exists(path))
             throw new SaveDataException($"Save slot {slot} does not exist.");
@@ -90,6 +100,7 @@ public sealed class SaveService : ISaveDataService
 
     public void Delete(int slot)
     {
+        ValidateSlot(slot);
         var path = PathForSlot(slot);
         if (_fs.Exists(path))
             _fs.Delete(path);
@@ -126,7 +137,11 @@ public sealed class SaveService : ISaveDataService
         return result;
     }
 
-    public bool HasSave(int slot) => _fs.Exists(PathForSlot(slot));
+    public bool HasSave(int slot)
+    {
+        ValidateSlot(slot);
+        return _fs.Exists(PathForSlot(slot));
+    }
 
     // ── ISaveService (MainMenuController compat) ──────────────────────────────
 

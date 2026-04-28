@@ -37,6 +37,16 @@ public class SaveServiceTest
     }
 
     [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    [TestCase(6)]
+    public void SaveService_Save_InvalidSlot_Throws(int slot)
+    {
+        var svc = Make(EmptyFs());
+        Assert.Throws<ArgumentOutOfRangeException>(() => svc.Save(new SaveData(), slot));
+    }
+
+    [Test]
     public void SaveService_Save_WritesJson()
     {
         var fs = EmptyFs();
@@ -118,6 +128,16 @@ public class SaveServiceTest
         Assert.Throws<SaveDataException>(() => svc.Load(1));
     }
 
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    [TestCase(6)]
+    public void SaveService_Load_InvalidSlot_Throws(int slot)
+    {
+        var svc = Make(EmptyFs());
+        Assert.Throws<ArgumentOutOfRangeException>(() => svc.Load(slot));
+    }
+
     // ── Load — corrupt file ───────────────────────────────────────────────────
 
     [Test]
@@ -163,6 +183,26 @@ public class SaveServiceTest
     {
         var svc = Make(EmptyFs());
         Assert.DoesNotThrow(() => svc.Delete(1));
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    [TestCase(6)]
+    public void SaveService_Delete_InvalidSlot_Throws(int slot)
+    {
+        var svc = Make(EmptyFs());
+        Assert.Throws<ArgumentOutOfRangeException>(() => svc.Delete(slot));
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    [TestCase(6)]
+    public void SaveService_HasSave_InvalidSlot_Throws(int slot)
+    {
+        var svc = Make(EmptyFs());
+        Assert.Throws<ArgumentOutOfRangeException>(() => svc.HasSave(slot));
     }
 
     // ── HasSaveFile (ISaveService compat) ─────────────────────────────────────
