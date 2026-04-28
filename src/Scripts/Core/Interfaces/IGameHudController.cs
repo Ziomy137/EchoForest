@@ -47,8 +47,12 @@ public interface IGameHudController
     /// <summary>Records the currently equipped weapon for the equipment display.</summary>
     void SetActiveWeapon(string? weaponId);
 
-    /// <summary>Updates the quest objective panel.</summary>
-    void SetQuestObjective(string questName, string objectiveText, int current, int total);
+    /// <summary>
+    /// Updates the quest objective panel. <paramref name="questName"/> and
+    /// <paramref name="objectiveText"/> may be <see langword="null"/> and are
+    /// treated as empty strings for HUD display/storage.
+    /// </summary>
+    void SetQuestObjective(string? questName, string? objectiveText, int current, int total);
 
     /// <summary>Shows the interaction prompt with the given action label.</summary>
     void ShowInteractionPrompt(string action);
