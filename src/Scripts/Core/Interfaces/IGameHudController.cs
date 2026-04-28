@@ -54,8 +54,11 @@ public interface IGameHudController
     /// </summary>
     void SetQuestObjective(string? questName, string? objectiveText, int current, int total);
 
-    /// <summary>Shows the interaction prompt with the given action label.</summary>
-    void ShowInteractionPrompt(string action);
+    /// <summary>
+    /// Shows the interaction prompt with the given action label.
+    /// <paramref name="action"/> may be <see langword="null"/>, in which case it is treated as an empty string.
+    /// </summary>
+    void ShowInteractionPrompt(string? action);
 
     /// <summary>Hides the interaction prompt and clears its text.</summary>
     void HideInteractionPrompt();
