@@ -1,0 +1,482 @@
+[gd_scene format=3 uid="uid://bsave1gmscr01"]
+
+[ext_resource type="Script" path="res://src/Scripts/Core/SaveGameScreenNode.cs" id="1_script"]
+
+; ── Button styles (same palette as MainMenu / SettingsScreen) ─────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.176, 0.141, 0.086, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.239, 0.184, 0.094, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.102, 0.102, 0.102, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.843, 0.0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
+bg_color = Color(0.239, 0.239, 0.239, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="Theme" id="Theme_ui"]
+Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
+Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+Button/styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_pressed_color = Color(1.0, 0.843, 0.0, 1)
+Button/colors/font_disabled_color = Color(0.353, 0.353, 0.353, 1)
+
+; ── Slot panel style ──────────────────────────────────────────────────────────
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.118, 0.118, 0.118, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.353, 0.353, 0.353, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_right = 12.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+; ── Scene tree ────────────────────────────────────────────────────────────────
+
+[node name="SaveGameScreen" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_script")
+
+; Full-screen dark background
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.102, 0.102, 0.102, 1)
+
+; Centred column
+[node name="MainContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ui")
+
+[node name="Layout" type="VBoxContainer" parent="MainContainer"]
+custom_minimum_size = Vector2(600, 0)
+theme_override_constants/separation = 12
+
+; Title
+[node name="TitleLabel" type="Label" parent="MainContainer/Layout"]
+layout_mode = 2
+text = "Save Game"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="TitleSpacer" type="Control" parent="MainContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 12)
+
+; ── Save slots ────────────────────────────────────────────────────────────────
+
+[node name="SlotsList" type="VBoxContainer" parent="MainContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+; ── Slot 0 ────────────────────────────────────────────────────────────────────
+
+[node name="Slot0" type="PanelContainer" parent="MainContainer/Layout/SlotsList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotRow0" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot0"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SlotInfo0" type="VBoxContainer" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameRow0" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotNumLabel0" type="Label" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/NameRow0"]
+layout_mode = 2
+text = "1."
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="NameEdit0" type="LineEdit" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/NameRow0"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(empty slot)"
+
+[node name="MetaRow0" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelLabel0" type="Label" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/MetaRow0"]
+layout_mode = 2
+text = "Level: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="LocationLabel0" type="Label" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/MetaRow0"]
+layout_mode = 2
+text = "Location: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="PlayTimeLabel0" type="Label" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/MetaRow0"]
+layout_mode = 2
+text = "Time: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="DateLabel0" type="Label" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0/SlotInfo0/MetaRow0"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+text = "—"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="SaveButton0" type="Button" parent="MainContainer/Layout/SlotsList/Slot0/SlotRow0"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Save"
+
+; ── Slot 1 ────────────────────────────────────────────────────────────────────
+
+[node name="Slot1" type="PanelContainer" parent="MainContainer/Layout/SlotsList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotRow1" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot1"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SlotInfo1" type="VBoxContainer" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameRow1" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotNumLabel1" type="Label" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/NameRow1"]
+layout_mode = 2
+text = "2."
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="NameEdit1" type="LineEdit" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/NameRow1"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(empty slot)"
+
+[node name="MetaRow1" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelLabel1" type="Label" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/MetaRow1"]
+layout_mode = 2
+text = "Level: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="LocationLabel1" type="Label" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/MetaRow1"]
+layout_mode = 2
+text = "Location: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="PlayTimeLabel1" type="Label" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/MetaRow1"]
+layout_mode = 2
+text = "Time: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="DateLabel1" type="Label" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1/SlotInfo1/MetaRow1"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+text = "—"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="SaveButton1" type="Button" parent="MainContainer/Layout/SlotsList/Slot1/SlotRow1"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Save"
+
+; ── Slot 2 ────────────────────────────────────────────────────────────────────
+
+[node name="Slot2" type="PanelContainer" parent="MainContainer/Layout/SlotsList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotRow2" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SlotInfo2" type="VBoxContainer" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameRow2" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotNumLabel2" type="Label" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/NameRow2"]
+layout_mode = 2
+text = "3."
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="NameEdit2" type="LineEdit" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/NameRow2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(empty slot)"
+
+[node name="MetaRow2" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelLabel2" type="Label" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/MetaRow2"]
+layout_mode = 2
+text = "Level: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="LocationLabel2" type="Label" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/MetaRow2"]
+layout_mode = 2
+text = "Location: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="PlayTimeLabel2" type="Label" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/MetaRow2"]
+layout_mode = 2
+text = "Time: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="DateLabel2" type="Label" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2/SlotInfo2/MetaRow2"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+text = "—"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="SaveButton2" type="Button" parent="MainContainer/Layout/SlotsList/Slot2/SlotRow2"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Save"
+
+; ── Slot 3 ────────────────────────────────────────────────────────────────────
+
+[node name="Slot3" type="PanelContainer" parent="MainContainer/Layout/SlotsList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotRow3" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot3"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SlotInfo3" type="VBoxContainer" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameRow3" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotNumLabel3" type="Label" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/NameRow3"]
+layout_mode = 2
+text = "4."
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="NameEdit3" type="LineEdit" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/NameRow3"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(empty slot)"
+
+[node name="MetaRow3" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelLabel3" type="Label" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/MetaRow3"]
+layout_mode = 2
+text = "Level: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="LocationLabel3" type="Label" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/MetaRow3"]
+layout_mode = 2
+text = "Location: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="PlayTimeLabel3" type="Label" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/MetaRow3"]
+layout_mode = 2
+text = "Time: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="DateLabel3" type="Label" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3/SlotInfo3/MetaRow3"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+text = "—"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="SaveButton3" type="Button" parent="MainContainer/Layout/SlotsList/Slot3/SlotRow3"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Save"
+
+; ── Slot 4 ────────────────────────────────────────────────────────────────────
+
+[node name="Slot4" type="PanelContainer" parent="MainContainer/Layout/SlotsList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotRow4" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot4"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SlotInfo4" type="VBoxContainer" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameRow4" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotNumLabel4" type="Label" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/NameRow4"]
+layout_mode = 2
+text = "5."
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+
+[node name="NameEdit4" type="LineEdit" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/NameRow4"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "(empty slot)"
+
+[node name="MetaRow4" type="HBoxContainer" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelLabel4" type="Label" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/MetaRow4"]
+layout_mode = 2
+text = "Level: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="LocationLabel4" type="Label" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/MetaRow4"]
+layout_mode = 2
+text = "Location: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="PlayTimeLabel4" type="Label" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/MetaRow4"]
+layout_mode = 2
+text = "Time: —"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="DateLabel4" type="Label" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4/SlotInfo4/MetaRow4"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+text = "—"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="SaveButton4" type="Button" parent="MainContainer/Layout/SlotsList/Slot4/SlotRow4"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Save"
+
+; ── Bottom action bar ─────────────────────────────────────────────────────────
+
+[node name="ActionSpacer" type="Control" parent="MainContainer/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 12)
+
+[node name="ActionRow" type="HBoxContainer" parent="MainContainer/Layout"]
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="MainContainer/Layout/ActionRow"]
+layout_mode = 2
+text = "Cancel"
