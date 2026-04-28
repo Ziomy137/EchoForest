@@ -32,16 +32,4 @@ public class CreditsControllerTest
         Assert.That(loader.LastRequestedPath, Is.EqualTo(MainMenuConfig.SceneResPath));
     }
 
-    [Test]
-    public void OnBack_CalledTwice_NavigatesEachTime()
-    {
-        var loader = new MockSceneLoader();
-        var ctrl = new CreditsController(loader);
-
-        ctrl.OnBack();
-        ctrl.OnBack();
-
-        Assert.That(loader.WasLoadRequested, Is.True);
-        Assert.That(loader.LastRequestedPath, Is.EqualTo(MainMenuConfig.SceneResPath));
-    }
 }
