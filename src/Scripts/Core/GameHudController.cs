@@ -69,9 +69,11 @@ public sealed class GameHudController : IGameHudController
         if (max <= 0f)
             throw new ArgumentException("max health must be greater than zero.", nameof(max));
 
-        CurrentHealth = current;
+        float clampedCurrent = Math.Clamp(current, 0f, max);
+
+        CurrentHealth = clampedCurrent;
         MaxHealth = max;
-        HealthFillRatio = Math.Clamp(current / max, 0f, 1f);
+        HealthFillRatio = clampedCurrent / max;
     }
 
     /// <inheritdoc/>
