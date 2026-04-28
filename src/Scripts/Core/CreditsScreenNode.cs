@@ -16,11 +16,8 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
 public partial class CreditsScreenNode : CanvasLayer
 {
-    private CreditsController _ctrl = null!;
-
     public override void _Ready()
     {
-        _ctrl = new CreditsController(new GodotSceneLoader());
         WireBackButton();
     }
 
@@ -28,6 +25,11 @@ public partial class CreditsScreenNode : CanvasLayer
 
     private void WireBackButton()
     {
-        GetNode<Button>("VBox/BackButton").Pressed += _ctrl.OnBack;
+        // Use GetTree() directly — more reliable than Engine.GetMainLoop() inside
+        // a signal handler on a CanvasLayer root scene.
+        if (FindChild("BackButton") is Button btn)
+            btn.Pressed += () => GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+        else
+            GD.PrintErr("[CreditsScreenNode] BackButton not found in scene tree");
     }
 }
