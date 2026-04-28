@@ -311,8 +311,6 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 - [x] Create `LoadGameScreen.tscn` — displays 5 save slots with area, playtime, date; Load buttons disabled for empty slots
 - [x] `QuestState` enum, `SaveSlotInfo` metadata record, `SaveDataException` custom exception
 - [x] `IFileSystem.Delete()` added; `MainMenuNode` wired to real `SaveService`
-- [ ] Integrate save trigger at: area transitions, dialogue completions, rest points *(deferred — requires gameplay systems)*
-- [ ] Apply loaded data to game systems on scene start *(deferred)*
 
 **Acceptance Criteria:**
 
@@ -396,14 +394,14 @@ Coverage gate: PRs blocked if coverage drops below 90%.
 
 **Sprint 5 Summary:**
 
-| Story                    | Points | Owner     |
-| ------------------------ | ------ | --------- |
-| S5-01 Main Menu ✅       | 5      | Developer |
-| S5-02 Settings Screen ✅ | 8      | Developer |
-| S5-03 Config Persistence | 3      | Developer |
+| Story                     | Points | Owner     |
+| ------------------------- | ------ | --------- |
+| S5-01 Main Menu ✅        | 5      | Developer |
+| S5-02 Settings Screen ✅  | 8      | Developer |
+| S5-03 Config Persistence  | 3      | Developer |
 | S5-04 Save/Load System ✅ | 8      | Developer |
-| S5-05 Credits Screen     | 2      | Developer |
-| **Total**                | **26** |           |
+| S5-05 Credits Screen      | 2      | Developer |
+| **Total**                 | **26** |           |
 
 ---
 
@@ -632,6 +630,7 @@ These are prerequisites for all quest and story content.
 - [ ] Typewriter effect: characters appear one-by-one at configurable speed; pressing `interact` skips to full line
 - [ ] Dialogue boxes use approved palette colors
 - [ ] Game world does NOT pause during dialogue (unless quest cutscene)
+- [ ] Trigger auto-save on `OnConversationEnded` for story-critical NPC dialogues (calls `ISaveDataService.Save`)
 
 **Acceptance Criteria:**
 
@@ -809,6 +808,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - Publishes appropriate `EventBus` events on state changes
 - [ ] Create `QuestDatabase.cs` — loads all quest JSON files from `res://Assets/Data/Quests/`
 - [ ] Implement all 5 main quests as JSON data files (stubs — full dialogue content in Sprint 14)
+- [ ] Apply loaded `SaveData.QuestStates` to `QuestService` on game load (load-game integration)
 
 **Acceptance Criteria:**
 
@@ -1011,6 +1011,7 @@ player can walk from Cottage → Farm → Forest Path.
 - [ ] Add `SpawnPoint` nodes (named `Area2D` markers) to all scenes
 - [ ] Wire Cottage scene southern boundary → Forest Path scene northern entrance
 - [ ] Wire Cottage scene eastern boundary → Farm scene western entrance
+- [ ] Apply `SaveData.PlayerX` / `SaveData.PlayerY` to override default spawn point when starting from a loaded save
 
 **Acceptance Criteria:**
 
