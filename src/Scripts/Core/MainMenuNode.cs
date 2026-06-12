@@ -30,22 +30,31 @@ public partial class MainMenuNode : CanvasLayer
         var saveService = new SaveService(new GodotFileSystem());
         _controller = new MainMenuController(saveService, sceneLoader, appCtrl);
 
-        WireButton("NewGameButton", _controller.OnNewGame);
-        WireButton("ContinueButton", _controller.OnContinue);
-        WireButton("LoadGameButton", _controller.OnLoadGame);
-        WireButton("SettingsButton", _controller.OnSettings);
-        WireButton("CreditsButton", _controller.OnCredits);
-        WireButton("ExitButton", _controller.OnExit);
+        // Navigation buttons use GetTree() directly — bypasses GodotSceneLoader/Engine.GetMainLoop()
+        // which can return null in some Godot 4 configurations.
+        WireNavButton("NewGameButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.GameBootstrapScenePath));
+        WireNavButton("ContinueButton", () => { if (_controller.IsContinueEnabled) GetTree().ChangeSceneToFile(MainMenuConfig.ContinueScenePath); });
+        WireNavButton("LoadGameButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.LoadGameScenePath));
+        WireNavButton("SettingsButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.SettingsScenePath));
+        WireNavButton("CreditsButton", () =>
+        {
+            GD.Print($"[MainMenu] CreditsButton pressed, path={MainMenuConfig.CreditsScenePath}");
+            GD.Print($"[MainMenu] File exists: {Godot.FileAccess.FileExists(MainMenuConfig.CreditsScenePath)}");
+            GetTree().ChangeSceneToFile(MainMenuConfig.CreditsScenePath);
+        });
+        WireNavButton("ExitButton", () => _controller.OnExit());
 
         // Reflect initial state of Continue button
         if (FindChild("ContinueButton") is Button continueBtn)
             continueBtn.Disabled = !_controller.IsContinueEnabled;
     }
 
-    private void WireButton(string nodeName, System.Action action)
+    private void WireNavButton(string nodeName, System.Action action)
     {
-        if (FindChild(nodeName) is not Button btn) return;
-        btn.Pressed += action;
+        var btn = FindChild(nodeName) as Button;
+        GD.Print($"[MainMenu] {nodeName} found: {btn != null}");
+        if (btn != null)
+            btn.Pressed += action;
     }
 
     // ── Config persistence ────────────────────────────────────────────────────

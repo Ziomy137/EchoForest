@@ -6,12 +6,14 @@ namespace EchoForest.Core;
 /// <summary>
 /// Godot <c>CanvasLayer</c> node for the Pause Menu overlay.
 ///
-/// Wires Resume / Settings / Save Game / Return to Main Menu buttons to
-/// <see cref="PauseMenuController"/> and applies <c>GetTree().Paused</c>
-/// after each action.
+/// Button signals are connected in <c>PauseMenu.tscn</c> via
+/// <c>[connection]</c> declarations — the most reliable approach for scenes
+/// added dynamically via <c>GetTree().Root.AddChild()</c>. C# delegate wiring
+/// in <c>_Ready()</c> can silently fail for such scenes.
 ///
-/// All logic lives in the pure-C# <see cref="PauseMenuController"/> so it
-/// can be unit-tested independently of the Godot runtime.
+/// Escape / "pause" input is handled here via <c>_Input</c> (fires before GUI,
+/// so no GUI element can swallow it). <see cref="CottageAreaNode"/> also
+/// handles Escape as a fallback.
 ///
 /// Excluded from NUnit code coverage — requires the Godot scene tree.
 /// </summary>
@@ -22,19 +24,12 @@ public partial class PauseMenuNode : CanvasLayer
 
     public override void _Ready()
     {
-        // Ensure this node (and children) process input while the tree is paused.
-        // This is set here in code in addition to the .tscn so it cannot be lost
-        // by scene re-import or editor overrides.
-        ProcessMode = ProcessModeEnum.Always;
-
-        _ctrl = new PauseMenuController(
-            new SaveService(new GodotFileSystem()),
-            new GodotSceneLoader());
-
+        _ctrl = new PauseMenuController(new SaveService(new GodotFileSystem()));
         _ctrl.Open();
-        WireButtons();
     }
 
+    // _Input fires for ALL input events before GUI processing —
+    // guarantees Escape is received even when a button has keyboard focus.
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("pause"))
@@ -44,41 +39,40 @@ public partial class PauseMenuNode : CanvasLayer
         }
     }
 
-    // ── Button wiring ─────────────────────────────────────────────────────────
+    // ── Signal receivers (connected from PauseMenu.tscn [connection] blocks) ──
 
-    private void WireButtons()
-    {
-        GetNode<Button>("Center/Panel/VBox/ResumeButton").Pressed += OnResume;
-
-        GetNode<Button>("Center/Panel/VBox/SettingsButton").Pressed += () =>
-        {
-            GetTree().Paused = false;
-            _ctrl.OnSettings();
-            QueueFree();
-        };
-
-        GetNode<Button>("Center/Panel/VBox/SaveGameButton").Pressed += OnSaveGame;
-
-        GetNode<Button>("Center/Panel/VBox/MainMenuButton").Pressed += () =>
-        {
-            GetTree().Paused = false;
-            _ctrl.OnMainMenu();
-            QueueFree();
-        };
-    }
-
-    // ── Handlers that also update tree state ──────────────────────────────────
-
-    private void OnResume()
+    /// <summary>Resumes gameplay and closes the pause menu.</summary>
+    public void OnResume()
     {
         _ctrl.OnResume();
-        GetTree().Paused = false;
         QueueFree();
     }
 
-    private void OnSaveGame()
+    /// <summary>Opens Settings screen and closes the pause menu.</summary>
+    public void OnSettingsPressed()
+    {
+        // Remove self from Root synchronously so the PauseMenu (layer=100)
+        // does not cover the incoming scene even for a single frame.
+        // GetTree() must be captured before RemoveChild invalidates it.
+        var tree = GetTree();
+        tree.Root.RemoveChild(this);
+        QueueFree();
+        tree.ChangeSceneToFile(MainMenuConfig.SettingsScenePath);
+    }
+
+    /// <summary>Saves the game to slot 1 (menu stays open).</summary>
+    public void OnSaveGame()
     {
         _ctrl.OnSaveGame();
-        // Pause state remains — player stays in pause menu after saving.
+    }
+
+    /// <summary>Returns to the Main Menu scene.</summary>
+    public void OnMainMenuPressed()
+    {
+        var tree = GetTree();
+        tree.Root.RemoveChild(this);
+        QueueFree();
+        tree.ChangeSceneToFile(MainMenuConfig.SceneResPath);
     }
 }
+

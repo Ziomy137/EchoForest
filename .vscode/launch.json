@@ -96,12 +96,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${env:GODOT_PATH}",
-      "args": [
-        "--headless",
-        "--path",
-        "${workspaceFolder}",
-        "--quit"
-      ],
+      "args": ["--headless", "--path", "${workspaceFolder}", "--quit"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"

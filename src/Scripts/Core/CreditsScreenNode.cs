@@ -19,20 +19,53 @@ public partial class CreditsScreenNode : CanvasLayer
     public override void _Ready()
     {
         GD.Print("[Credits] _Ready() called");
-        GD.Print($"[Credits] Children: {GetChildCount()}");
-
-        // List all direct and nested children for debugging
-        foreach (var child in GetChildren())
-            GD.Print($"[Credits] Child: {child.Name}");
-
+        PopulateCreditsText();
         WireBackButton();
+    }
+
+    private void PopulateCreditsText()
+    {
+        const string leftText =
+            "[b][color=#ffd700]Studio[/color][/b]\n" +
+            "Ziomy137 Studio\n\n" +
+            "[b][color=#ffd700]Lead Developer[/color][/b]\n" +
+            "Filip Klos\n\n" +
+            "[b][color=#ffd700]Art & Assets[/color][/b]\n" +
+            "Filip Klos\n\n" +
+            "[b][color=#ffd700]Level Design[/color][/b]\n" +
+            "Filip Klos";
+
+        const string rightText =
+            "[b][color=#ffd700]QA & Testing[/color][/b]\n" +
+            "Automated NUnit Suite\n\n" +
+            "[b][color=#ffd700]Tools & Technologies[/color][/b]\n" +
+            "Godot 4  |  C# / .NET 10\n" +
+            "GitHub Actions  |  ReportGenerator\n\n" +
+            "[b][color=#ffd700]Special Thanks[/color][/b]\n" +
+            "[i]Thank you for playing Echo Forest.[/i]";
+
+        var leftLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/LeftPanel/LeftLabel");
+        GD.Print($"[Credits] LeftLabel found: {leftLabel != null}");
+        if (leftLabel != null)
+        {
+            leftLabel.Clear();
+            leftLabel.AppendText(leftText);
+        }
+
+        var rightLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/RightPanel/RightLabel");
+        GD.Print($"[Credits] RightLabel found: {rightLabel != null}");
+        if (rightLabel != null)
+        {
+            rightLabel.Clear();
+            rightLabel.AppendText(rightText);
+        }
     }
 
     // ── Button wiring ─────────────────────────────────────────────────────────
 
     private void WireBackButton()
     {
-        var btn = FindChild("BackButton") as Button;
+        var btn = GetNodeOrNull<Button>("VBox/BackButton");
         GD.Print($"[Credits] BackButton found: {btn != null}");
         if (btn != null)
             btn.Pressed += OnBack;

@@ -80,8 +80,9 @@ layer = 100
 process_mode = 3
 
 ; Semi-transparent dark overlay covering the full viewport.
+; mouse_filter = IGNORE so mouse events pass through to the buttons above.
 [node name="Overlay" type="ColorRect" parent="."]
-process_mode = 3
+mouse_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -133,3 +134,12 @@ text = "Save Game"
 process_mode = 3
 layout_mode = 2
 text = "Return to Main Menu"
+
+; ── Signal connections ────────────────────────────────────────────────────────
+; Wired in .tscn so connections are established by Godot before _Ready() runs.
+; This is more reliable than C# delegate wiring for dynamically added scenes.
+
+[connection signal="pressed" from="Center/Panel/VBox/ResumeButton" to="." method="OnResume"]
+[connection signal="pressed" from="Center/Panel/VBox/SettingsButton" to="." method="OnSettingsPressed"]
+[connection signal="pressed" from="Center/Panel/VBox/SaveGameButton" to="." method="OnSaveGame"]
+[connection signal="pressed" from="Center/Panel/VBox/MainMenuButton" to="." method="OnMainMenuPressed"]

@@ -132,10 +132,13 @@ fi
 EXPORT_LINE="export GODOT_PATH=\"$GODOT_BIN\""
 
 if [[ "$OS" == "Darwin" ]]; then
-    # macOS default since Catalina is zsh
-    PROFILE="$HOME/.zshrc"
-    if [[ -n "${BASH_VERSION:-}" ]]; then
+    # Use the user's login shell ($SHELL), NOT $BASH_VERSION.
+    # $BASH_VERSION is always set when this script runs (shebang is bash),
+    # which caused the script to always choose .bash_profile even on zsh systems.
+    if [[ "${SHELL:-}" == *bash* ]]; then
         PROFILE="$HOME/.bash_profile"
+    else
+        PROFILE="$HOME/.zshrc"  # macOS default since Catalina
     fi
 else
     PROFILE="$HOME/.bashrc"
