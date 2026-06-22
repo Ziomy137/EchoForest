@@ -18,7 +18,6 @@ public partial class CreditsScreenNode : CanvasLayer
 {
     public override void _Ready()
     {
-        GD.Print("[Credits] _Ready() called");
         PopulateCreditsText();
         WireBackButton();
     }
@@ -45,7 +44,6 @@ public partial class CreditsScreenNode : CanvasLayer
             "[i]Thank you for playing Echo Forest.[/i]";
 
         var leftLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/LeftPanel/LeftLabel");
-        GD.Print($"[Credits] LeftLabel found: {leftLabel != null}");
         if (leftLabel != null)
         {
             leftLabel.Clear();
@@ -53,7 +51,6 @@ public partial class CreditsScreenNode : CanvasLayer
         }
 
         var rightLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/RightPanel/RightLabel");
-        GD.Print($"[Credits] RightLabel found: {rightLabel != null}");
         if (rightLabel != null)
         {
             rightLabel.Clear();
@@ -66,14 +63,12 @@ public partial class CreditsScreenNode : CanvasLayer
     private void WireBackButton()
     {
         var btn = GetNodeOrNull<Button>("VBox/BackButton");
-        GD.Print($"[Credits] BackButton found: {btn != null}");
         if (btn != null)
             btn.Pressed += OnBack;
     }
 
     private void OnBack()
     {
-        GD.Print("[Credits] OnBack called, navigating to MainMenu");
         GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
     }
 }

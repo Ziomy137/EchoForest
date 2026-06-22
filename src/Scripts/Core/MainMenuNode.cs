@@ -36,12 +36,7 @@ public partial class MainMenuNode : CanvasLayer
         WireNavButton("ContinueButton", () => { if (_controller.IsContinueEnabled) GetTree().ChangeSceneToFile(MainMenuConfig.ContinueScenePath); });
         WireNavButton("LoadGameButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.LoadGameScenePath));
         WireNavButton("SettingsButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.SettingsScenePath));
-        WireNavButton("CreditsButton", () =>
-        {
-            GD.Print($"[MainMenu] CreditsButton pressed, path={MainMenuConfig.CreditsScenePath}");
-            GD.Print($"[MainMenu] File exists: {Godot.FileAccess.FileExists(MainMenuConfig.CreditsScenePath)}");
-            GetTree().ChangeSceneToFile(MainMenuConfig.CreditsScenePath);
-        });
+        WireNavButton("CreditsButton", () => GetTree().ChangeSceneToFile(MainMenuConfig.CreditsScenePath));
         WireNavButton("ExitButton", () => _controller.OnExit());
 
         // Reflect initial state of Continue button
@@ -52,7 +47,6 @@ public partial class MainMenuNode : CanvasLayer
     private void WireNavButton(string nodeName, System.Action action)
     {
         var btn = FindChild(nodeName) as Button;
-        GD.Print($"[MainMenu] {nodeName} found: {btn != null}");
         if (btn != null)
             btn.Pressed += action;
     }

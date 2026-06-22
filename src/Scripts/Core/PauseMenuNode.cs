@@ -45,16 +45,17 @@ public partial class PauseMenuNode : CanvasLayer
     public void OnResume()
     {
         _ctrl.OnResume();
+        GetTree().Paused = false;
         QueueFree();
     }
 
     /// <summary>Opens Settings screen and closes the pause menu.</summary>
     public void OnSettingsPressed()
     {
-        // Remove self from Root synchronously so the PauseMenu (layer=100)
-        // does not cover the incoming scene even for a single frame.
+        // Unpause before navigation so the incoming scene runs normally.
         // GetTree() must be captured before RemoveChild invalidates it.
         var tree = GetTree();
+        tree.Paused = false;
         tree.Root.RemoveChild(this);
         QueueFree();
         tree.ChangeSceneToFile(MainMenuConfig.SettingsScenePath);
@@ -70,6 +71,7 @@ public partial class PauseMenuNode : CanvasLayer
     public void OnMainMenuPressed()
     {
         var tree = GetTree();
+        tree.Paused = false;
         tree.Root.RemoveChild(this);
         QueueFree();
         tree.ChangeSceneToFile(MainMenuConfig.SceneResPath);
