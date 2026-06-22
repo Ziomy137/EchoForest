@@ -45,7 +45,6 @@ public partial class PauseMenuNode : CanvasLayer
     public void OnResume()
     {
         _ctrl.OnResume();
-        GetTree().Paused = false;
         QueueFree();
     }
 
