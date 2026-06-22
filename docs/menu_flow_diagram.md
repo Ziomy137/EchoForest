@@ -46,7 +46,7 @@ flowchart TD
     SETTINGS_MM["⚙️ SettingsScreen.tscn\n(SettingsScreenNode)\nfrom Main Menu"]
     SETTINGS_MM -->|"Back / Apply"| MAIN
 
-    CREDITS["📜 CreditsScreen.tscn\n(CreditsScreenNode)\nauto-scroll 20 s"]
+    CREDITS["📜 CreditsScreen.tscn\n(CreditsScreenNode)\nstatic credits text"]
     CREDITS -->|"Back"| MAIN
 ```
 
