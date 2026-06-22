@@ -498,8 +498,8 @@ These are prerequisites for all quest and story content.
 
 - [x] Create `PauseMenu.tscn` — overlay on `CanvasLayer` (highest Z-order)
 - [x] Pause menu options: **Resume**, **Settings**, **Save Game**, **Return to Main Menu**
-- [x] Toggle on `pause` input action; `get_tree().paused = true` halts game loop _(moved from S6-01)_
-- [x] Wire `GameHudNode` to detect `pause` input action and show `PauseMenu` overlay
+- [x] Toggle on `pause` input action; open `PauseMenu` overlay and disable Player processing (avoids `get_tree().paused` GUI-input limitation in Godot 4)
+- [x] Wire `CottageAreaNode` to detect `pause` input action and show `PauseMenu` overlay
 - [x] Create `PauseMenuController.cs`:
   - `OnResume()` — unpauses
   - `OnSettings()` — opens Settings screen (shared with main menu)
