@@ -48,6 +48,14 @@ dotnet test src/Scripts/Tests/EchoForest.Tests.csproj \
 
 Coverage gate: **≥ 90% line coverage** (enforced by CI).
 
+### Step 5 - Update the sprint plan
+
+Update sprint-plan-full.md with the new feature, bug fix, or refactor. Add a new row to the "Test Suite Breakdown" table with the test file name, number of tests, sprint, and notes. Move deferred tasks to adequate sections.
+
+### Step 6 - Push changes to the repository
+
+Push changes to the repository to trigger CI pipeline. CI will run the same commands as above, and will reject the PR if any test fails or if line coverage drops below 90%. Create a PR to `main` with a descriptive title and summary of changes.
+
 ### Quick combined sequence (validated working)
 
 ```bash

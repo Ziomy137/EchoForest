@@ -130,4 +130,7 @@ public partial class GameHudNode : CanvasLayer
             ? "—"
             : _ctrl.ActiveWeaponId;
     }
+
+    // Pause input is handled by CottageAreaNode (root Node2D) — CanvasLayer
+    // nodes do not reliably receive _UnhandledInput in Godot 4.
 }

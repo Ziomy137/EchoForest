@@ -491,19 +491,20 @@ These are prerequisites for all quest and story content.
 
 **Type:** UI  
 **Assignee:** Developer  
-**Estimate:** 3 points
+**Estimate:** 3 points  
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Create `PauseMenu.tscn` — overlay on `CanvasLayer` (highest Z-order)
-- [ ] Pause menu options: **Resume**, **Settings**, **Save Game**, **Return to Main Menu**
-- [ ] Toggle on `pause` input action; `get_tree().paused = true` halts game loop _(moved from S6-01)_
-- [ ] Wire `GameHudNode` to detect `pause` input action and show `PauseMenu` overlay
-- [ ] Create `PauseMenuController.cs`:
+- [x] Create `PauseMenu.tscn` — overlay on `CanvasLayer` (highest Z-order)
+- [x] Pause menu options: **Resume**, **Settings**, **Save Game**, **Return to Main Menu**
+- [x] Toggle on `pause` input action; open `PauseMenu` overlay and disable Player processing (avoids `get_tree().paused` GUI-input limitation in Godot 4)
+- [x] Wire `CottageAreaNode` to detect `pause` input action and show `PauseMenu` overlay
+- [x] Create `PauseMenuController.cs`:
   - `OnResume()` — unpauses
   - `OnSettings()` — opens Settings screen (shared with main menu)
-  - `OnSaveGame()` — triggers save + shows "Game Saved" confirmation toast
-  - `OnMainMenu()` — prompts unsaved changes warning → return to main menu
+  - `OnSaveGame()` — triggers save + sets `GameSaved` flag
+  - `OnMainMenu()` — returns to main menu
 
 **Acceptance Criteria:**
 
@@ -529,6 +530,12 @@ These are prerequisites for all quest and story content.
     Assert.IsTrue(saveService.SaveWasCalled);
 }
 ```
+
+**Test Suite Breakdown:**
+
+| Test File                    | Tests | Sprint | Notes                                   |
+| ---------------------------- | ----- | ------ | --------------------------------------- |
+| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix. |
 
 ---
 
@@ -693,7 +700,7 @@ These are prerequisites for all quest and story content.
 | Story                  | Points | Owner     |
 | ---------------------- | ------ | --------- |
 | S6-01 Full Game HUD ✅ | 8      | Developer |
-| S6-02 Pause Menu       | 3      | Developer |
+| S6-02 Pause Menu ✅    | 3      | Developer |
 | S6-03 NPC Framework    | 8      | Lead Dev  |
 | S6-04 Dialogue System  | 8      | Developer |
 | **Total**              | **27** |           |

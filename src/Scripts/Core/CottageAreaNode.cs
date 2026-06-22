@@ -161,14 +161,39 @@ public partial class CottageAreaNode : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event.IsActionPressed("ui_cancel"))
-		{
-			// Persist position so Continue restores the player here.
-			var player = GetNodeOrNull<Node2D>("Player");
-			if (player is not null)
-				GameSession.SavePlayerPosition(player.GlobalPosition.X, player.GlobalPosition.Y);
+		if (!@event.IsActionPressed("pause")) return;
 
-			GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
+		var existingMenu = GetTree().Root.FindChild("PauseMenu", recursive: false, owned: false);
+
+		if (existingMenu is not null)
+		{
+			// Escape pressed while menu is open — close it.
+			// Primary handler is PauseMenuNode._Input; this fires only if that
+			// node didn't receive/consume the event (e.g. added to Root sibling).
+			GetViewport().SetInputAsHandled();
+			existingMenu.QueueFree();
+			return;
 		}
+
+		// No menu open — open it.
+		GetViewport().SetInputAsHandled();
+
+		// Freeze the player node so the character cannot move while the menu is
+		// open. We deliberately avoid GetTree().Paused because in Godot 4 the
+		// pause system blocks _gui_input on ALL nodes — including those marked
+		// ProcessMode.Always — preventing button Pressed signals from firing.
+		var player = GetNode<Node>("Player");
+		player.ProcessMode = ProcessModeEnum.Disabled;
+
+		var pauseMenu = GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate();
+
+		// Restore the player when the pause menu is freed (any button or Esc).
+		pauseMenu.TreeExiting += () =>
+		{
+			if (GodotObject.IsInstanceValid(player))
+				player.ProcessMode = ProcessModeEnum.Inherit;
+		};
+
+		GetTree().Root.AddChild(pauseMenu);
 	}
 }

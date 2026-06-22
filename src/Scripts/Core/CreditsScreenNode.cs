@@ -6,8 +6,7 @@ namespace EchoForest.Core;
 /// <summary>
 /// Godot <c>CanvasLayer</c> node for the Credits screen.
 ///
-/// Starts the auto-scroll tween and wires the Back button to
-/// <see cref="CreditsController.OnBack"/>.
+/// Wires the Back button to <see cref="CreditsController.OnBack"/>.
 ///
 /// All navigation logic lives in the pure-C# <see cref="CreditsController"/>
 /// so it can be unit-tested independently of the Godot runtime.
@@ -17,39 +16,59 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
 public partial class CreditsScreenNode : CanvasLayer
 {
-    private CreditsController _ctrl = null!;
-
     public override void _Ready()
     {
-        _ctrl = new CreditsController(new GodotSceneLoader());
-        StartAutoScroll();
+        PopulateCreditsText();
         WireBackButton();
     }
 
-    // ── Scroll ────────────────────────────────────────────────────────────────
-
-    private void StartAutoScroll()
+    private void PopulateCreditsText()
     {
-        if (FindChild("ScrollContainer") is not ScrollContainer scrollContainer)
-            return;
-        if (FindChild("CreditsLabel") is not RichTextLabel label)
-            return;
+        const string leftText =
+            "[b][color=#ffd700]Studio[/color][/b]\n" +
+            "Ziomy137 Studio\n\n" +
+            "[b][color=#ffd700]Lead Developer[/color][/b]\n" +
+            "Filip Klos\n\n" +
+            "[b][color=#ffd700]Art & Assets[/color][/b]\n" +
+            "Filip Klos\n\n" +
+            "[b][color=#ffd700]Level Design[/color][/b]\n" +
+            "Filip Klos";
 
-        // Scroll the container from top (0) to bottom of content.
-        scrollContainer.ScrollVertical = 0;
-        var tween = CreateTween();
-        tween.TweenProperty(
-            scrollContainer,
-            "scroll_vertical",
-            label.GetContentHeight(),
-            Constants.CreditsScrollDuration);
+        const string rightText =
+            "[b][color=#ffd700]QA & Testing[/color][/b]\n" +
+            "Automated NUnit Suite\n\n" +
+            "[b][color=#ffd700]Tools & Technologies[/color][/b]\n" +
+            "Godot 4  |  C# / .NET 10\n" +
+            "GitHub Actions  |  ReportGenerator\n\n" +
+            "[b][color=#ffd700]Special Thanks[/color][/b]\n" +
+            "[i]Thank you for playing Echo Forest.[/i]";
+
+        var leftLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/LeftPanel/LeftLabel");
+        if (leftLabel != null)
+        {
+            leftLabel.Clear();
+            leftLabel.AppendText(leftText);
+        }
+
+        var rightLabel = GetNodeOrNull<RichTextLabel>("VBox/Columns/RightPanel/RightLabel");
+        if (rightLabel != null)
+        {
+            rightLabel.Clear();
+            rightLabel.AppendText(rightText);
+        }
     }
 
     // ── Button wiring ─────────────────────────────────────────────────────────
 
     private void WireBackButton()
     {
-        if (FindChild("BackButton") is Button btn)
-            btn.Pressed += _ctrl.OnBack;
+        var btn = GetNodeOrNull<Button>("VBox/BackButton");
+        if (btn != null)
+            btn.Pressed += OnBack;
+    }
+
+    private void OnBack()
+    {
+        GetTree().ChangeSceneToFile(MainMenuConfig.SceneResPath);
     }
 }
