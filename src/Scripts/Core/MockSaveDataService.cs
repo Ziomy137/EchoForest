@@ -11,6 +11,12 @@ public sealed class MockSaveDataService : ISaveDataService
     /// <summary>Whether <see cref="Save"/> has been called at least once.</summary>
     public bool SaveWasCalled { get; private set; }
 
+    /// <summary>The most recent data passed to <see cref="Save"/>.</summary>
+    public SaveData? LastSavedData { get; private set; }
+
+    /// <summary>The most recent slot passed to <see cref="Save"/>.</summary>
+    public int? LastSavedSlot { get; private set; }
+
     /// <inheritdoc/>
     public bool HasSaveFile() => SaveWasCalled;
 
@@ -18,7 +24,12 @@ public sealed class MockSaveDataService : ISaveDataService
     public bool HasSave(int slot) => SaveWasCalled;
 
     /// <inheritdoc/>
-    public void Save(SaveData data, int slot) => SaveWasCalled = true;
+    public void Save(SaveData data, int slot)
+    {
+        SaveWasCalled = true;
+        LastSavedData = data;
+        LastSavedSlot = slot;
+    }
 
     /// <inheritdoc/>
     public SaveData Load(int slot) => new SaveData();

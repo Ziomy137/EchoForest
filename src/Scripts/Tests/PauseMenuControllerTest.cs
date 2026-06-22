@@ -55,7 +55,7 @@ public class PauseMenuControllerTest
     public void OnSaveGame_WhenCalled_SetsSavedFlag()
     {
         var ctrl = new PauseMenuController(new MockSaveDataService());
-        ctrl.OnSaveGame();
+        ctrl.OnSaveGame(new SaveData());
         Assert.IsTrue(ctrl.GameSaved);
     }
 
@@ -64,8 +64,26 @@ public class PauseMenuControllerTest
     {
         var saveService = new MockSaveDataService();
         var ctrl = new PauseMenuController(saveService);
-        ctrl.OnSaveGame();
+        ctrl.OnSaveGame(new SaveData());
         Assert.IsTrue(saveService.SaveWasCalled);
+    }
+
+    [Test]
+    public void OnSaveGame_PersistsProvidedSaveDataToSlot1()
+    {
+        var saveService = new MockSaveDataService();
+        var ctrl = new PauseMenuController(saveService);
+        var saveData = new SaveData
+        {
+            CurrentArea = CottageSceneConfig.SceneResPath,
+            PlayerX = 123.4f,
+            PlayerY = 567.8f,
+        };
+
+        ctrl.OnSaveGame(saveData);
+
+        Assert.That(saveService.LastSavedData, Is.SameAs(saveData));
+        Assert.That(saveService.LastSavedSlot, Is.EqualTo(1));
     }
 
     // ── Navigation ────────────────────────────────────────────────────────────

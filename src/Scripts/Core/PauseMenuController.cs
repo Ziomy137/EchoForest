@@ -44,9 +44,9 @@ public sealed class PauseMenuController : IPauseMenuController
         _sceneLoader?.LoadScene(MainMenuConfig.SettingsScenePath);
 
     /// <inheritdoc/>
-    public void OnSaveGame()
+    public void OnSaveGame(SaveData data)
     {
-        _saveService.Save(new SaveData(), slot: 1);
+        _saveService.Save(data ?? throw new ArgumentNullException(nameof(data)), slot: 1);
         GameSaved = true;
     }
 

@@ -61,7 +61,15 @@ public partial class PauseMenuNode : CanvasLayer
     /// <summary>Saves the game to slot 1 (menu stays open).</summary>
     public void OnSaveGame()
     {
-        _ctrl.OnSaveGame();
+        var player = GetTree().CurrentScene?.GetNodeOrNull<Node2D>("Player");
+        var currentArea = GetTree().CurrentScene?.SceneFilePath ?? string.Empty;
+
+        _ctrl.OnSaveGame(new SaveData
+        {
+            CurrentArea = currentArea,
+            PlayerX = player?.GlobalPosition.X ?? 0f,
+            PlayerY = player?.GlobalPosition.Y ?? 0f,
+        });
     }
 
     /// <summary>Returns to the Main Menu scene.</summary>
@@ -72,4 +80,3 @@ public partial class PauseMenuNode : CanvasLayer
         tree.ChangeSceneToFile(MainMenuConfig.SceneResPath);
     }
 }
-

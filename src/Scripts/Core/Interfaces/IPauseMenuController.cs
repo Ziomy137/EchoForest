@@ -21,7 +21,7 @@ public interface IPauseMenuController
     void OnSettings();
 
     /// <summary>Saves to slot 1 and sets <see cref="GameSaved"/>.</summary>
-    void OnSaveGame();
+    void OnSaveGame(SaveData data);
 
     /// <summary>Returns to the Main Menu.</summary>
     void OnMainMenu();
