@@ -32,7 +32,7 @@ public partial class PauseMenuNode : CanvasLayer
     // guarantees Escape is received even when a button has keyboard focus.
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("pause"))
+        if (@event.IsActionPressed(InputActionNames.Pause))
         {
             GetViewport().SetInputAsHandled();
             OnResume();
