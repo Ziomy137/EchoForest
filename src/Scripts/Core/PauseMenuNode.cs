@@ -51,10 +51,8 @@ public partial class PauseMenuNode : CanvasLayer
     /// <summary>Opens Settings screen and closes the pause menu.</summary>
     public void OnSettingsPressed()
     {
-        // Unpause before navigation so the incoming scene runs normally.
         // GetTree() must be captured before RemoveChild invalidates it.
         var tree = GetTree();
-        tree.Paused = false;
         tree.Root.RemoveChild(this);
         QueueFree();
         tree.ChangeSceneToFile(MainMenuConfig.SettingsScenePath);
