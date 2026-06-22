@@ -31,8 +31,11 @@ public sealed class PauseMenuController : IPauseMenuController
     }
 
     /// <inheritdoc/>
-    public void Open() => IsPaused = true;
-
+    public void Open()
+    {
+        IsPaused = true;
+        GameSaved = false;
+    }
     /// <inheritdoc/>
     public void OnResume() => IsPaused = false;
 
