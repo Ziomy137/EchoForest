@@ -531,6 +531,12 @@ These are prerequisites for all quest and story content.
 }
 ```
 
+**Test Suite Breakdown:**
+
+| Test File                    | Tests | Sprint | Notes                                   |
+| ---------------------------- | ----- | ------ | --------------------------------------- |
+| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix. |
+
 ---
 
 ### S6-03 — NPC Framework & Interaction System

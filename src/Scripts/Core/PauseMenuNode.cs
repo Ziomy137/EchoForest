@@ -74,6 +74,7 @@ public partial class PauseMenuNode : CanvasLayer
 
     /// <summary>Returns to the Main Menu scene.</summary>
     public void OnMainMenuPressed()
+    {
         var tree = GetTree();
         tree.Root.RemoveChild(this);
         QueueFree();
