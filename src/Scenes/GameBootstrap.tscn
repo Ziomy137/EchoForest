@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsks1satgrr6j"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/GameBootstrapNode.cs" id="1_bootstrap"]
-[ext_resource type="Script" path="res://src/Scripts/Core/LoadingScreenNode.cs" id="2_loading"]
+[ext_resource type="Script" uid="uid://w7k16by1kq72" path="res://src/Scripts/Core/GameBootstrapNode.cs" id="1_bootstrap"]
+[ext_resource type="Script" uid="uid://jihbuxolttrb" path="res://src/Scripts/Core/LoadingScreenNode.cs" id="2_loading"]
 
 [node name="GameBootstrap" type="Node2D" unique_id=1133115469]
 script = ExtResource("1_bootstrap")

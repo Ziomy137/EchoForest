@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgb5c42sm3k73"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/MainMenuNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://cv0w457cya71p" path="res://src/Scripts/Core/MainMenuNode.cs" id="1_script"]
 
 ; ── Shared button StyleBoxFlat resources ─────────────────────────────────────
 

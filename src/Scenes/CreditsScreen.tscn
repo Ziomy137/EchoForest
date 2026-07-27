@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bcrdtscr01ef"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/CreditsScreenNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://m42d5by47x2k"
+ path="res://src/Scripts/Core/CreditsScreenNode.cs" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.176, 0.141, 0.086, 1)
@@ -69,7 +70,8 @@ content_margin_right = 24.0
 content_margin_top = 20.0
 content_margin_bottom = 20.0
 
-[node name="CreditsScreen" type="CanvasLayer" script=ExtResource("1_script")]
+[node name="CreditsScreen" type="CanvasLayer"]
+script = ExtResource("1_script")
 
 [node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15

@@ -167,6 +167,12 @@ public partial class CottageAreaNode : Node2D
 
 		if (existingMenu is not null)
 		{
+			if (existingMenu is CanvasLayer { Visible: false })
+			{
+				GetViewport().SetInputAsHandled();
+				return;
+			}
+
 			// Escape pressed while menu is open — close it.
 			// Primary handler is PauseMenuNode._Input; this fires only if that
 			// node didn't receive/consume the event (e.g. added to Root sibling).
@@ -185,7 +191,7 @@ public partial class CottageAreaNode : Node2D
 		var player = GetNode<Node>("Player");
 		player.ProcessMode = ProcessModeEnum.Disabled;
 
-		var pauseMenu = GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate();
+		var pauseMenu = GD.Load<PackedScene>(MainMenuConfig.PauseMenuScenePath).Instantiate<PauseMenuNode>();
 
 		// Restore the player when the pause menu is freed (any button or Esc).
 		pauseMenu.TreeExiting += () =>

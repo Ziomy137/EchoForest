@@ -1,7 +1,7 @@
 # Menu Flow Diagram — EchoForest
 
-**Document Version:** 1.0  
-**Last Updated:** April 28, 2026  
+**Document Version:** 1.2
+**Last Updated:** July 27, 2026
 **Source:** `ui-ux-spec.md` §3 (Main Menu) + §9 (Pause Menu)  
 **Implementation reference:** `MainMenuConfig.cs` scene path constants
 
@@ -71,15 +71,15 @@ flowchart TD
 
     GAMEPLAY -->|"'pause' input action\nGameHudNode._UnhandledInput\nAddChild(PauseMenu)"| PAUSE
 
-    PAUSE["⏸️ PauseMenu.tscn (overlay)\n(PauseMenuNode / PauseMenuController)\nCanvasLayer layer=100\nGetTree().Paused = true"]
+    PAUSE["⏸️ PauseMenu.tscn (overlay)\n(PauseMenuNode / PauseMenuController)\nCanvasLayer layer=100\nPlayer ProcessMode = Disabled"]
 
-    PAUSE -->|"Resume\nGetTree().Paused = false\nQueueFree"| GAMEPLAY
+    PAUSE -->|"Resume\nQueueFree"| GAMEPLAY
     PAUSE -->|"Save Game\nSaveService.Save slot 1\nstays open"| PAUSE
     PAUSE -->|"Settings"| SETTINGS_PM
     PAUSE -->|"Return to Main Menu"| MAIN
 
     SETTINGS_PM["⚙️ SettingsScreen.tscn\n(from Pause Menu)"]
-    SETTINGS_PM -->|"Back / Apply\n⚠️ returns to Main Menu\nnot back to Pause"| MAIN
+    SETTINGS_PM -->|"Back\nrestore hidden Pause Menu"| PAUSE
 
     MAIN["🏠 MainMenu.tscn"]
 ```
@@ -90,7 +90,7 @@ flowchart TD
 | -------------------- | --------------------------------- |
 | `PauseMenuScenePath` | `res://src/Scenes/PauseMenu.tscn` |
 
-> **⚠️ Known limitation (S6-02):** `SettingsScreen` always navigates back to `MainMenu` via `MainMenuConfig.SceneResPath`. When opened from the Pause Menu, pressing Back/Apply sends the player to the Main Menu rather than returning to the Pause Menu. Fixing this requires a caller-context parameter on `SettingsController` — deferred to a later sprint.
+> **Settings opened from Pause Menu:** `PauseMenuNode` hides and disables its overlay, then adds `SettingsScreenNode` to `SceneTree.Root`. `SettingsScreenNode.OnBack()` restores the hidden pause overlay and frees only the Settings overlay. Settings opened from Main Menu remains a full-scene flow and returns to Main Menu.
 
 ---
 
@@ -125,7 +125,7 @@ flowchart LR
     GAMEPLAY -- "pause input" --> PAUSE
     PAUSE -- "Resume" --> GAMEPLAY
     PAUSE -- "Settings" --> SETTINGS
-    SETTINGS -. "Back ⚠️" .-> MAIN
+    SETTINGS -- "Back from Pause" --> PAUSE
     PAUSE -- "Main Menu" --> MAIN
     LOAD -- "Back" --> MAIN
 ```
@@ -150,17 +150,32 @@ flowchart LR
 ## 5. Transition Implementation Notes
 
 - **Full scene swap:** `ISceneLoader.LoadScene(path)` → calls `GetTree().ChangeSceneToFile(path)`. Previous scene is destroyed.
-- **Overlay (Pause Menu):** `GD.Load<PackedScene>(path).Instantiate()` added via `GetTree().Root.AddChild(...)` in `CottageAreaNode._UnhandledInput`. Gameplay scene stays in tree; only the `Player` node has its `ProcessMode` set to `Disabled` to freeze movement.
+- **Overlay (Pause Menu):** `GD.Load<PackedScene>(path).Instantiate<PauseMenuNode>()` is added via `GetTree().Root.AddChild(...)` in `CottageAreaNode._UnhandledInput`. The generic instantiation makes a missing C# script binding fail immediately instead of silently returning a base `CanvasLayer`. Gameplay stays in tree; only the `Player` node has its `ProcessMode` set to `Disabled` to freeze movement.
 - **Why NOT `GetTree().Paused`:** In Godot 4, `SceneTree.Paused = true` blocks `_gui_input` on **all** nodes — including those with `ProcessMode.Always` — preventing button `Pressed` signals from firing. `CottageAreaNode` deliberately avoids this.
 - **Overlay visual blocking:** The `Overlay` ColorRect must have `mouse_filter = IGNORE (2)` so mouse events pass through it to the buttons. Default `mouse_filter = STOP (0)` on a full-screen overlay can intercept clicks before they reach the button controls.
-- **Button wiring pattern:** All menus (including `PauseMenuNode`) use `FindChild(name)` for button lookup — recursive, null-safe, and forgiving of scene hierarchy changes. Hard-coded `GetNode("path")` calls are fragile.
+- **Button wiring pattern:** Dynamic menu overlays connect `Button.Pressed` in the root node's `_Ready()` with `FindChild(name)`. Do not rely on `.tscn` `[connection]` blocks for dynamically added C# overlays.
 - **Back from overlay:** `QueueFree()` on the overlay node + `player.ProcessMode = ProcessModeEnum.Inherit` restored via `TreeExiting` signal.
+- **Settings from Pause:** Hide and disable `PauseMenuNode`, add `SettingsScreenNode` to `SceneTree.Root`, then restore the pause overlay and `QueueFree()` the Settings overlay on Back. Do not replace the gameplay scene for this path.
+
+### C# Script Binding and UID Validation
+
+For a `.tscn` root backed by a C# node wrapper, declare `script` as a node property rather than in the `[node]` header:
+
+```gdscene
+[ext_resource type="Script" uid="uid://example" path="res://src/Scripts/Core/FooNode.cs" id="1_script"]
+
+[node name="Foo" type="CanvasLayer"]
+script = ExtResource("1_script")
+```
+
+Validate the `uid` against the generated sidecar file before committing: `src/Scripts/Core/FooNode.cs.uid` contains the authoritative `uid://...` value. The UID and `path` in the scene's `ext_resource` must refer to that same script. If `Instantiate<FooNode>()` throws an `InvalidCastException` to the base Godot type, check this binding first, then restart the game so Godot reloads the PackedScene.
 
 ---
 
 ## 6. Revision History
 
-| Version | Date           | Changes                                                                              |
-| ------- | -------------- | ------------------------------------------------------------------------------------ |
-| 1.0     | April 28, 2026 | Initial diagram — Main Menu + Pause Menu flows                                       |
-| 1.1     | April 28, 2026 | Fixed implementation notes: no `GetTree().Paused`, Overlay `mouse_filter`, FindChild |
+| Version | Date           | Changes                                                                                         |
+| ------- | -------------- | ----------------------------------------------------------------------------------------------- |
+| 1.0     | April 28, 2026 | Initial diagram — Main Menu + Pause Menu flows                                                  |
+| 1.1     | April 28, 2026 | Fixed implementation notes: no `GetTree().Paused`, Overlay `mouse_filter`, FindChild            |
+| 1.2     | July 27, 2026  | Fixed Pause → Settings → Back flow; documented dynamic menu wiring and C# script UID validation |

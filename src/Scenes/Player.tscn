@@ -19,7 +19,7 @@
 ;
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/PlayerControllerNode.cs" id="1"]
+[ext_resource type="Script" uid="uid://ch5f5ywjroqgs" path="res://src/Scripts/Core/PlayerControllerNode.cs" id="1"]
 [ext_resource type="SpriteFrames" path="res://src/Assets/Animations/player_animations.tres" id="2_anim"]
 
 [sub_resource type="CapsuleShape2D" id="3"]

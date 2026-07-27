@@ -117,6 +117,13 @@ Any class that inherits from a Godot type (`Node`, `CanvasLayer`, `CharacterBody
 
 All `res://` scene paths are defined as `const string` in `src/Scripts/Core/MainMenuConfig.cs`. Never hardcode scene paths in controllers.
 
+### Godot Menu Scene Wiring
+
+- For a `.tscn` root backed by a C# node wrapper, keep `script = ExtResource("...")` as a property below the `[node]` declaration, not in the `[node]` header.
+- Use the matching `uid://...` from the generated `src/Scripts/Core/FooNode.cs.uid` file in the scene's script `ext_resource`; its `path` must identify the same script.
+- Instantiate dynamic C# overlays with `Instantiate<FooNode>()`, then connect buttons with `FindChild(...)` and `Pressed += ...` in `_Ready()`. This makes a missing script binding fail as a type error instead of silently creating the base Godot node.
+- For Settings opened from Pause Menu, preserve the game scene: hide and disable the Pause Menu, add Settings as an overlay, then restore the Pause Menu and free only Settings on Back. Settings opened from Main Menu remains a normal scene transition.
+
 ---
 
 ## Repository Layout
@@ -165,6 +172,7 @@ addons/gut/                # GUT test framework (Godot scene tests — NOT run b
 - `dotnet test` without `--no-restore` is safe but slower; add `--no-restore --no-build` when the project is already built.
 - The `addons/gut/` GUT tests require the Godot editor to run — they are **not** part of the `dotnet test` pipeline.
 - `InternalsVisibleTo("EchoForest.Tests")` is set in `EchoForest.csproj`, so `internal` members are accessible in tests.
+- If a C# node's `_Ready()` is not called or `Instantiate<FooNode>()` casts to a base Godot type, verify the scene's `script` property and compare its `uid` with the script's generated `.cs.uid` sidecar file; restart the game after correcting a scene binding.
 
 ---
 

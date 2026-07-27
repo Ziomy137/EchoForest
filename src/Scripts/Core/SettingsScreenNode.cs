@@ -214,6 +214,16 @@ public partial class SettingsScreenNode : CanvasLayer
     {
         _ctrl.Cancel();
         RevertDisplay();
+
+        var pauseMenu = GetTree().Root.FindChild("PauseMenu", recursive: false, owned: false) as CanvasLayer;
+        if (pauseMenu is not null)
+        {
+            pauseMenu.Visible = true;
+            pauseMenu.ProcessMode = ProcessModeEnum.Always;
+            QueueFree();
+            return;
+        }
+
         var loader = new GodotSceneLoader();
         loader.LoadScene(MainMenuConfig.SceneResPath);
     }
