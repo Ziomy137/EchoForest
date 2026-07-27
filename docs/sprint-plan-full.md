@@ -541,6 +541,8 @@ These are prerequisites for all quest and story content.
 | `DialogueServiceTest.cs`     | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
 | `DialogueControllerTest.cs`  | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
 | `EventBusTest.cs`            | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.   |
+| `QuestServiceTest.cs`        | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.  |
+| `QuestDatabaseTest.cs`       | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                   |
 
 ---
 
@@ -800,10 +802,11 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 **Type:** System  
 **Assignee:** Developer  
 **Estimate:** 8 points
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Define quest data format in JSON:
+- [x] Define quest data format in JSON:
   ```json
   {
     "id": "q_kidnapped",
@@ -821,9 +824,9 @@ cutscene system can trigger story sequences. These form the backbone of all stor
     "triggers_quest": "q_seek_mage"
   }
   ```
-- [ ] Create data classes: `QuestData.cs`, `QuestObjective.cs`, `QuestReward.cs`
-- [ ] Create `QuestState` enum: `NotStarted`, `Active`, `Completed`, `Failed`
-- [ ] Create `QuestService.cs` implementing `IQuestService`:
+- [x] Create data classes: `QuestData.cs`, `QuestObjective.cs`, `QuestReward.cs`
+- [x] Create `QuestState` enum: `NotStarted`, `Active`, `Completed`, `Failed`
+- [x] Create `QuestService.cs` implementing `IQuestService`:
   - `StartQuest(string questId)`
   - `CompleteObjective(string questId, string objectiveId)`
   - `CompleteQuest(string questId)`
@@ -831,9 +834,9 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - `GetActiveQuests() → List<QuestData>`
   - `GetActiveObjectives(string questId) → List<QuestObjective>`
   - Publishes appropriate `EventBus` events on state changes
-- [ ] Create `QuestDatabase.cs` — loads all quest JSON files from `res://Assets/Data/Quests/`
-- [ ] Implement all 5 main quests as JSON data files (stubs — full dialogue content in Sprint 14)
-- [ ] Apply loaded `SaveData.QuestStates` to `QuestService` on game load (load-game integration)
+- [x] Create `QuestDatabase.cs` — loads all quest JSON files from `res://src/Assets/Data/Quests/`
+- [x] Implement all 5 main quests as JSON data files (stubs — full dialogue content in Sprint 14)
+- [x] Apply loaded `SaveData.QuestStates` to `QuestService` on game load (load-game integration)
 
 **Acceptance Criteria:**
 
@@ -996,7 +999,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 | Story                    | Points | Owner     |
 | ------------------------ | ------ | --------- |
 | S7-01 Event Bus ✅       | 5      | Lead Dev  |
-| S7-02 Quest System       | 8      | Developer |
+| S7-02 Quest System ✅    | 8      | Developer |
 | S7-03 Quest Journal UI   | 5      | Developer |
 | S7-04 Cutscene Framework | 5      | Developer |
 | **Total**                | **23** |           |

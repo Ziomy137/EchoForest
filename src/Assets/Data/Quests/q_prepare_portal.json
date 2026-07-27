@@ -1,0 +1,11 @@
+{
+  "id": "q_prepare_portal",
+  "title": "Prepare the Portal",
+  "description": "Fulfil the mage's condition to gain access to the portal.",
+  "objectives": [
+    { "id": "complete_mage_condition", "text": "Complete the mage's condition", "required": true },
+    { "id": "return_to_mage", "text": "Return to the mage with proof", "required": true }
+  ],
+  "rewards": [],
+  "triggers_quest": "q_enter_portal"
+}

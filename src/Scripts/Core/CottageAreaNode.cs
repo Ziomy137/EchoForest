@@ -15,13 +15,24 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot Node2D wrapper — requires scene tree")]
 public partial class CottageAreaNode : Node2D
 {
+	private QuestService _questService = null!;
+
 	public override void _Ready()
 	{
+		InitializeQuestService();
 		PopulateTiles();
 		SpawnProps();
 		SetupBoundary();
 		SpawnPlayer();
 		SetupCamera();
+	}
+
+	private void InitializeQuestService()
+	{
+		var questDatabase = new QuestDatabase(new GodotFileSystem());
+		questDatabase.GetAllQuests();
+		_questService = new QuestService(questDatabase, new EventBus());
+		_questService.ApplyQuestStates(GameSession.QuestStates);
 	}
 
 	// ─── Tile population ──────────────────────────────────────────────────────

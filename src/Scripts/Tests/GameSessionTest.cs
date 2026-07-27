@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using EchoForest.Core;
 
 namespace EchoForest.Tests;
@@ -108,6 +109,31 @@ public class GameSessionTest
         {
             Assert.That(GameSession.LastPlayerX, Is.EqualTo(99f).Within(0.001f));
             Assert.That(GameSession.LastPlayerY, Is.EqualTo(88f).Within(0.001f));
+        });
+    }
+
+    [Test]
+    public void GameSession_ApplyLoadedSave_RestoresPositionAndQuestStates()
+    {
+        var saveData = new SaveData
+        {
+            PlayerX = 123.4f,
+            PlayerY = 567.8f,
+            QuestStates = new Dictionary<string, QuestState>
+            {
+                ["q_kidnapped"] = QuestState.Completed,
+                ["q_seek_mage"] = QuestState.Active,
+            },
+        };
+
+        GameSession.ApplyLoadedSave(saveData);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(GameSession.HasSession, Is.True);
+            Assert.That(GameSession.LastPlayerX, Is.EqualTo(123.4f));
+            Assert.That(GameSession.LastPlayerY, Is.EqualTo(567.8f));
+            Assert.That(GameSession.QuestStates, Is.EqualTo(saveData.QuestStates));
         });
     }
 

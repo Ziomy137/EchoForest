@@ -1,0 +1,12 @@
+{
+  "id": "q_rescue_child",
+  "title": "Rescue and Confrontation",
+  "description": "Find your child, confront the kidnapper, and return home.",
+  "objectives": [
+    { "id": "navigate_portal_chamber", "text": "Navigate the portal chamber", "required": true },
+    { "id": "rescue_child", "text": "Locate and rescue your child", "required": true },
+    { "id": "confront_kidnapper", "text": "Confront the kidnapper", "required": true },
+    { "id": "return_home", "text": "Return safely to the cottage", "required": true }
+  ],
+  "rewards": []
+}
