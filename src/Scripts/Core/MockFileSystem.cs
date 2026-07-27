@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace EchoForest.Core;
 
@@ -26,6 +27,24 @@ public sealed class MockFileSystem : IFileSystem
     public MockFileSystem(Dictionary<string, string> files)
     {
         _files = new Dictionary<string, string>(files);
+    }
+
+    public List<string> ListFiles(string directory)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(directory);
+        var prefix = $"{directory.TrimEnd('/')}/";
+        var paths = new List<string>();
+        foreach (var path in _files.Keys)
+        {
+            if (path.StartsWith(prefix, StringComparison.Ordinal)
+                && path.IndexOf('/', prefix.Length) < 0)
+            {
+                paths.Add(path);
+            }
+        }
+
+        paths.Sort(StringComparer.Ordinal);
+        return paths;
     }
 
     public bool Exists(string path) => _files.ContainsKey(path);

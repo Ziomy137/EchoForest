@@ -1,3 +1,5 @@
+using System;
+
 namespace EchoForest.Core;
 
 /// <summary>
@@ -9,7 +11,11 @@ public enum QuestState
     NotStarted,
 
     /// <summary>Quest is currently active.</summary>
-    InProgress,
+    Active,
+
+    /// <summary>Legacy serialized name for <see cref="Active"/>.</summary>
+    [Obsolete("Use Active instead.")]
+    InProgress = Active,
 
     /// <summary>Quest has been successfully completed.</summary>
     Completed,

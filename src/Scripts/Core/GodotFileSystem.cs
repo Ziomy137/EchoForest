@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using Godot;
 
 namespace EchoForest.Core;
@@ -13,6 +14,27 @@ namespace EchoForest.Core;
 [ExcludeFromCodeCoverage(Justification = "Godot FileAccess wrapper — requires Godot runtime")]
 public sealed class GodotFileSystem : IFileSystem
 {
+    public List<string> ListFiles(string directory)
+    {
+        var dir = DirAccess.Open(directory);
+        if (dir is null)
+            return [];
+
+        var files = new List<string>();
+        dir.ListDirBegin();
+        while (true)
+        {
+            var fileName = dir.GetNext();
+            if (string.IsNullOrEmpty(fileName))
+                break;
+
+            if (!dir.CurrentIsDir())
+                files.Add($"{directory.TrimEnd('/')}/{fileName}");
+        }
+        dir.ListDirEnd();
+        return files;
+    }
+
     public bool Exists(string path) => FileAccess.FileExists(path);
 
     public string ReadText(string path)

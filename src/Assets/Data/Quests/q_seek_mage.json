@@ -1,0 +1,12 @@
+{
+  "id": "q_seek_mage",
+  "title": "Seek the Local Mage",
+  "description": "Travel to the city and ask the local mage about the portal.",
+  "objectives": [
+    { "id": "travel_to_city", "text": "Travel to the city", "required": true },
+    { "id": "locate_mage", "text": "Locate the local mage", "required": true },
+    { "id": "speak_to_mage", "text": "Speak with the mage about the portal", "required": true }
+  ],
+  "rewards": [],
+  "triggers_quest": "q_prepare_portal"
+}

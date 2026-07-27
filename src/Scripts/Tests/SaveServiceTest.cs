@@ -89,6 +89,22 @@ public class SaveServiceTest
     }
 
     [Test]
+    public void SaveService_Load_LegacyInProgressQuestState_MapsToActive()
+    {
+        var fs = new MockFileSystem(new Dictionary<string, string>
+        {
+            ["user://save_slot_1.json"] = """
+            { "QuestStates": { "q_kidnapped": "InProgress" } }
+            """,
+        });
+        var service = Make(fs);
+
+        var loaded = service.Load(1);
+
+        Assert.That(loaded.QuestStates["q_kidnapped"], Is.EqualTo(QuestState.Active));
+    }
+
+    [Test]
     public void SaveService_SaveAndLoad_PreservesInventory()
     {
         var fs = EmptyFs();

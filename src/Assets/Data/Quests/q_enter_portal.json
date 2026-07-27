@@ -1,0 +1,11 @@
+{
+  "id": "q_enter_portal",
+  "title": "Enter the Portal",
+  "description": "Return to the tower and enter the portal chamber.",
+  "objectives": [
+    { "id": "return_to_mage_tower", "text": "Return to the mage's tower", "required": true },
+    { "id": "enter_portal_chamber", "text": "Enter the portal chamber", "required": true }
+  ],
+  "rewards": [],
+  "triggers_quest": "q_rescue_child"
+}

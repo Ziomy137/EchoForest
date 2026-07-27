@@ -65,8 +65,7 @@ public partial class LoadGameScreenNode : CanvasLayer
         {
             // Apply saved position to GameSession so the scene can restore it.
             var data = _svc.Load(slot);
-            GameSession.Start();
-            GameSession.SavePlayerPosition(data.PlayerX, data.PlayerY);
+            GameSession.ApplyLoadedSave(data);
 
             var scene = string.IsNullOrEmpty(data.CurrentArea)
                 ? MainMenuConfig.ContinueScenePath

@@ -1,0 +1,12 @@
+{
+  "id": "q_kidnapped",
+  "title": "Kidnapped",
+  "description": "Discover what happened to your child after the attack.",
+  "objectives": [
+    { "id": "wake_up", "text": "Wake up after the mage attack", "required": true },
+    { "id": "discover_child_missing", "text": "Discover that your child is missing", "required": true },
+    { "id": "find_portal", "text": "Find where the portal was", "required": true }
+  ],
+  "rewards": [],
+  "triggers_quest": "q_seek_mage"
+}

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace EchoForest.Core;
 
 /// <summary>
@@ -6,6 +8,9 @@ namespace EchoForest.Core;
 /// </summary>
 public interface IFileSystem
 {
+    /// <summary>Returns full paths for files directly inside <paramref name="directory"/>.</summary>
+    List<string> ListFiles(string directory);
+
     /// <summary>Returns <c>true</c> if the file at <paramref name="path"/> exists.</summary>
     bool Exists(string path);
 

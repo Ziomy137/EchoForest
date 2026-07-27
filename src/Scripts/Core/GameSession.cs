@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace EchoForest.Core;
 
 /// <summary>
@@ -13,6 +16,8 @@ namespace EchoForest.Core;
 /// </summary>
 public static class GameSession
 {
+    private static Dictionary<string, QuestState> _questStates = new(StringComparer.Ordinal);
+
     /// <summary><c>true</c> when the player has started at least one session.</summary>
     public static bool HasSession { get; private set; }
 
@@ -25,6 +30,9 @@ public static class GameSession
     /// <summary>Last saved player world-space Y coordinate.</summary>
     public static float LastPlayerY { get; private set; }
 
+    /// <summary>Quest states supplied by the currently loaded save, if any.</summary>
+    public static IReadOnlyDictionary<string, QuestState> QuestStates => _questStates;
+
     /// <summary>
     /// Marks a session as active and clears any saved player position so the
     /// next load uses the scene's spawn point. Call when a NEW game starts.
@@ -33,6 +41,23 @@ public static class GameSession
     {
         HasSession = true;
         HasPlayerPosition = false;
+        _questStates.Clear();
+    }
+
+    /// <summary>Stores quest progress until the target game scene composes its quest service.</summary>
+    public static void SetQuestStates(IReadOnlyDictionary<string, QuestState> questStates)
+    {
+        ArgumentNullException.ThrowIfNull(questStates);
+        _questStates = new Dictionary<string, QuestState>(questStates, StringComparer.Ordinal);
+    }
+
+    /// <summary>Applies the session state required after a save is selected.</summary>
+    public static void ApplyLoadedSave(SaveData saveData)
+    {
+        ArgumentNullException.ThrowIfNull(saveData);
+        Start();
+        SavePlayerPosition(saveData.PlayerX, saveData.PlayerY);
+        SetQuestStates(saveData.QuestStates);
     }
 
     /// <summary>
@@ -53,5 +78,6 @@ public static class GameSession
         HasPlayerPosition = false;
         LastPlayerX = 0f;
         LastPlayerY = 0f;
+        _questStates.Clear();
     }
 }
