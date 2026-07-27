@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bcrdtscr01ef"]
 
-[ext_resource type="Script" uid="uid://m42d5by47x2k"
- path="res://src/Scripts/Core/CreditsScreenNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://m42d5by47x2k" path="res://src/Scripts/Core/CreditsScreenNode.cs" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.176, 0.141, 0.086, 1)
