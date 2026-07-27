@@ -25,4 +25,7 @@ public static class MainMenuConfig
 
     /// <summary>Pause menu overlay scene resource path.</summary>
     public const string PauseMenuScenePath = "res://src/Scenes/PauseMenu.tscn";
+
+    /// <summary>Dialogue overlay scene resource path.</summary>
+    public const string DialogueBoxScenePath = "res://src/Scenes/DialogueBox.tscn";
 }

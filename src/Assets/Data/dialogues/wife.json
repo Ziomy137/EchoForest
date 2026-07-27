@@ -1,0 +1,18 @@
+{
+  "npc_id": "wife",
+  "is_story_critical": true,
+  "lines": [
+    {
+      "id": "wife_01",
+      "speaker": "Wife",
+      "text": "Please, find our child!",
+      "next": "wife_02"
+    },
+    {
+      "id": "wife_02",
+      "speaker": "Wife",
+      "text": "Head to the city and find the local mage.",
+      "next": null
+    }
+  ]
+}

@@ -533,11 +533,13 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                    | Tests | Sprint | Notes                                                     |
-| ---------------------------- | ----- | ------ | --------------------------------------------------------- |
-| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix.                   |
-| `InteractionDetectorTest.cs` | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage. |
-| `NpcControllerTest.cs`       | 4     | S6-03  | NPC interaction contract and validation coverage.         |
+| Test File                    | Tests | Sprint | Notes                                                            |
+| ---------------------------- | ----- | ------ | ---------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix.                          |
+| `InteractionDetectorTest.cs` | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.        |
+| `NpcControllerTest.cs`       | 4     | S6-03  | NPC interaction contract and validation coverage.                |
+| `DialogueServiceTest.cs`     | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
+| `DialogueControllerTest.cs`  | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
 
 ---
 
@@ -609,10 +611,11 @@ These are prerequisites for all quest and story content.
 **Type:** Gameplay / System  
 **Assignee:** Developer  
 **Estimate:** 8 points
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Define dialogue data format in JSON:
+- [x] Define dialogue data format in JSON:
   ```json
   {
     "npc_id": "wife",
@@ -632,21 +635,21 @@ These are prerequisites for all quest and story content.
     ]
   }
   ```
-- [ ] Create `DialogueLine.cs`, `DialogueTree.cs`, `DialogueOption.cs` data classes
-- [ ] Create `DialogueService.cs` implementing `IDialogueService`:
+- [x] Create `DialogueLine.cs`, `DialogueTree.cs`, `DialogueOption.cs` data classes
+- [x] Create `DialogueService.cs` implementing `IDialogueService`:
   - `LoadDialogue(string npcId) → DialogueTree`
   - `GetLine(string lineId) → DialogueLine`
   - `GetNextLine(string currentLineId) → DialogueLine?`
-- [ ] Create `DialogueController.cs` — manages conversation flow:
+- [x] Create `DialogueController.cs` — manages conversation flow:
   - `StartConversation(string npcId)`
   - `Advance()` — moves to next line or ends conversation
   - `EndConversation()`
   - Event: `OnConversationStarted`, `OnLineChanged(DialogueLine)`, `OnConversationEnded`
-- [ ] Create `DialogueBox.tscn` — UI panel with NPC name, dialogue text (typewriter effect), `[E] Continue` prompt
-- [ ] Typewriter effect: characters appear one-by-one at configurable speed; pressing `interact` skips to full line
-- [ ] Dialogue boxes use approved palette colors
-- [ ] Game world does NOT pause during dialogue (unless quest cutscene)
-- [ ] Trigger auto-save on `OnConversationEnded` for story-critical NPC dialogues (calls `ISaveDataService.Save`)
+- [x] Create `DialogueBox.tscn` — UI panel with NPC name, dialogue text (typewriter effect), `[E] Continue` prompt
+- [x] Typewriter effect: characters appear one-by-one at configurable speed; pressing `interact` skips to full line
+- [x] Dialogue boxes use approved palette colors
+- [x] Game world does NOT pause during dialogue (unless quest cutscene)
+- [x] Trigger auto-save on `OnConversationEnded` for story-critical NPC dialogues (calls `ISaveDataService.Save`)
 
 **Acceptance Criteria:**
 
@@ -661,19 +664,22 @@ These are prerequisites for all quest and story content.
 ```csharp
 // DialogueServiceTest.cs
 [Test] public void DialogueService_GetLine_ReturnsCorrectText() {
-    var svc = new DialogueService(new MockFileSystem(dialogueJson: WifeDialogueJson));
+    var fs = new MockFileSystem(new Dictionary<string, string> {
+        ["res://src/Assets/Data/dialogues/wife.json"] = WifeDialogueJson
+    });
+    var svc = new DialogueService(fs);
     svc.LoadDialogue("wife");
     var line = svc.GetLine("wife_01");
     Assert.AreEqual("Please, find our child!", line.Text);
 }
 [Test] public void DialogueService_GetNextLine_FollowsChain() {
-    var svc = new DialogueService(new MockFileSystem(dialogueJson: WifeDialogueJson));
+    var svc = CreateDialogueService(WifeDialogueJson);
     svc.LoadDialogue("wife");
     var next = svc.GetNextLine("wife_01");
     Assert.AreEqual("wife_02", next.Id);
 }
 [Test] public void DialogueService_GetNextLine_ReturnsNull_AtEnd() {
-    var svc = new DialogueService(new MockFileSystem(dialogueJson: WifeDialogueJson));
+    var svc = CreateDialogueService(WifeDialogueJson);
     svc.LoadDialogue("wife");
     var next = svc.GetNextLine("wife_02");
     Assert.IsNull(next);
@@ -681,14 +687,14 @@ These are prerequisites for all quest and story content.
 // DialogueControllerTest.cs
 [Test] public void DialogueController_StartConversation_RaisesStartedEvent() {
     bool started = false;
-    var ctrl = new DialogueController(new MockDialogueService());
+  var ctrl = new DialogueController(CreateDialogueService(WifeDialogueJson));
     ctrl.OnConversationStarted += () => started = true;
     ctrl.StartConversation("wife");
     Assert.IsTrue(started);
 }
 [Test] public void DialogueController_Advance_AtLastLine_EndsConversation() {
     bool ended = false;
-    var ctrl = new DialogueController(new MockDialogueService(lineCount: 1));
+  var ctrl = new DialogueController(CreateDialogueService(SingleLineDialogueJson));
     ctrl.OnConversationEnded += () => ended = true;
     ctrl.StartConversation("wife");
     ctrl.Advance();
@@ -700,13 +706,13 @@ These are prerequisites for all quest and story content.
 
 **Sprint 6 Summary:**
 
-| Story                  | Points | Owner     |
-| ---------------------- | ------ | --------- |
-| S6-01 Full Game HUD ✅ | 8      | Developer |
-| S6-02 Pause Menu ✅    | 3      | Developer |
-| S6-03 NPC Framework ✅ | 8      | Lead Dev  |
-| S6-04 Dialogue System  | 8      | Developer |
-| **Total**              | **27** |           |
+| Story                    | Points | Owner     |
+| ------------------------ | ------ | --------- |
+| S6-01 Full Game HUD ✅   | 8      | Developer |
+| S6-02 Pause Menu ✅      | 3      | Developer |
+| S6-03 NPC Framework ✅   | 8      | Lead Dev  |
+| S6-04 Dialogue System ✅ | 8      | Developer |
+| **Total**                | **27** |           |
 
 ---
 
