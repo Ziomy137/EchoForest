@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bload1gmscr01"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/LoadGameScreenNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://bc3iia8w1mntf" path="res://src/Scripts/Core/LoadGameScreenNode.cs" id="1_script"]
 
 ; ── Button styles (same palette as MainMenu / SettingsScreen) ─────────────────
 

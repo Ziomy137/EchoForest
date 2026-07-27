@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpause01ef26"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/PauseMenuNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://0id7wdygq6i7" path="res://src/Scripts/Core/PauseMenuNode.cs" id="2_script"]
 
 ; ── Button styles (palette-compliant, matches other menu screens) ─────────────
 
@@ -75,7 +75,8 @@ content_margin_bottom = 32.0
 
 ; ── Scene tree ────────────────────────────────────────────────────────────────
 
-[node name="PauseMenu" type="CanvasLayer" script=ExtResource("1_script")]
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("2_script")
 layer = 100
 process_mode = 3
 
@@ -134,12 +135,3 @@ text = "Save Game"
 process_mode = 3
 layout_mode = 2
 text = "Return to Main Menu"
-
-; ── Signal connections ────────────────────────────────────────────────────────
-; Wired in .tscn so connections are established by Godot before _Ready() runs.
-; This is more reliable than C# delegate wiring for dynamically added scenes.
-
-[connection signal="pressed" from="Center/Panel/VBox/ResumeButton" to="." method="OnResume"]
-[connection signal="pressed" from="Center/Panel/VBox/SettingsButton" to="." method="OnSettingsPressed"]
-[connection signal="pressed" from="Center/Panel/VBox/SaveGameButton" to="." method="OnSaveGame"]
-[connection signal="pressed" from="Center/Panel/VBox/MainMenuButton" to="." method="OnMainMenuPressed"]

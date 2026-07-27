@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bo8rkoid8h8s4"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/SettingsScreenNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://1e3gjykrsix3" path="res://src/Scripts/Core/SettingsScreenNode.cs" id="1_script"]
 
 ; ── Shared button styles (reuse palette from MainMenu) ───────────────────────
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgmhud01ef26"]
 
-[ext_resource type="Script" path="res://src/Scripts/Core/GameHudNode.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://brd8yi4o0536q" path="res://src/Scripts/Core/GameHudNode.cs" id="1_script"]
 
 ; ── Shared styles ─────────────────────────────────────────────────────────────
 

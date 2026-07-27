@@ -1,7 +1,6 @@
 # ─── Godot ───────────────────────────────────────────────────────────────────
 # Auto-generated Godot files
 .godot/
-*.uid
 
 # Godot import files (auto-generated per-asset)
 *.import

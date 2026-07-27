@@ -151,8 +151,11 @@ All test doubles are named `Mock*` and live alongside production code in `src/Sc
 - **Scene paths**: always `const string` in `MainMenuConfig.cs`. Never hardcode `res://` paths elsewhere.
 - **Scene change from a node**: call `GetTree().ChangeSceneToFile(path)` directly. Capture `GetTree()` BEFORE `RemoveChild(this)` — `GetTree()` returns null once a node leaves the tree.
 - **Pause menus added to Root**: use `ProcessMode.Disabled` on the player, NOT `GetTree().Paused` — Godot 4 pause blocks `_gui_input` on ALL nodes including `ProcessMode.Always`.
-- **Signal wiring for dynamic scenes**: use `.tscn` `[connection]` blocks, not C# delegates in `_Ready()`.
+- **Signal wiring for dynamic scenes**: use `FindChild(...)` and connect `Pressed += ...` in the root node's `_Ready()`. Do not rely on `.tscn` `[connection]` blocks for a dynamically added C# overlay.
 - **Removing a node before scene change**: `tree.Root.RemoveChild(this)` → `QueueFree()` → `tree.ChangeSceneToFile(path)` — ensures the node's CanvasLayer doesn't cover the incoming scene.
+- **C# scene script binding**: declare `script = ExtResource("...")` below the `[node]` declaration, not in the `[node]` header. Reference the matching `uid://...` from the generated `FooNode.cs.uid` sidecar in the script `ext_resource`; its path must identify the same script.
+- **Dynamic C# overlays**: instantiate with `Instantiate<FooNode>()`, so an unbound script fails as an immediate type error rather than returning a base Godot node. Restart the game after correcting a `.tscn` script binding to reload the PackedScene.
+- **Settings from Pause Menu**: hide and disable the Pause Menu, add Settings as an overlay, then restore the Pause Menu and free only Settings on Back. Do not replace the gameplay scene for this path.
 - **Serialization**: `System.Text.Json` with `JsonStringEnumConverter`. Never Newtonsoft.
 - **Save files**: `SaveService` writes to `user://save_slot_{N}.json` (slots 1–5) via `IFileSystem`.
 
