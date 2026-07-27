@@ -18,7 +18,7 @@ namespace EchoForest.Core;
 /// Excluded from NUnit code coverage — requires the Godot scene tree.
 /// </summary>
 [ExcludeFromCodeCoverage(Justification = "Godot CanvasLayer wrapper — requires scene tree")]
-public partial class GameHudNode : CanvasLayer
+public partial class GameHudNode : CanvasLayer, IGameHudController
 {
     private GameHudController _ctrl = null!;
 
@@ -30,6 +30,16 @@ public partial class GameHudNode : CanvasLayer
     private Label _questProgressLabel = null!;
     private Label _interactionPromptLabel = null!;
     private Label _weaponLabel = null!;
+
+    public float HealthFillRatio => _ctrl.HealthFillRatio;
+    public float CurrentHealth => _ctrl.CurrentHealth;
+    public float MaxHealth => _ctrl.MaxHealth;
+    public bool IsInteractionPromptVisible => _ctrl.IsInteractionPromptVisible;
+    public string InteractionPromptText => _ctrl.InteractionPromptText;
+    public string CurrentQuestName => _ctrl.CurrentQuestName;
+    public string CurrentObjectiveText => _ctrl.CurrentObjectiveText;
+    public string ObjectiveProgress => _ctrl.ObjectiveProgress;
+    public string ActiveWeaponId => _ctrl.ActiveWeaponId;
 
     public override void _Ready()
     {
