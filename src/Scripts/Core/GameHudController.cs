@@ -14,6 +14,13 @@ namespace EchoForest.Core;
 /// </summary>
 public sealed class GameHudController : IGameHudController
 {
+    private readonly IEventBus? _eventBus;
+
+    public GameHudController(IEventBus? eventBus = null)
+    {
+        _eventBus = eventBus;
+    }
+
     // ── Health ────────────────────────────────────────────────────────────────
 
     /// <inheritdoc/>
@@ -74,6 +81,7 @@ public sealed class GameHudController : IGameHudController
         CurrentHealth = clampedCurrent;
         MaxHealth = max;
         HealthFillRatio = clampedCurrent / max;
+        _eventBus?.Publish(new PlayerHealthChangedEvent(CurrentHealth, MaxHealth));
     }
 
     /// <inheritdoc/>
