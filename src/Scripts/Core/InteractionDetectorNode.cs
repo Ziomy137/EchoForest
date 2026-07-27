@@ -39,6 +39,10 @@ public partial class InteractionDetectorNode : Area2D
         if (_detector is null || !@event.IsActionPressed(InputActionNames.Interact))
             return;
 
+        var dialogueBox = GetTree().CurrentScene.GetNodeOrNull<DialogueBoxNode>("DialogueBox");
+        if (dialogueBox?.IsConversationActive == true)
+            return;
+
         if (_detector.NearestInteractable is INpc npc && _npcNodes.TryGetValue(npc, out var npcNode))
             npcNode.FaceToward(_player.GlobalPosition);
 

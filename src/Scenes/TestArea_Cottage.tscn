@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bp5oa24oojjch" path="res://src/Scripts/Core/IsometricCameraNode.cs" id="4_camera"]
 [ext_resource type="PackedScene" uid="uid://bgmhud01ef26" path="res://src/Scenes/GameHUD.tscn" id="5_hud"]
 [ext_resource type="PackedScene" path="res://src/Scenes/Wife.tscn" id="6_wife"]
+[ext_resource type="PackedScene" path="res://src/Scenes/DialogueBox.tscn" id="7_dialogue"]
 
 [node name="TestArea_Cottage" type="Node2D" unique_id=424375799]
 y_sort_enabled = true
@@ -32,3 +33,5 @@ FollowTarget = NodePath("../Player")
 position = Vector2(160, 416)
 
 [node name="HUD" parent="." instance=ExtResource("5_hud")]
+
+[node name="DialogueBox" parent="." instance=ExtResource("7_dialogue")]
