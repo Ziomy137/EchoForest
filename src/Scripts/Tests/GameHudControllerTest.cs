@@ -94,6 +94,24 @@ public class GameHudControllerTest
     }
 
     [Test]
+    public void UpdateHealth_PublishesClampedHealthChangedEvent()
+    {
+        var bus = new EventBus();
+        var ctrl = new GameHudController(bus);
+        PlayerHealthChangedEvent? receivedEvent = null;
+        bus.Subscribe<PlayerHealthChangedEvent>(healthEvent => receivedEvent = healthEvent);
+
+        ctrl.UpdateHealth(150f, 100f);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(receivedEvent, Is.Not.Null);
+            Assert.That(receivedEvent!.NewHealth, Is.EqualTo(100f));
+            Assert.That(receivedEvent.MaxHealth, Is.EqualTo(100f));
+        });
+    }
+
+    [Test]
     public void UpdateHealth_ZeroMax_Throws()
     {
         var ctrl = new GameHudController();

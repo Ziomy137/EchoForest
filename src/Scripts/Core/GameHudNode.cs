@@ -21,6 +21,9 @@ namespace EchoForest.Core;
 public partial class GameHudNode : CanvasLayer, IGameHudController
 {
     private GameHudController _ctrl = null!;
+    private EventBus _eventBus = null!;
+    private Tween? _damageFlashTween;
+    private float _lastKnownHealth;
 
     // Cached node references resolved once in _Ready.
     private ProgressBar _healthBar = null!;
@@ -43,7 +46,9 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
 
     public override void _Ready()
     {
-        _ctrl = new GameHudController();
+        _eventBus = new EventBus();
+        _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
+        _ctrl = new GameHudController(_eventBus);
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
         _healthLabel = GetNode<Label>("TopLeft/HealthLabel");
@@ -54,6 +59,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _weaponLabel = GetNode<Label>("TopRight/WeaponLabel");
 
         RefreshHud();
+        _lastKnownHealth = _ctrl.CurrentHealth;
     }
 
     // ── Public API — called by other Godot nodes ──────────────────────────────
@@ -65,7 +71,11 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     public void UpdateHealth(float current, float max)
     {
         _ctrl.UpdateHealth(current, max);
-        RefreshHealthBar();
+    }
+
+    public override void _ExitTree()
+    {
+        _eventBus?.Unsubscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
     }
 
     /// <summary>Updates the active weapon slot label.</summary>
@@ -117,6 +127,24 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     {
         _healthBar.Value = _ctrl.HealthFillRatio * _healthBar.MaxValue;
         _healthLabel.Text = $"{(int)_ctrl.CurrentHealth}/{(int)_ctrl.MaxHealth}";
+    }
+
+    private void OnPlayerHealthChanged(PlayerHealthChangedEvent healthEvent)
+    {
+        var tookDamage = healthEvent.NewHealth < _lastKnownHealth;
+        _lastKnownHealth = healthEvent.NewHealth;
+        RefreshHealthBar();
+
+        if (tookDamage)
+            PlayDamageFlash();
+    }
+
+    private void PlayDamageFlash()
+    {
+        _damageFlashTween?.Kill();
+        _healthBar.Modulate = new Color(1f, 0.35f, 0.35f, 1f);
+        _damageFlashTween = CreateTween();
+        _damageFlashTween.TweenProperty(_healthBar, "modulate", Colors.White, 0.2d);
     }
 
     private void RefreshQuestPanel()

@@ -540,6 +540,7 @@ These are prerequisites for all quest and story content.
 | `NpcControllerTest.cs`       | 4     | S6-03  | NPC interaction contract and validation coverage.                |
 | `DialogueServiceTest.cs`     | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
 | `DialogueControllerTest.cs`  | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
+| `EventBusTest.cs`            | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.   |
 
 ---
 
@@ -733,15 +734,16 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 **Type:** System / Architecture  
 **Assignee:** Lead Developer  
 **Estimate:** 5 points
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Create `EventBus.cs` as a pure C# singleton (injected via DI, not Godot autoload):
+- [x] Create `EventBus.cs` as a pure C# singleton (injected via DI, not Godot autoload):
   - Typed `Publish<TEvent>(TEvent e)` — broadcasts event to all subscribers
   - Typed `Subscribe<TEvent>(Action<TEvent> handler)` — registers listener
   - `Unsubscribe<TEvent>(Action<TEvent> handler)` — deregisters listener
   - `Clear()` — removes all subscriptions (for test teardown)
-- [ ] Define initial game events:
+- [x] Define initial game events:
   - `PlayerHealthChangedEvent(float newHealth, float maxHealth)`
   - `QuestStartedEvent(string questId)`
   - `QuestObjectiveCompletedEvent(string questId, string objectiveId)`
@@ -750,8 +752,8 @@ cutscene system can trigger story sequences. These form the backbone of all stor
   - `AreaTransitionEvent(string fromArea, string toArea)`
   - `PlayerDiedEvent`
   - `ItemPickedUpEvent(string itemId, int quantity)`
-- [ ] All game systems communicate exclusively through EventBus (no direct references between systems)
-- [ ] `GameHudNode` subscribes to `PlayerHealthChangedEvent` and triggers a red damage-flash Tween on the health bar _(moved from S6-01)_
+- [x] New inter-system integrations communicate through `EventBus` instead of direct system references
+- [x] `GameHudNode` subscribes to `PlayerHealthChangedEvent` and triggers a red damage-flash Tween on the health bar _(moved from S6-01)_
 
 **Acceptance Criteria:**
 
@@ -993,7 +995,7 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 
 | Story                    | Points | Owner     |
 | ------------------------ | ------ | --------- |
-| S7-01 Event Bus          | 5      | Lead Dev  |
+| S7-01 Event Bus ✅       | 5      | Lead Dev  |
 | S7-02 Quest System       | 8      | Developer |
 | S7-03 Quest Journal UI   | 5      | Developer |
 | S7-04 Cutscene Framework | 5      | Developer |
