@@ -38,6 +38,12 @@ public class SceneScriptUidTest
                     continue;
 
                 var sceneName = Path.GetRelativePath(repositoryRoot, scenePath);
+                if (!resourcePath.StartsWith("res://", StringComparison.Ordinal))
+                {
+                    failures.Add($"{sceneName} references {resourcePath}, but only res:// paths are supported by this test.");
+                    continue;
+                }
+
                 var scriptPath = Path.Combine(repositoryRoot, resourcePath["res://".Length..].Replace('/', Path.DirectorySeparatorChar));
                 var uidPath = scriptPath + ".uid";
 
