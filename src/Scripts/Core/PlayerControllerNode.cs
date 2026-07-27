@@ -25,6 +25,9 @@ public partial class PlayerControllerNode : CharacterBody2D
     private PlayerController _controller = null!;
     private PlayerAnimationController _animController = null!;
 
+    /// <summary>Pure-C# controller used by gameplay components that interact with the player.</summary>
+    public IPlayerController Controller => _controller;
+
     public Direction FacingDirection => _controller.FacingDirection;
     public PlayerState CurrentState => _controller.CurrentState;
 

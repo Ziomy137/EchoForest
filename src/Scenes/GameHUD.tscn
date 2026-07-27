@@ -31,7 +31,8 @@ content_margin_bottom = 4.0
 
 ; ── Scene tree ────────────────────────────────────────────────────────────────
 
-[node name="GameHUD" type="CanvasLayer" script=ExtResource("1_script")]
+[node name="GameHUD" type="CanvasLayer"]
+script = ExtResource("1_script")
 layer = 10
 
 ; ── Top-left: health + quest objective ───────────────────────────────────────

@@ -533,9 +533,11 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                    | Tests | Sprint | Notes                                   |
-| ---------------------------- | ----- | ------ | --------------------------------------- |
-| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix. |
+| Test File                    | Tests | Sprint | Notes                                                     |
+| ---------------------------- | ----- | ------ | --------------------------------------------------------- |
+| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix.                   |
+| `InteractionDetectorTest.cs` | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage. |
+| `NpcControllerTest.cs`       | 4     | S6-03  | NPC interaction contract and validation coverage.         |
 
 ---
 
@@ -544,23 +546,24 @@ These are prerequisites for all quest and story content.
 **Type:** Gameplay / System  
 **Assignee:** Lead Developer  
 **Estimate:** 8 points
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Create `INpc` interface:
+- [x] Create `INpc` interface:
   - `NpcId` (string)
   - `DisplayName` (string)
   - `InteractionRadius` (float)
   - `Interact(IPlayerController player)`
   - `IsInteractable → bool`
-- [ ] Create `NpcController.cs` as `CharacterBody2D` wrapper implementing `INpc`
-- [ ] Create `InteractionDetector.cs` — `Area2D` child of player; detects when player enters NPC interaction radius
+- [x] Create `NpcController.cs` pure-C# interaction controller with `NpcControllerNode.cs` `CharacterBody2D` wrapper
+- [x] Create `InteractionDetector.cs` with `InteractionDetectorNode.cs` `Area2D` player child; detects when player enters NPC interaction radius
   - Raises `InteractableEntered(INpc npc)` and `InteractableExited(INpc npc)` events
   - Calls `GameHudController.ShowInteractionPrompt("Talk")` on enter
   - On `interact` input action: calls `npc.Interact(player)`
-- [ ] NPCs have `Idle` animation loop (2-frame sprite cycle)
-- [ ] NPCs face toward player when interaction starts
-- [ ] Add Wife NPC placeholder to Cottage scene (non-functional dialogue for now)
+- [x] NPCs have an `Idle` animation loop (temporary existing idle sprites pending S16-01 NPC art)
+- [x] NPCs face toward player when interaction starts
+- [x] Add Wife NPC placeholder to Cottage scene (non-functional dialogue for now)
 
 **Acceptance Criteria:**
 
@@ -575,26 +578,26 @@ These are prerequisites for all quest and story content.
 // InteractionDetectorTest.cs
 [Test] public void Detector_WithinRadius_RaisesEnteredEvent() {
     bool raised = false;
-    var detector = new InteractionDetector();
+    var detector = new InteractionDetector(new GameHudController());
     detector.InteractableEntered += _ => raised = true;
     var mockNpc = new MockNpc { InteractionRadius = 100f };
-    detector.SimulateNpcEnter(mockNpc, distance: 50f);
+    detector.TrackNpc(mockNpc, distance: 50f);
     Assert.IsTrue(raised);
 }
 [Test] public void Detector_OutsideRadius_DoesNotRaiseEvent() {
     bool raised = false;
-    var detector = new InteractionDetector();
+    var detector = new InteractionDetector(new GameHudController());
     detector.InteractableEntered += _ => raised = true;
     var mockNpc = new MockNpc { InteractionRadius = 50f };
-    detector.SimulateNpcEnter(mockNpc, distance: 100f);
+    detector.TrackNpc(mockNpc, distance: 100f);
     Assert.IsFalse(raised);
 }
 [Test] public void Detector_MultipleNpcs_TargetsNearest() {
-    var detector = new InteractionDetector();
+    var detector = new InteractionDetector(new GameHudController());
     var npc1 = new MockNpc { NpcId = "wife", InteractionRadius = 100f };
     var npc2 = new MockNpc { NpcId = "mage", InteractionRadius = 100f };
-    detector.SimulateNpcEnter(npc1, distance: 80f);
-    detector.SimulateNpcEnter(npc2, distance: 40f);
+    detector.TrackNpc(npc1, distance: 80f);
+    detector.TrackNpc(npc2, distance: 40f);
     Assert.AreEqual("mage", detector.NearestInteractable.NpcId);
 }
 ```
@@ -701,7 +704,7 @@ These are prerequisites for all quest and story content.
 | ---------------------- | ------ | --------- |
 | S6-01 Full Game HUD ✅ | 8      | Developer |
 | S6-02 Pause Menu ✅    | 3      | Developer |
-| S6-03 NPC Framework    | 8      | Lead Dev  |
+| S6-03 NPC Framework ✅ | 8      | Lead Dev  |
 | S6-04 Dialogue System  | 8      | Developer |
 | **Total**              | **27** |           |
 
