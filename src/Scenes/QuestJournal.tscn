@@ -1,0 +1,164 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://5oys0tah1dbv" path="res://src/Scripts/Core/QuestJournalNode.cs" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.063, 0.043, 0.024, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.68, 0.53, 0.19, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 20.0
+content_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_panel"]
+bg_color = Color(0.1, 0.075, 0.04, 1)
+border_width_right = 1
+border_color = Color(0.4, 0.33, 0.2, 1)
+content_margin_left = 14.0
+content_margin_right = 14.0
+content_margin_top = 12.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_normal"]
+bg_color = Color(0.14, 0.11, 0.06, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.25, 0.19, 0.08, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.843, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+
+[sub_resource type="Theme" id="Theme_journal"]
+Button/styles/normal = SubResource("StyleBoxFlat_button_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_button_hover")
+Button/colors/font_color = Color(0.878, 0.863, 0.824, 1)
+Button/colors/font_hover_color = Color(1, 0.843, 0, 1)
+
+[node name="QuestJournal" type="CanvasLayer"]
+layer = 90
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="Overlay" type="ColorRect" parent="."]
+mouse_filter = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.58)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(880, 520)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Layout" type="HBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme = SubResource("Theme_journal")
+
+[node name="QuestListPanel" type="PanelContainer" parent="Center/Panel/Layout"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_list_panel")
+
+[node name="QuestList" type="VBoxContainer" parent="Center/Panel/Layout/QuestListPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="Center/Panel/Layout/QuestListPanel/QuestList"]
+layout_mode = 2
+text = "QUEST LOG"
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 24
+
+[node name="ActiveHeading" type="Label" parent="Center/Panel/Layout/QuestListPanel/QuestList"]
+layout_mode = 2
+text = "ACTIVE"
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="ActiveQuestList" type="VBoxContainer" parent="Center/Panel/Layout/QuestListPanel/QuestList"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CompletedHeading" type="Label" parent="Center/Panel/Layout/QuestListPanel/QuestList"]
+layout_mode = 2
+text = "COMPLETED"
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="CompletedQuestList" type="VBoxContainer" parent="Center/Panel/Layout/QuestListPanel/QuestList"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="DetailsPanel" type="MarginContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 8
+
+[node name="Details" type="VBoxContainer" parent="Center/Panel/Layout/DetailsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Center/Panel/Layout/DetailsPanel/Details"]
+layout_mode = 2
+text = "No quests yet"
+autowrap_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 26
+
+[node name="DescriptionLabel" type="Label" parent="Center/Panel/Layout/DetailsPanel/Details"]
+layout_mode = 2
+text = "Quest updates will appear here."
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="ObjectivesHeading" type="Label" parent="Center/Panel/Layout/DetailsPanel/Details"]
+layout_mode = 2
+text = "OBJECTIVES"
+theme_override_colors/font_color = Color(0.72, 0.64, 0.42, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="ObjectivesList" type="VBoxContainer" parent="Center/Panel/Layout/DetailsPanel/Details"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Spacer" type="Control" parent="Center/Panel/Layout/DetailsPanel/Details"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="Center/Panel/Layout/DetailsPanel/Details"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Close"

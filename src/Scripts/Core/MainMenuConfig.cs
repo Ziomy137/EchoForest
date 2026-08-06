@@ -28,4 +28,7 @@ public static class MainMenuConfig
 
     /// <summary>Dialogue overlay scene resource path.</summary>
     public const string DialogueBoxScenePath = "res://src/Scenes/DialogueBox.tscn";
+
+    /// <summary>Quest journal overlay scene resource path.</summary>
+    public const string QuestJournalScenePath = "res://src/Scenes/QuestJournal.tscn";
 }
