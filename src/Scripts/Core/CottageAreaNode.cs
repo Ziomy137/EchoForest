@@ -233,6 +233,7 @@ public partial class CottageAreaNode : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		if (InputHandler.IsBlocked) return;
 		if (!@event.IsActionPressed("pause")) return;
 
 		var existingMenu = GetTree().Root.FindChild("PauseMenu", recursive: false, owned: false);
