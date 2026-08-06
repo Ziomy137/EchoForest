@@ -24,6 +24,7 @@ public partial class GameBootstrapNode : Node2D
     public override void _Ready()
     {
         GameSession.Start();
+        GameSession.RequestIntroCutscene();
 
         // Auto-save slot 1 with an empty initial state so the Main Menu
         // "Continue" button is enabled immediately after starting a new game.

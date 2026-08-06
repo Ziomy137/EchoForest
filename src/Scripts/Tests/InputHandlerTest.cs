@@ -108,6 +108,16 @@ public class InputHandlerTest
     }
 
     [Test]
+    public void MockInputHandler_IsBlocked_DefaultsFalseAndCanBeSet()
+    {
+        var mock = new MockInputHandler();
+
+        Assert.That(mock.IsBlocked, Is.False);
+        mock.IsBlocked = true;
+        Assert.That(mock.IsBlocked, Is.True);
+    }
+
+    [Test]
     public void MockInputHandler_PressedAction_ReturnsTrue()
     {
         var mock = new MockInputHandler();

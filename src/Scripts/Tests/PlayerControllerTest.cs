@@ -63,6 +63,17 @@ public class PlayerControllerTest
         Assert.That(_player.CurrentState, Is.EqualTo(PlayerState.Idle));
     }
 
+    [Test]
+    public void Movement_InputBlocked_VelocityIsZero()
+    {
+        _input.SetPressed(InputActionNames.MoveRight, true);
+        _input.IsBlocked = true;
+
+        _player.SimulatePhysicsFrame(0.016f);
+
+        Assert.That(_player.Velocity, Is.EqualTo(Vector2.Zero));
+    }
+
     // ── Walking ───────────────────────────────────────────────────────────────
 
     [Test]

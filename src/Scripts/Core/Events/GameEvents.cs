@@ -23,3 +23,12 @@ public sealed record PlayerDiedEvent;
 
 /// <summary>Published after items are added to the inventory.</summary>
 public sealed record ItemPickedUpEvent(string ItemId, int Quantity);
+
+/// <summary>Published when a named cutscene begins.</summary>
+public sealed record CutsceneStartedEvent(string CutsceneId);
+
+/// <summary>Published when a named cutscene completes.</summary>
+public sealed record CutsceneEndedEvent(string CutsceneId);
+
+/// <summary>Published at the flash point of the new-game mage attack intro.</summary>
+public sealed record MageAttackStartedEvent;

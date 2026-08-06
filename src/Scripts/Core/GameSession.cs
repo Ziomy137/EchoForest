@@ -17,6 +17,7 @@ namespace EchoForest.Core;
 public static class GameSession
 {
     private static Dictionary<string, QuestState> _questStates = new(StringComparer.Ordinal);
+    private static bool _introCutsceneRequested;
 
     /// <summary><c>true</c> when the player has started at least one session.</summary>
     public static bool HasSession { get; private set; }
@@ -33,6 +34,17 @@ public static class GameSession
     /// <summary>Quest states supplied by the currently loaded save, if any.</summary>
     public static IReadOnlyDictionary<string, QuestState> QuestStates => _questStates;
 
+    /// <summary>Marks the next loaded game scene to play the new-game intro cutscene.</summary>
+    public static void RequestIntroCutscene() => _introCutsceneRequested = true;
+
+    /// <summary>Returns and clears the pending new-game intro request.</summary>
+    public static bool ConsumeIntroCutsceneRequest()
+    {
+        var requested = _introCutsceneRequested;
+        _introCutsceneRequested = false;
+        return requested;
+    }
+
     /// <summary>
     /// Marks a session as active and clears any saved player position so the
     /// next load uses the scene's spawn point. Call when a NEW game starts.
@@ -42,6 +54,7 @@ public static class GameSession
         HasSession = true;
         HasPlayerPosition = false;
         _questStates.Clear();
+        _introCutsceneRequested = false;
     }
 
     /// <summary>Stores quest progress until the target game scene composes its quest service.</summary>
@@ -79,5 +92,6 @@ public static class GameSession
         LastPlayerX = 0f;
         LastPlayerY = 0f;
         _questStates.Clear();
+        _introCutsceneRequested = false;
     }
 }

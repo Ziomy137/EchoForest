@@ -72,6 +72,31 @@ public partial class DialogueBoxNode : CanvasLayer
             _controller.StartConversation(npcId);
     }
 
+    /// <summary>Starts a cutscene dialogue from one configured line and signals when it ends.</summary>
+    public void PlayCutsceneLine(string npcId, string lineId, Action onComplete)
+    {
+        ArgumentNullException.ThrowIfNull(onComplete);
+        if (IsConversationActive)
+            throw new InvalidOperationException("Cannot start a cutscene dialogue while another conversation is active.");
+
+        void Complete()
+        {
+            _controller.OnConversationEnded -= Complete;
+            onComplete();
+        }
+
+        _controller.OnConversationEnded += Complete;
+        try
+        {
+            _controller.StartConversationAtLine(npcId, lineId);
+        }
+        catch
+        {
+            _controller.OnConversationEnded -= Complete;
+            throw;
+        }
+    }
+
     private bool IsLineFullyRevealed => _revealedCharacters >= _currentText.Length;
 
     private void ShowDialogue()
