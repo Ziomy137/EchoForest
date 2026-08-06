@@ -86,7 +86,15 @@ public partial class DialogueBoxNode : CanvasLayer
         }
 
         _controller.OnConversationEnded += Complete;
-        _controller.StartConversationAtLine(npcId, lineId);
+        try
+        {
+            _controller.StartConversationAtLine(npcId, lineId);
+        }
+        catch
+        {
+            _controller.OnConversationEnded -= Complete;
+            throw;
+        }
     }
 
     private bool IsLineFullyRevealed => _revealedCharacters >= _currentText.Length;
