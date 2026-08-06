@@ -21,12 +21,14 @@ namespace EchoForest.Core;
 public partial class GameHudNode : CanvasLayer, IGameHudController
 {
     private GameHudController _ctrl = null!;
-    private EventBus _eventBus = null!;
+    private IEventBus _eventBus = null!;
     private Tween? _damageFlashTween;
+    private Tween? _questPanelTween;
     private float _lastKnownHealth;
 
     // Cached node references resolved once in _Ready.
     private ProgressBar _healthBar = null!;
+    private PanelContainer _questPanel = null!;
     private Label _healthLabel = null!;
     private Label _questNameLabel = null!;
     private Label _questObjectiveLabel = null!;
@@ -46,11 +48,12 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
 
     public override void _Ready()
     {
-        _eventBus = new EventBus();
+        _eventBus = (GetTree().CurrentScene as CottageAreaNode)?.EventBus ?? new EventBus();
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _ctrl = new GameHudController(_eventBus);
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
+        _questPanel = GetNode<PanelContainer>("TopLeft/QuestPanel");
         _healthLabel = GetNode<Label>("TopLeft/HealthLabel");
         _questNameLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestNameLabel");
         _questObjectiveLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestObjectiveLabel");
@@ -76,6 +79,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     public override void _ExitTree()
     {
         _eventBus?.Unsubscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
+        _questPanelTween?.Kill();
     }
 
     /// <summary>Updates the active weapon slot label.</summary>
@@ -90,6 +94,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     {
         _ctrl.SetQuestObjective(questName, objectiveText, current, total);
         RefreshQuestPanel();
+        PlayQuestPanelFade();
     }
 
     /// <summary>Shows the context-sensitive interaction prompt.</summary>
@@ -145,6 +150,14 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _healthBar.Modulate = new Color(1f, 0.35f, 0.35f, 1f);
         _damageFlashTween = CreateTween();
         _damageFlashTween.TweenProperty(_healthBar, "modulate", Colors.White, 0.2d);
+    }
+
+    private void PlayQuestPanelFade()
+    {
+        _questPanelTween?.Kill();
+        _questPanel.Modulate = new Color(1f, 1f, 1f, 0f);
+        _questPanelTween = CreateTween();
+        _questPanelTween.TweenProperty(_questPanel, "modulate", Colors.White, 0.2d);
     }
 
     private void RefreshQuestPanel()

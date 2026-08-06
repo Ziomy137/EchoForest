@@ -533,16 +533,17 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                    | Tests | Sprint | Notes                                                            |
-| ---------------------------- | ----- | ------ | ---------------------------------------------------------------- |
-| `PauseMenuControllerTest.cs` | 12    | S6-02  | Pause menu controller coverage; CI fix.                          |
-| `InteractionDetectorTest.cs` | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.        |
-| `NpcControllerTest.cs`       | 4     | S6-03  | NPC interaction contract and validation coverage.                |
-| `DialogueServiceTest.cs`     | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
-| `DialogueControllerTest.cs`  | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
-| `EventBusTest.cs`            | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.   |
-| `QuestServiceTest.cs`        | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.  |
-| `QuestDatabaseTest.cs`       | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                   |
+| Test File                       | Tests | Sprint | Notes                                                            |
+| ------------------------------- | ----- | ------ | ---------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                          |
+| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.        |
+| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                |
+| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
+| `DialogueControllerTest.cs`     | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
+| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.   |
+| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.  |
+| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                   |
+| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.   |
 
 ---
 
@@ -888,18 +889,19 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 **Type:** UI  
 **Assignee:** Developer  
 **Estimate:** 5 points
+**Status: ✅ COMPLETED**
 
 **Tasks:**
 
-- [ ] Create `QuestJournal.tscn` — opened via `inventory` input action (or separate `journal` key)
-- [ ] Two-panel layout: left = quest list, right = selected quest details + objectives
-- [ ] Quest list shows: Active quests (gold color), Completed quests (grayed out)
-- [ ] Detail panel shows: quest title, description, objective list with checkboxes
-- [ ] Create `QuestJournalController.cs`:
+- [x] Create `QuestJournal.tscn` — opened via `inventory` input action (or separate `journal` key)
+- [x] Two-panel layout: left = quest list, right = selected quest details + objectives
+- [x] Quest list shows: Active quests (gold color), Completed quests (grayed out)
+- [x] Detail panel shows: quest title, description, objective list with checkboxes
+- [x] Create `QuestJournalController.cs`:
   - Subscribes to `QuestStartedEvent`, `QuestObjectiveCompletedEvent`, `QuestCompletedEvent`
   - Refreshes display automatically when events arrive
-- [ ] Pause game while journal is open
-- [ ] Quest objective HUD panel fades in via Tween when `SetQuestObjective` is called _(moved from S6-01)_
+- [x] Pause game while journal is open
+- [x] Quest objective HUD panel fades in via Tween when `SetQuestObjective` is called _(moved from S6-01)_
 
 **Acceptance Criteria:**
 
@@ -996,13 +998,13 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 
 **Sprint 7 Summary:**
 
-| Story                    | Points | Owner     |
-| ------------------------ | ------ | --------- |
-| S7-01 Event Bus ✅       | 5      | Lead Dev  |
-| S7-02 Quest System ✅    | 8      | Developer |
-| S7-03 Quest Journal UI   | 5      | Developer |
-| S7-04 Cutscene Framework | 5      | Developer |
-| **Total**                | **23** |           |
+| Story                     | Points | Owner     |
+| ------------------------- | ------ | --------- |
+| S7-01 Event Bus ✅        | 5      | Lead Dev  |
+| S7-02 Quest System ✅     | 8      | Developer |
+| S7-03 Quest Journal UI ✅ | 5      | Developer |
+| S7-04 Cutscene Framework  | 5      | Developer |
+| **Total**                 | **23** |           |
 
 ---
 
