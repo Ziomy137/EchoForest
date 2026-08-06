@@ -16,6 +16,7 @@ namespace EchoForest.Core;
 public partial class CottageAreaNode : Node2D
 {
 	public IEventBus EventBus { get; private set; } = null!;
+	public IInputHandler InputHandler { get; private set; } = null!;
 	public IQuestDatabase QuestDatabase { get; private set; } = null!;
 	public IQuestService QuestService { get; private set; } = null!;
 	private GameHudNode _hud = null!;
@@ -23,6 +24,7 @@ public partial class CottageAreaNode : Node2D
 	public override void _EnterTree()
 	{
 		EventBus = new EventBus();
+		InputHandler = new global::EchoForest.InputHandler();
 		QuestDatabase = new QuestDatabase(new GodotFileSystem());
 		QuestDatabase.GetAllQuests();
 		QuestService = new QuestService(QuestDatabase, EventBus);
@@ -37,6 +39,7 @@ public partial class CottageAreaNode : Node2D
 		SpawnPlayer();
 		SetupCamera();
 		WireQuestHud();
+		WireIntroCutscene();
 	}
 
 	public override void _ExitTree()
@@ -44,6 +47,19 @@ public partial class CottageAreaNode : Node2D
 		EventBus.Unsubscribe<QuestStartedEvent>(OnQuestStarted);
 		EventBus.Unsubscribe<QuestObjectiveCompletedEvent>(OnQuestObjectiveCompleted);
 		EventBus.Unsubscribe<QuestCompletedEvent>(OnQuestCompleted);
+		EventBus.Unsubscribe<MageAttackStartedEvent>(OnMageAttackStarted);
+	}
+
+	private void WireIntroCutscene()
+	{
+		EventBus.Subscribe<MageAttackStartedEvent>(OnMageAttackStarted);
+		if (GameSession.ConsumeIntroCutsceneRequest())
+			GetNode<CutsceneDirectorNode>("CutsceneDirector").PlayIntroMageAttack(() => { });
+	}
+
+	private void OnMageAttackStarted(MageAttackStartedEvent _)
+	{
+		QuestService.StartQuest("q_kidnapped");
 	}
 
 	private void WireQuestHud()

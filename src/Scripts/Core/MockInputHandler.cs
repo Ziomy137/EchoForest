@@ -34,6 +34,8 @@ public sealed class MockInputHandler : IInputHandler
 
     // ── IInputHandler ─────────────────────────────────────────────────────────
 
+    public bool IsBlocked { get; set; }
+
     public bool IsActionPressed(string action) => _pressed.Contains(action);
     public bool IsActionJustPressed(string action) => _justPressed.Contains(action);
 

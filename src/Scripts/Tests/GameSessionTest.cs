@@ -46,6 +46,29 @@ public class GameSessionTest
     }
 
     [Test]
+    public void GameSession_IntroCutsceneRequest_IsConsumedOnce()
+    {
+        GameSession.Start();
+        GameSession.RequestIntroCutscene();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(GameSession.ConsumeIntroCutsceneRequest(), Is.True);
+            Assert.That(GameSession.ConsumeIntroCutsceneRequest(), Is.False);
+        });
+    }
+
+    [Test]
+    public void GameSession_ApplyLoadedSave_ClearsPendingIntroCutscene()
+    {
+        GameSession.RequestIntroCutscene();
+
+        GameSession.ApplyLoadedSave(new SaveData());
+
+        Assert.That(GameSession.ConsumeIntroCutsceneRequest(), Is.False);
+    }
+
+    [Test]
     public void MockSaveService_WithSession_HasSaveFile_ReturnsTrue()
     {
         // Verify the same pattern works end-to-end via MockSaveService:

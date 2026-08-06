@@ -13,6 +13,8 @@ namespace EchoForest;
 [ExcludeFromCodeCoverage]
 public sealed class InputHandler : IInputHandler
 {
+    public bool IsBlocked { get; set; }
+
     public bool IsActionPressed(string action) =>
         Input.IsActionPressed(action);
 

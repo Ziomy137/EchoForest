@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://src/Scenes/Wife.tscn" id="6_wife"]
 [ext_resource type="PackedScene" path="res://src/Scenes/DialogueBox.tscn" id="7_dialogue"]
 [ext_resource type="PackedScene" path="res://src/Scenes/QuestJournal.tscn" id="8_journal"]
+[ext_resource type="PackedScene" path="res://src/Scenes/CutsceneDirector.tscn" id="9_cutscene"]
 
 [node name="TestArea_Cottage" type="Node2D" unique_id=424375799]
 y_sort_enabled = true
@@ -38,3 +39,5 @@ position = Vector2(160, 416)
 [node name="DialogueBox" parent="." instance=ExtResource("7_dialogue")]
 
 [node name="QuestJournal" parent="." instance=ExtResource("8_journal")]
+
+[node name="CutsceneDirector" parent="." instance=ExtResource("9_cutscene")]

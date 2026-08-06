@@ -533,17 +533,18 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                       | Tests | Sprint | Notes                                                            |
-| ------------------------------- | ----- | ------ | ---------------------------------------------------------------- |
-| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                          |
-| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.        |
-| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                |
-| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.       |
-| `DialogueControllerTest.cs`     | 5     | S6-04  | Conversation lifecycle, events, and critical auto-save coverage. |
-| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.   |
-| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.  |
-| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                   |
-| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.   |
+| Test File                       | Tests | Sprint | Notes                                                                     |
+| ------------------------------- | ----- | ------ | ------------------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                   |
+| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                 |
+| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                         |
+| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                |
+| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage. |
+| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.            |
+| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.           |
+| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                            |
+| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.            |
+| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters. |
 
 ---
 
@@ -940,19 +941,19 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 
 **Tasks:**
 
-- [ ] Create `ICutscene` interface with `Play(Action onComplete)` method
-- [ ] Create `CutsceneSequencer.cs`:
+- [x] Create `ICutscene` interface with `Play(Action onComplete)` method
+- [x] Create `CutsceneSequencer.cs`:
   - Accepts list of `ICutsceneStep` items (pan camera, show dialogue, fade, wait, trigger event)
   - Plays each step in sequence, waits for completion
   - Publishes `CutsceneStartedEvent` and `CutsceneEndedEvent` via EventBus
   - Locks player input during cutscene (`IInputHandler.IsBlocked = true`)
-- [ ] Implement concrete steps:
-  - `FadeStep(float duration, Color targetColor)` — screen fade in/out
+- [x] Implement concrete steps:
+  - `FadeStep(float duration, CutsceneColor targetColor)` — screen fade in/out
   - `WaitStep(float seconds)` — simple delay
   - `DialogueStep(string npcId, string lineId)` — plays one dialogue line
-  - `CameraPanStep(Vector2 target, float duration)` — pans camera to position
+  - `CameraPanStep(CutscenePosition target, float duration)` — pans camera to position
   - `PublishEventStep<TEvent>(TEvent e)` — fires an EventBus event at a point in sequence
-- [ ] Intro cutscene (mage attack scene) implemented as first use case — plays on new game start
+- [x] Intro cutscene (mage attack scene) implemented as first use case — plays on new game start
 
 **Acceptance Criteria:**
 
@@ -998,13 +999,13 @@ cutscene system can trigger story sequences. These form the backbone of all stor
 
 **Sprint 7 Summary:**
 
-| Story                     | Points | Owner     |
-| ------------------------- | ------ | --------- |
-| S7-01 Event Bus ✅        | 5      | Lead Dev  |
-| S7-02 Quest System ✅     | 8      | Developer |
-| S7-03 Quest Journal UI ✅ | 5      | Developer |
-| S7-04 Cutscene Framework  | 5      | Developer |
-| **Total**                 | **23** |           |
+| Story                       | Points | Owner     |
+| --------------------------- | ------ | --------- |
+| S7-01 Event Bus ✅          | 5      | Lead Dev  |
+| S7-02 Quest System ✅       | 8      | Developer |
+| S7-03 Quest Journal UI ✅   | 5      | Developer |
+| S7-04 Cutscene Framework ✅ | 5      | Developer |
+| **Total**                   | **23** |           |
 
 ---
 
