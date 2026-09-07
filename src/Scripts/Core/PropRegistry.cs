@@ -60,7 +60,7 @@ public static class PropRegistry
         "prop_barn.png",
         width: 192,
         height: 160,
-        expectedColorHexCodes: new[] { "8b0000", "5c3d2e", "8b7355", "2d2416" });
+        expectedColorHexCodes: new[] { "8b0000", "5c3d2e", "8b7355", "2d2416", "3d3d3d", "ffd700" });
 
     public static readonly PropConfig Scarecrow = new(
         "Scarecrow",
