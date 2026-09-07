@@ -14,6 +14,12 @@ public static class MainMenuConfig
     /// <summary>Game scene loaded directly when continuing an existing session (skips bootstrap).</summary>
     public const string ContinueScenePath = "res://src/Scenes/TestArea_Cottage.tscn";
 
+    /// <summary>Farm scene resource path.</summary>
+    public const string FarmScenePath = "res://src/Scenes/Scene_Farm.tscn";
+
+    /// <summary>Forest Path scene resource path.</summary>
+    public const string ForestPathScenePath = "res://src/Scenes/Scene_ForestPath.tscn";
+
     /// <summary>Load Game screen scene resource path.</summary>
     public const string LoadGameScenePath = "res://src/Scenes/LoadGameScreen.tscn";
 

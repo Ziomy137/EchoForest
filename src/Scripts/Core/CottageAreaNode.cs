@@ -17,6 +17,7 @@ public partial class CottageAreaNode : Node2D
 {
 	public IEventBus EventBus { get; private set; } = null!;
 	public IInputHandler InputHandler { get; private set; } = null!;
+	public IAreaTransitionService AreaTransitionService { get; private set; } = null!;
 	public IQuestDatabase QuestDatabase { get; private set; } = null!;
 	public IQuestService QuestService { get; private set; } = null!;
 	private GameHudNode _hud = null!;
@@ -25,6 +26,7 @@ public partial class CottageAreaNode : Node2D
 	{
 		EventBus = new EventBus();
 		InputHandler = new global::EchoForest.InputHandler();
+		AreaTransitionService = new AreaTransitionService(EventBus, new SceneLoader(), new SaveService(new GodotFileSystem()));
 		QuestDatabase = new QuestDatabase(new GodotFileSystem());
 		QuestDatabase.GetAllQuests();
 		QuestService = new QuestService(QuestDatabase, EventBus);
@@ -38,6 +40,7 @@ public partial class CottageAreaNode : Node2D
 		SetupBoundary();
 		SpawnPlayer();
 		SetupCamera();
+		ConfigureAreaTransitions();
 		WireQuestHud();
 		WireIntroCutscene();
 	}
@@ -203,8 +206,13 @@ public partial class CottageAreaNode : Node2D
 	private void SpawnPlayer()
 	{
 		var player = GetNode<Node2D>("Player");
+		var requestedSpawnPointId = GameSession.ConsumeTransitionSpawnPointId();
 
-		if (GameSession.HasPlayerPosition)
+		if (requestedSpawnPointId is not null && TryGetSpawnPoint(requestedSpawnPointId, out var transitionSpawnPoint))
+		{
+			player.GlobalPosition = transitionSpawnPoint.GlobalPosition;
+		}
+		else if (GameSession.HasPlayerPosition)
 		{
 			// Continue: restore last saved position instead of using spawn point.
 			player.GlobalPosition = new Vector2(GameSession.LastPlayerX, GameSession.LastPlayerY);
@@ -216,6 +224,47 @@ public partial class CottageAreaNode : Node2D
 			player.GlobalPosition = spawnPoint.GlobalPosition;
 		}
 	}
+
+	private bool TryGetSpawnPoint(string spawnPointId, out SpawnPointNode spawnPoint)
+	{
+		foreach (var child in GetChildren())
+		{
+			if (child is SpawnPointNode candidate && candidate.SpawnPointId == spawnPointId)
+			{
+				spawnPoint = candidate;
+				return true;
+			}
+		}
+
+		spawnPoint = null!;
+		return false;
+	}
+
+	private void ConfigureAreaTransitions()
+	{
+		GetNode<AreaTransitionNode>("ToFarmTransition").Configure(
+			MainMenuConfig.FarmScenePath,
+			"west_entrance",
+			TransitionType.FadeToBlack,
+			AreaTransitionService,
+			InputHandler,
+			CreateTransitionSaveData);
+		GetNode<AreaTransitionNode>("ToForestPathTransition").Configure(
+			MainMenuConfig.ForestPathScenePath,
+			"north_entrance",
+			TransitionType.FadeToBlack,
+			AreaTransitionService,
+			InputHandler,
+			CreateTransitionSaveData);
+	}
+
+	private SaveData CreateTransitionSaveData(PlayerControllerNode player) => new()
+	{
+		CurrentArea = SceneFilePath,
+		PlayerX = player.GlobalPosition.X,
+		PlayerY = player.GlobalPosition.Y,
+		QuestStates = new System.Collections.Generic.Dictionary<string, QuestState>(QuestService.GetQuestStates()),
+	};
 
 	// ─── Camera setup ─────────────────────────────────────────────────────────
 

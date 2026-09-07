@@ -18,6 +18,7 @@ public static class GameSession
 {
     private static Dictionary<string, QuestState> _questStates = new(StringComparer.Ordinal);
     private static bool _introCutsceneRequested;
+    private static string? _transitionSpawnPointId;
 
     /// <summary><c>true</c> when the player has started at least one session.</summary>
     public static bool HasSession { get; private set; }
@@ -33,6 +34,21 @@ public static class GameSession
 
     /// <summary>Quest states supplied by the currently loaded save, if any.</summary>
     public static IReadOnlyDictionary<string, QuestState> QuestStates => _questStates;
+
+    /// <summary>Records the destination spawn point for the next area scene.</summary>
+    public static void RequestTransitionSpawnPointId(string spawnPointId)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(spawnPointId);
+        _transitionSpawnPointId = spawnPointId;
+    }
+
+    /// <summary>Returns and clears the destination spawn point requested by an area transition.</summary>
+    public static string? ConsumeTransitionSpawnPointId()
+    {
+        var spawnPointId = _transitionSpawnPointId;
+        _transitionSpawnPointId = null;
+        return spawnPointId;
+    }
 
     /// <summary>Marks the next loaded game scene to play the new-game intro cutscene.</summary>
     public static void RequestIntroCutscene() => _introCutsceneRequested = true;
@@ -55,6 +71,7 @@ public static class GameSession
         HasPlayerPosition = false;
         _questStates.Clear();
         _introCutsceneRequested = false;
+        _transitionSpawnPointId = null;
     }
 
     /// <summary>Stores quest progress until the target game scene composes its quest service.</summary>
@@ -93,5 +110,6 @@ public static class GameSession
         LastPlayerY = 0f;
         _questStates.Clear();
         _introCutsceneRequested = false;
+        _transitionSpawnPointId = null;
     }
 }

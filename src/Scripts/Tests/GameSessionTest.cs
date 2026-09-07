@@ -69,6 +69,18 @@ public class GameSessionTest
     }
 
     [Test]
+    public void GameSession_TransitionSpawnPointRequest_IsConsumedOnce()
+    {
+        GameSession.RequestTransitionSpawnPointId("west_entrance");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(GameSession.ConsumeTransitionSpawnPointId(), Is.EqualTo("west_entrance"));
+            Assert.That(GameSession.ConsumeTransitionSpawnPointId(), Is.Null);
+        });
+    }
+
+    [Test]
     public void MockSaveService_WithSession_HasSaveFile_ReturnsTrue()
     {
         // Verify the same pattern works end-to-end via MockSaveService:

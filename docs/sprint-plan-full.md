@@ -533,18 +533,19 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                       | Tests | Sprint | Notes                                                                     |
-| ------------------------------- | ----- | ------ | ------------------------------------------------------------------------- |
-| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                   |
-| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                 |
-| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                         |
-| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                |
-| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage. |
-| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.            |
-| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.           |
-| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                            |
-| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.            |
-| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters. |
+| Test File                       | Tests | Sprint | Notes                                                                          |
+| ------------------------------- | ----- | ------ | ------------------------------------------------------------------------------ |
+| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                        |
+| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                      |
+| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                              |
+| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                     |
+| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.      |
+| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                 |
+| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                |
+| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                 |
+| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                 |
+| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.      |
+| `AreaTransitionServiceTest.cs`  | 5     | S8-01  | Transition event, save order/snapshot, target scene, and named spawn coverage. |
 
 ---
 
@@ -1032,18 +1033,18 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Tasks:**
 
-- [ ] Create `AreaTransition.cs` — `Area2D`-based trigger zone placed at scene edges:
+- [x] Create `AreaTransitionNode.cs` — `Area2D`-based trigger zone placed at scene edges:
   - `TargetArea` (string scene path)
   - `SpawnPointId` (string) — named spawn point in target scene
   - `TransitionType`: `Instant`, `FadeToBlack`, `FadeToWhite`
-- [ ] Create `AreaTransitionService.cs` implementing `IAreaTransitionService`:
+- [x] Create `AreaTransitionService.cs` implementing `IAreaTransitionService`:
   - On trigger: fade out → unload current scene → load target scene → spawn at named point → fade in
   - Publishes `AreaTransitionEvent` to EventBus
   - Saves current game state before transition
-- [ ] Add `SpawnPoint` nodes (named `Area2D` markers) to all scenes
-- [ ] Wire Cottage scene southern boundary → Forest Path scene northern entrance
-- [ ] Wire Cottage scene eastern boundary → Farm scene western entrance
-- [ ] Apply `SaveData.PlayerX` / `SaveData.PlayerY` to override default spawn point when starting from a loaded save
+- [x] Add `SpawnPoint` nodes (named `Marker2D` markers) to all existing area scenes
+- [x] Wire Cottage scene southern boundary → Forest Path scene northern entrance
+- [x] Wire Cottage scene eastern boundary → Farm scene western entrance
+- [x] Apply `SaveData.PlayerX` / `SaveData.PlayerY` to override default spawn point when starting from a loaded save
 
 **Acceptance Criteria:**
 
@@ -1151,12 +1152,12 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Sprint 8 Summary:**
 
-| Story                     | Points | Owner                |
-| ------------------------- | ------ | -------------------- |
-| S8-01 Area Transition Sys | 5      | Lead Dev             |
-| S8-02 Farm Area           | 8      | Level Designer + Art |
-| S8-03 Forest Path Area    | 8      | Level Designer + Art |
-| **Total**                 | **21** |                      |
+| Story                        | Points | Owner                |
+| ---------------------------- | ------ | -------------------- |
+| S8-01 Area Transition Sys ✅ | 5      | Lead Dev             |
+| S8-02 Farm Area              | 8      | Level Designer + Art |
+| S8-03 Forest Path Area       | 8      | Level Designer + Art |
+| **Total**                    | **21** |                      |
 
 ---
 
