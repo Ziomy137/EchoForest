@@ -28,6 +28,7 @@ public sealed class AreaTransitionService : IAreaTransitionService
         ArgumentNullException.ThrowIfNull(saveData);
 
         _saveService.Save(saveData, slot: 1);
+        GameSession.SetQuestStates(saveData.QuestStates);
         GameSession.RequestTransitionSpawnPointId(spawnPointId);
         _sceneLoader.LoadScene(targetArea);
         _eventBus.Publish(new AreaTransitionEvent(fromArea, targetArea));

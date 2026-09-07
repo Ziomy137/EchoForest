@@ -3,9 +3,9 @@ using System.Linq;
 namespace EchoForest.Core;
 
 /// <summary>
-/// Central registry of all tile sprite assets defined in S3-01.
+/// Central registry of all tile sprite assets used by area scenes.
 ///
-/// Every tile required for the Cottage test area is configured here with
+/// Every registered tile is configured here with
 /// its metadata, expected palette colors, and walkability flag.
 ///
 /// Pure C# — no Godot runtime required. Testable with NUnit.
@@ -21,7 +21,7 @@ public static class TileRegistry
     public const int TileHeight = 32;
 
     /// <summary>Total number of tile sprites required for S3-01.</summary>
-    public const int ExpectedTileCount = 11;
+    public const int ExpectedTileCount = 16;
 
     // ─── Tile definitions ─────────────────────────────────────────────────────
 
@@ -69,6 +69,26 @@ public static class TileRegistry
         "Shadow", "tile_shadow.png", TileWidth, TileHeight, true,
         new[] { "1a1a1a" });
 
+    public static readonly TileConfig CropYoung = new(
+        "Young Crop", "tile_crop_young.png", TileWidth, TileHeight, true,
+        new[] { "1a3a1a", "8b7355", "2d2416" });
+
+    public static readonly TileConfig CropMature = new(
+        "Mature Crop", "tile_crop_mature.png", TileWidth, TileHeight, true,
+        new[] { "1a3a1a", "ffd700", "8b7355", "2d2416" });
+
+    public static readonly TileConfig SoilDry = new(
+        "Dry Soil", "tile_soil_dry.png", TileWidth, TileHeight, true,
+        new[] { "2d2416", "8b7355", "3d3d3d" });
+
+    public static readonly TileConfig Irrigation = new(
+        "Irrigation", "tile_irrigation.png", TileWidth, TileHeight, true,
+        new[] { "1a3a5c", "5a5a5a", "2d2416" });
+
+    public static readonly TileConfig Hay = new(
+        "Hay Ground", "tile_hay.png", TileWidth, TileHeight, true,
+        new[] { "8b7355", "ffd700", "2d2416" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly TileConfig[] _all =
@@ -76,6 +96,7 @@ public static class TileRegistry
         Grass, GrassVariation, Dirt, Farmland, Stone,
         Water, CottageWall, CottageRoof,
         FenceHorizontal, FenceVertical, Shadow,
+        CropYoung, CropMature, SoilDry, Irrigation, Hay,
     };
 
     /// <summary>

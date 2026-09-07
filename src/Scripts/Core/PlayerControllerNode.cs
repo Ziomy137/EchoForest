@@ -33,7 +33,7 @@ public partial class PlayerControllerNode : CharacterBody2D
 
     public override void _Ready()
     {
-        var input = (GetTree().CurrentScene as CottageAreaNode)?.InputHandler
+        var input = (GetTree().CurrentScene as IAreaSceneContext)?.InputHandler
             ?? new global::EchoForest.InputHandler();
         var stateMachine = new PlayerStateMachine();
         _controller = new PlayerController(input, stateMachine);

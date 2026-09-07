@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" uid="uid://bg5ht1bbtowde" path="res://src/Scripts/Core/FarmAreaNode.cs" id="1_farm"]
+[ext_resource type="TileSet" uid="uid://casdwwy7lo7q" path="res://src/Assets/Data/IsometricTileSet.tres" id="2_tileset"]
+[ext_resource type="PackedScene" path="res://src/Scenes/Player.tscn" id="3_player"]
+[ext_resource type="Script" uid="uid://bp5oa24oojjch" path="res://src/Scripts/Core/IsometricCameraNode.cs" id="4_camera"]
+[ext_resource type="PackedScene" uid="uid://bgmhud01ef26" path="res://src/Scenes/GameHUD.tscn" id="5_hud"]
+[ext_resource type="Script" uid="uid://cbw61yjqb2m08" path="res://src/Scripts/Core/SpawnPointNode.cs" id="6_spawn"]
+[ext_resource type="Script" uid="uid://bhhwmj8sgw64e" path="res://src/Scripts/Core/AreaTransitionNode.cs" id="7_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cottage_transition"]
+size = Vector2(64, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_forest_transition"]
+size = Vector2(128, 96)
+
+[node name="Scene_Farm" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_farm")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+y_sort_origin = 16
+texture_filter = 1
+tile_set = ExtResource("2_tileset")
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(-672, 336)
+script = ExtResource("6_spawn")
+SpawnPointId = "default"
+
+[node name="WestEntranceSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(-672, 336)
+script = ExtResource("6_spawn")
+SpawnPointId = "west_entrance"
+
+[node name="NorthEntranceSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(608, 304)
+script = ExtResource("6_spawn")
+SpawnPointId = "north_entrance"
+
+[node name="Boundary" type="StaticBody2D" parent="."]
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("4_camera")
+FollowTarget = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]
+
+[node name="ToCottageTransition" type="Area2D" parent="."]
+position = Vector2(-736, 368)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("7_transition")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToCottageTransition"]
+shape = SubResource("RectangleShape2D_cottage_transition")
+
+[node name="ToForestPathTransition" type="Area2D" parent="."]
+position = Vector2(608, 304)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("7_transition")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToForestPathTransition"]
+shape = SubResource("RectangleShape2D_forest_transition")

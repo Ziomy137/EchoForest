@@ -13,7 +13,7 @@ namespace EchoForest.Core;
 /// Excluded from NUnit code coverage — requires the Godot engine scene tree.
 /// </summary>
 [ExcludeFromCodeCoverage(Justification = "Godot Node2D wrapper — requires scene tree")]
-public partial class CottageAreaNode : Node2D
+public partial class CottageAreaNode : Node2D, IAreaSceneContext
 {
 	public IEventBus EventBus { get; private set; } = null!;
 	public IInputHandler InputHandler { get; private set; } = null!;

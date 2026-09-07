@@ -11,6 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://b46a61ecd7a4" path="res://src/Assets/Sprites/Tiles/tile_stone.png" id="tile_stone"]
 [ext_resource type="Texture2D" uid="uid://558a6a8b27fa" path="res://src/Assets/Sprites/Tiles/tile_wall_front.png" id="tile_wall_front"]
 [ext_resource type="Texture2D" uid="uid://ea8458546c70" path="res://src/Assets/Sprites/Tiles/tile_water.png" id="tile_water"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_crop_young.png" id="tile_crop_young"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_crop_mature.png" id="tile_crop_mature"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_soil_dry.png" id="tile_soil_dry"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_irrigation.png" id="tile_irrigation"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_hay.png" id="tile_hay"]
 
 [sub_resource type="TileSetAtlasSource" id="src_grass"]
 texture = ExtResource("tile_grass")
@@ -73,6 +78,36 @@ texture = ExtResource("tile_fence_v")
 texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="src_crop_young"]
+texture = ExtResource("tile_crop_young")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_crop_mature"]
+texture = ExtResource("tile_crop_mature")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_soil_dry"]
+texture = ExtResource("tile_soil_dry")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_irrigation"]
+texture = ExtResource("tile_irrigation")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_hay"]
+texture = ExtResource("tile_hay")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
 [resource]
 tile_shape = 1
 tile_layout = 5
@@ -91,3 +126,8 @@ sources/7 = SubResource("src_roof")
 sources/8 = SubResource("src_fence_h")
 sources/9 = SubResource("src_fence_v")
 sources/10 = SubResource("src_shadow")
+sources/11 = SubResource("src_crop_young")
+sources/12 = SubResource("src_crop_mature")
+sources/13 = SubResource("src_soil_dry")
+sources/14 = SubResource("src_irrigation")
+sources/15 = SubResource("src_hay")

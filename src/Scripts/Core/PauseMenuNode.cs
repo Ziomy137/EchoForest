@@ -77,7 +77,7 @@ public partial class PauseMenuNode : CanvasLayer
     {
         var player = GetTree().CurrentScene?.GetNodeOrNull<Node2D>("Player");
         var currentArea = GetTree().CurrentScene?.SceneFilePath ?? string.Empty;
-        var questStates = (GetTree().CurrentScene as CottageAreaNode)?.QuestService.GetQuestStates()
+        var questStates = (GetTree().CurrentScene as IAreaSceneContext)?.QuestService.GetQuestStates()
             ?? new System.Collections.Generic.Dictionary<string, QuestState>();
 
         _ctrl.OnSaveGame(new SaveData

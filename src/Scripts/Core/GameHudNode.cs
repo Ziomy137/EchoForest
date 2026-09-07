@@ -48,7 +48,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
 
     public override void _Ready()
     {
-        _eventBus = (GetTree().CurrentScene as CottageAreaNode)?.EventBus ?? new EventBus();
+        _eventBus = (GetTree().CurrentScene as IAreaSceneContext)?.EventBus ?? new EventBus();
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _ctrl = new GameHudController(_eventBus);
 

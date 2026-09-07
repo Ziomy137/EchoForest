@@ -634,8 +634,8 @@ public class PropRegistryTest
         Assert.That(PropRegistry.All.Length, Is.EqualTo(PropRegistry.ExpectedPropCount));
 
     [Test]
-    public void ExpectedPropCount_IsFive() =>
-        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(5));
+    public void ExpectedPropCount_IsEight() =>
+        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(8));
 
     // ─── Individual props exist ───────────────────────────────────────────────
 
@@ -644,6 +644,9 @@ public class PropRegistryTest
     [Test] public void Tree_IsRegistered() => Assert.That(PropRegistry.Tree, Is.Not.Null);
     [Test] public void HayBale_IsRegistered() => Assert.That(PropRegistry.HayBale, Is.Not.Null);
     [Test] public void FencePost_IsRegistered() => Assert.That(PropRegistry.FencePost, Is.Not.Null);
+    [Test] public void Barn_IsRegistered() => Assert.That(PropRegistry.Barn, Is.Not.Null);
+    [Test] public void Scarecrow_IsRegistered() => Assert.That(PropRegistry.Scarecrow, Is.Not.Null);
+    [Test] public void Plow_IsRegistered() => Assert.That(PropRegistry.Plow, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -652,6 +655,9 @@ public class PropRegistryTest
     [TestCase("prop_tree.png")]
     [TestCase("prop_haybale.png")]
     [TestCase("prop_fencepost.png")]
+    [TestCase("prop_barn.png")]
+    [TestCase("prop_scarecrow.png")]
+    [TestCase("prop_plow.png")]
     public void All_ContainsPropWithFileName(string fileName)
     {
         Assert.That(PropRegistry.All.Any(p => p.FileName == fileName), Is.True,
