@@ -13,6 +13,7 @@ public partial class FarmAreaNode : Node2D, IAreaSceneContext
     public IAreaTransitionService AreaTransitionService { get; private set; } = null!;
     public IQuestDatabase QuestDatabase { get; private set; } = null!;
     public IQuestService QuestService { get; private set; } = null!;
+    private GameHudNode _hud = null!;
 
     public override void _EnterTree()
     {
@@ -33,6 +34,48 @@ public partial class FarmAreaNode : Node2D, IAreaSceneContext
         SpawnPlayer();
         SetupCamera();
         ConfigureAreaTransitions();
+        WireQuestHud();
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus.Unsubscribe<QuestStartedEvent>(OnQuestStarted);
+        EventBus.Unsubscribe<QuestObjectiveCompletedEvent>(OnQuestObjectiveCompleted);
+        EventBus.Unsubscribe<QuestCompletedEvent>(OnQuestCompleted);
+    }
+
+    private void WireQuestHud()
+    {
+        _hud = GetNode<GameHudNode>("HUD");
+        EventBus.Subscribe<QuestStartedEvent>(OnQuestStarted);
+        EventBus.Subscribe<QuestObjectiveCompletedEvent>(OnQuestObjectiveCompleted);
+        EventBus.Subscribe<QuestCompletedEvent>(OnQuestCompleted);
+
+        var activeQuests = QuestService.GetActiveQuests();
+        if (activeQuests.Count > 0)
+            ShowCurrentObjective(activeQuests[0].Id);
+    }
+
+    private void OnQuestStarted(QuestStartedEvent gameEvent) => ShowCurrentObjective(gameEvent.QuestId);
+
+    private void OnQuestObjectiveCompleted(QuestObjectiveCompletedEvent gameEvent) => ShowCurrentObjective(gameEvent.QuestId);
+
+    private void OnQuestCompleted(QuestCompletedEvent gameEvent)
+    {
+        var quest = QuestDatabase.GetQuest(gameEvent.QuestId);
+        _hud.SetQuestObjective(quest.Title, "Quest completed", quest.Objectives.Count, quest.Objectives.Count);
+    }
+
+    private void ShowCurrentObjective(string questId)
+    {
+        var quest = QuestDatabase.GetQuest(questId);
+        var activeObjectives = QuestService.GetActiveObjectives(questId);
+        if (activeObjectives.Count == 0)
+            return;
+
+        var objective = activeObjectives[0];
+        var completedCount = quest.Objectives.Count - activeObjectives.Count;
+        _hud.SetQuestObjective(quest.Title, objective.Text, completedCount, quest.Objectives.Count);
     }
 
     private void PopulateTiles()
