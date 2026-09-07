@@ -9,6 +9,14 @@
 [ext_resource type="PackedScene" path="res://src/Scenes/DialogueBox.tscn" id="7_dialogue"]
 [ext_resource type="PackedScene" path="res://src/Scenes/QuestJournal.tscn" id="8_journal"]
 [ext_resource type="PackedScene" path="res://src/Scenes/CutsceneDirector.tscn" id="9_cutscene"]
+[ext_resource type="Script" uid="uid://cbw61yjqb2m08" path="res://src/Scripts/Core/SpawnPointNode.cs" id="10_spawn"]
+[ext_resource type="Script" uid="uid://bhhwmj8sgw64e" path="res://src/Scripts/Core/AreaTransitionNode.cs" id="11_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_farm_transition"]
+size = Vector2(48, 832)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_forest_path_transition"]
+size = Vector2(1488, 48)
 
 [node name="TestArea_Cottage" type="Node2D" unique_id=424375799]
 y_sort_enabled = true
@@ -22,6 +30,18 @@ tile_set = ExtResource("2_tileset")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="." unique_id=833826968]
 position = Vector2(64, 416)
+script = ExtResource("10_spawn")
+SpawnPointId = "default"
+
+[node name="FarmEntranceSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(896, 416)
+script = ExtResource("10_spawn")
+SpawnPointId = "farm_entrance"
+
+[node name="ForestPathEntranceSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(320, 736)
+script = ExtResource("10_spawn")
+SpawnPointId = "forest_path_entrance"
 
 [node name="Boundary" type="StaticBody2D" parent="." unique_id=1231230418]
 
@@ -41,3 +61,23 @@ position = Vector2(160, 416)
 [node name="QuestJournal" parent="." instance=ExtResource("8_journal")]
 
 [node name="CutsceneDirector" parent="." instance=ExtResource("9_cutscene")]
+
+[node name="ToFarmTransition" type="Area2D" parent="."]
+position = Vector2(928, 384)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("11_transition")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToFarmTransition"]
+shape = SubResource("RectangleShape2D_farm_transition")
+
+[node name="ToForestPathTransition" type="Area2D" parent="."]
+position = Vector2(160, 768)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("11_transition")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToForestPathTransition"]
+shape = SubResource("RectangleShape2D_forest_path_transition")
