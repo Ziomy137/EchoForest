@@ -99,8 +99,14 @@ public partial class AreaTransitionNode : Area2D
         fadeOut.TweenProperty(fadeRect, "color", color, FadeDuration);
         fadeOut.Finished += () =>
         {
-            CompleteTransition(player);
-            tree.ProcessFrame += FadeIn;
+            try
+            {
+                CompleteTransition(player);
+            }
+            finally
+            {
+                tree.ProcessFrame += FadeIn;
+            }
         };
 
         void FadeIn()
