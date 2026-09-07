@@ -98,8 +98,8 @@ public class TileRegistryTest
         Assert.That(TileRegistry.All.Length, Is.EqualTo(TileRegistry.ExpectedTileCount));
 
     [Test]
-    public void ExpectedTileCount_IsEleven() =>
-        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(11));
+    public void ExpectedTileCount_IsSixteen() =>
+        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(16));
 
     // ─── Dimensions ───────────────────────────────────────────────────────────
 
@@ -167,6 +167,11 @@ public class TileRegistryTest
     [Test] public void FenceH_IsRegistered() => Assert.That(TileRegistry.FenceHorizontal, Is.Not.Null);
     [Test] public void FenceV_IsRegistered() => Assert.That(TileRegistry.FenceVertical, Is.Not.Null);
     [Test] public void Shadow_IsRegistered() => Assert.That(TileRegistry.Shadow, Is.Not.Null);
+    [Test] public void CropYoung_IsRegistered() => Assert.That(TileRegistry.CropYoung, Is.Not.Null);
+    [Test] public void CropMature_IsRegistered() => Assert.That(TileRegistry.CropMature, Is.Not.Null);
+    [Test] public void SoilDry_IsRegistered() => Assert.That(TileRegistry.SoilDry, Is.Not.Null);
+    [Test] public void Irrigation_IsRegistered() => Assert.That(TileRegistry.Irrigation, Is.Not.Null);
+    [Test] public void Hay_IsRegistered() => Assert.That(TileRegistry.Hay, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -181,6 +186,11 @@ public class TileRegistryTest
     [TestCase("tile_fence_h.png")]
     [TestCase("tile_fence_v.png")]
     [TestCase("tile_shadow.png")]
+    [TestCase("tile_crop_young.png")]
+    [TestCase("tile_crop_mature.png")]
+    [TestCase("tile_soil_dry.png")]
+    [TestCase("tile_irrigation.png")]
+    [TestCase("tile_hay.png")]
     public void All_ContainsTileWithFileName(string fileName)
     {
         Assert.That(TileRegistry.All.Any(t => t.FileName == fileName), Is.True,
@@ -223,11 +233,26 @@ public class TileRegistryTest
     public void Shadow_IsWalkable() => Assert.That(TileRegistry.Shadow.IsWalkable, Is.True);
 
     [Test]
+    public void CropYoung_IsWalkable() => Assert.That(TileRegistry.CropYoung.IsWalkable, Is.True);
+
+    [Test]
+    public void CropMature_IsWalkable() => Assert.That(TileRegistry.CropMature.IsWalkable, Is.True);
+
+    [Test]
+    public void SoilDry_IsWalkable() => Assert.That(TileRegistry.SoilDry.IsWalkable, Is.True);
+
+    [Test]
+    public void Irrigation_IsWalkable() => Assert.That(TileRegistry.Irrigation.IsWalkable, Is.True);
+
+    [Test]
+    public void Hay_IsWalkable() => Assert.That(TileRegistry.Hay.IsWalkable, Is.True);
+
+    [Test]
     public void Walkable_ReturnsOnlyWalkableTiles()
     {
         var walkable = TileRegistry.Walkable;
         Assert.That(walkable.All(t => t.IsWalkable), Is.True);
-        Assert.That(walkable.Length, Is.EqualTo(6));
+        Assert.That(walkable.Length, Is.EqualTo(11));
     }
 
     [Test]

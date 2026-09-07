@@ -39,8 +39,8 @@ public partial class InteractionDetectorNode : Area2D
         if (_detector is null || !@event.IsActionPressed(InputActionNames.Interact))
             return;
 
-        var cottage = GetTree().CurrentScene as CottageAreaNode;
-        if (cottage?.InputHandler.IsBlocked == true)
+        var area = GetTree().CurrentScene as IAreaSceneContext;
+        if (area?.InputHandler.IsBlocked == true)
             return;
 
         var dialogueBox = GetTree().CurrentScene.GetNodeOrNull<DialogueBoxNode>("DialogueBox");

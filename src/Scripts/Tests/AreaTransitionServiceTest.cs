@@ -89,6 +89,23 @@ public class AreaTransitionServiceTest
         });
     }
 
+    [Test]
+    public void TriggerTransition_PreservesQuestStatesForTargetArea()
+    {
+        var questStates = new Dictionary<string, QuestState>
+        {
+            ["q_kidnapped"] = QuestState.Active,
+        };
+        var service = CreateService(out _, out _);
+
+        service.TriggerTransition("cottage", MainMenuConfig.FarmScenePath, "west_entrance", new SaveData
+        {
+            QuestStates = questStates,
+        });
+
+        Assert.That(GameSession.QuestStates, Is.EqualTo(questStates));
+    }
+
     private static AreaTransitionService CreateService(out EventBus eventBus, out MockSaveDataService saveService)
     {
         eventBus = new EventBus();

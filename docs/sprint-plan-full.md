@@ -533,19 +533,20 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                       | Tests | Sprint | Notes                                                                          |
-| ------------------------------- | ----- | ------ | ------------------------------------------------------------------------------ |
-| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                        |
-| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                      |
-| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                              |
-| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                     |
-| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.      |
-| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                 |
-| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                |
-| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                 |
-| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                 |
-| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.      |
-| `AreaTransitionServiceTest.cs`  | 5     | S8-01  | Transition event, save order/snapshot, target scene, and named spawn coverage. |
+| Test File                       | Tests | Sprint | Notes                                                                               |
+| ------------------------------- | ----- | ------ | ----------------------------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                             |
+| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                           |
+| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                                   |
+| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                          |
+| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.           |
+| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                      |
+| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                     |
+| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                      |
+| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                      |
+| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.           |
+| `AreaTransitionServiceTest.cs`  | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage. |
+| `FarmSceneConfigTest.cs`        | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage. |
 
 ---
 
@@ -1084,26 +1085,26 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Tasks:**
 
-- [ ] Create 5 new tile sprites for farm area (Artist):
+- [x] Create 5 new tile sprites for farm area (Artist):
   - `tile_crop_young.png` — early crop growth
   - `tile_crop_mature.png` — full grown crop
   - `tile_soil_dry.png` — untended earth
   - `tile_irrigation.png` — water channel edge
   - `tile_hay.png` — straw ground cover
-- [ ] Create 3 new props (Artist):
+- [x] Create 3 new props (Artist):
   - `prop_barn.png` — large barn structure (multi-tile)
   - `prop_scarecrow.png` — field scarecrow
   - `prop_plow.png` — wooden plow tool
-- [ ] Build `Scene_Farm.tscn` — 40×25 tile grid:
+- [x] Build `Scene_Farm.tscn` — 40×25 tile grid:
   - Crop fields (6×4 blocks of `tile_crop_mature`)
   - Irrigation ditch (`tile_irrigation` running east-west)
   - Barn in northeast corner
   - Scarecrow at field center
   - Plow near barn entrance
   - Dirt path connecting to Cottage (west) and Forest Path (north)
-- [ ] All collision shapes configured
-- [ ] Transition zones to Cottage (west) and Forest Path (north)
-- [ ] Run `PaletteValidator` against all new sprites
+- [x] All collision shapes configured
+- [x] Transition zones to Cottage (west) and Forest Path (north)
+- [x] Run palette validation against all new sprites (`tools/generate_s802_assets.py`)
 
 **Acceptance Criteria:**
 
@@ -1155,7 +1156,7 @@ player can walk from Cottage → Farm → Forest Path.
 | Story                        | Points | Owner                |
 | ---------------------------- | ------ | -------------------- |
 | S8-01 Area Transition Sys ✅ | 5      | Lead Dev             |
-| S8-02 Farm Area              | 8      | Level Designer + Art |
+| S8-02 Farm Area ✅           | 8      | Level Designer + Art |
 | S8-03 Forest Path Area       | 8      | Level Designer + Art |
 | **Total**                    | **21** |                      |
 

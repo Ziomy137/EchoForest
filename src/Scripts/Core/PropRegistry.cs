@@ -3,10 +3,9 @@ using System.Linq;
 namespace EchoForest.Core;
 
 /// <summary>
-/// Central registry of all environment prop sprite assets defined in S3-02.
+/// Central registry of all environment prop sprite assets used by area scenes.
 ///
-/// Contains metadata for the five props required in the Cottage test area:
-/// door, well, tree, hay bale, and fence post.
+/// Contains metadata for the props required by the Cottage and Farm areas.
 ///
 /// Note: <c>prop_tree.png</c> omits the non-approved color <c>#2d5a2d</c> that
 /// appears in the sprint plan spec; only palette-approved colors are used.
@@ -16,7 +15,7 @@ namespace EchoForest.Core;
 public static class PropRegistry
 {
     /// <summary>Total number of prop sprites defined in S3-02.</summary>
-    public const int ExpectedPropCount = 5;
+    public const int ExpectedPropCount = 8;
 
     // ─── Prop definitions ─────────────────────────────────────────────────────
 
@@ -56,11 +55,33 @@ public static class PropRegistry
         height: 32,
         expectedColorHexCodes: new[] { "5c3d2e", "8b7355" });
 
+    public static readonly PropConfig Barn = new(
+        "Farm Barn",
+        "prop_barn.png",
+        width: 192,
+        height: 160,
+        expectedColorHexCodes: new[] { "8b0000", "5c3d2e", "8b7355", "2d2416", "3d3d3d", "ffd700" });
+
+    public static readonly PropConfig Scarecrow = new(
+        "Scarecrow",
+        "prop_scarecrow.png",
+        width: 32,
+        height: 64,
+        expectedColorHexCodes: new[] { "8b7355", "5c3d2e", "ffd700", "2d2416" });
+
+    public static readonly PropConfig Plow = new(
+        "Wooden Plow",
+        "prop_plow.png",
+        width: 48,
+        height: 32,
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416", "5a5a5a" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly PropConfig[] _all =
     {
         Door, Well, Tree, HayBale, FencePost,
+        Barn, Scarecrow, Plow,
     };
 
     /// <summary>
