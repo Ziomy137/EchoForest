@@ -35,7 +35,7 @@ script = ExtResource("6_spawn")
 SpawnPointId = "west_entrance"
 
 [node name="NorthEntranceSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(608, 304)
+position = Vector2(512, 384)
 script = ExtResource("6_spawn")
 SpawnPointId = "north_entrance"
 
