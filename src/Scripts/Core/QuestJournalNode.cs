@@ -40,6 +40,10 @@ public partial class QuestJournalNode : CanvasLayer
 
     public override void _Input(InputEvent @event)
     {
+        var cottage = GetTree().CurrentScene as CottageAreaNode;
+        if (cottage?.InputHandler.IsBlocked == true)
+            return;
+
         if (!@event.IsActionPressed(InputActionNames.Inventory)
             && !(Visible && @event.IsActionPressed(InputActionNames.Pause)))
         {

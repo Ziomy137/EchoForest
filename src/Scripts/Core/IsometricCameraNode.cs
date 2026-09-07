@@ -74,6 +74,8 @@ public partial class IsometricCameraNode : Camera2D
     }
 
     private CameraController _controller = new();
+    private Tween? _cutscenePanTween;
+    private bool _isCutscenePanning;
 
     private void SyncControllerSettings()
     {
@@ -106,8 +108,32 @@ public partial class IsometricCameraNode : Camera2D
         GlobalPosition = _controller.Position;
     }
 
+    /// <summary>Pans the camera while temporarily suspending follow updates.</summary>
+    public void PanTo(Vector2 target, float duration, System.Action onComplete)
+    {
+        System.ArgumentNullException.ThrowIfNull(onComplete);
+        if (duration < 0f)
+            throw new System.ArgumentOutOfRangeException(nameof(duration));
+
+        _cutscenePanTween?.Kill();
+        _isCutscenePanning = true;
+        if (duration == 0f)
+        {
+            GlobalPosition = target;
+            FinishCutscenePan(onComplete);
+            return;
+        }
+
+        _cutscenePanTween = CreateTween();
+        _cutscenePanTween.TweenProperty(this, "global_position", target, duration);
+        _cutscenePanTween.Finished += () => FinishCutscenePan(onComplete);
+    }
+
     public override void _Process(double delta)
     {
+        if (_isCutscenePanning)
+            return;
+
         if (FollowTarget != null)
             _controller.SetTarget(FollowTarget.GlobalPosition);
         else
@@ -115,5 +141,12 @@ public partial class IsometricCameraNode : Camera2D
 
         _controller.Update(delta);
         GlobalPosition = _controller.Position;
+    }
+
+    private void FinishCutscenePan(System.Action onComplete)
+    {
+        _controller.ForcePosition(GlobalPosition);
+        _isCutscenePanning = false;
+        onComplete();
     }
 }

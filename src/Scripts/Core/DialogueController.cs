@@ -44,8 +44,17 @@ public sealed class DialogueController : IDialogueController
     /// <inheritdoc/>
     public void StartConversation(string npcId)
     {
+        StartConversationAtLine(npcId, lineId: null);
+    }
+
+    /// <inheritdoc/>
+    public void StartConversationAtLine(string npcId, string? lineId)
+    {
+        if (IsConversationActive)
+            throw new InvalidOperationException("A conversation is already active.");
+
         _activeDialogue = _dialogueService.LoadDialogue(npcId);
-        CurrentLine = _dialogueService.GetLine(_activeDialogue.FirstLineId);
+        CurrentLine = _dialogueService.GetLine(lineId ?? _activeDialogue.FirstLineId);
         IsConversationActive = true;
 
         OnConversationStarted?.Invoke();

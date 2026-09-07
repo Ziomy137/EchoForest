@@ -58,6 +58,20 @@ public class DialogueControllerTest
     }
 
     [Test]
+    public void StartConversationAtLine_SetsRequestedDialogueLine()
+    {
+        var controller = new DialogueController(CreateService());
+
+        controller.StartConversationAtLine("wife", "wife_02");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(controller.IsConversationActive, Is.True);
+            Assert.That(controller.CurrentLine!.Id, Is.EqualTo("wife_02"));
+        });
+    }
+
+    [Test]
     public void Advance_MovesToNextLine()
     {
         var controller = new DialogueController(CreateService());

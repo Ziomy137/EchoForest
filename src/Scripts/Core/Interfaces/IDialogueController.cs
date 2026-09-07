@@ -13,6 +13,7 @@ public interface IDialogueController
     event Action? OnConversationEnded;
 
     void StartConversation(string npcId);
+    void StartConversationAtLine(string npcId, string lineId);
     bool Advance();
     void EndConversation();
 }

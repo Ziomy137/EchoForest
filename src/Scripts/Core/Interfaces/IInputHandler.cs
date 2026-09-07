@@ -7,6 +7,9 @@ namespace EchoForest.Core;
 /// </summary>
 public interface IInputHandler
 {
+    /// <summary>When true, gameplay input consumers must ignore player actions.</summary>
+    bool IsBlocked { get; set; }
+
     /// <summary>Returns true while the named input action is held.</summary>
     bool IsActionPressed(string action);
 

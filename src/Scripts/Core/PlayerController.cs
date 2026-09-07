@@ -49,6 +49,13 @@ public sealed class PlayerController : IPlayerController
     /// </summary>
     public void SimulatePhysicsFrame(float delta)
     {
+        if (_input.IsBlocked)
+        {
+            Velocity = Vector2.Zero;
+            UpdateStateMachine();
+            return;
+        }
+
         float h = _input.GetAxis(InputActionNames.MoveLeft, InputActionNames.MoveRight);
         float v = _input.GetAxis(InputActionNames.MoveUp, InputActionNames.MoveDown);
 
