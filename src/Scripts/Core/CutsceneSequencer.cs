@@ -58,14 +58,31 @@ public sealed class CutsceneSequencer : ICutscene
 
         var step = _steps[_currentStepIndex++];
         var completed = false;
-        step.Play(() =>
+        try
         {
-            if (completed || !IsPlaying)
-                return;
+            step.Play(() =>
+            {
+                if (completed || !IsPlaying)
+                    return;
 
-            completed = true;
-            PlayNextStep();
-        });
+                completed = true;
+
+                try
+                {
+                    PlayNextStep();
+                }
+                catch
+                {
+                    Abort();
+                    throw;
+                }
+            });
+        }
+        catch
+        {
+            Abort();
+            throw;
+        }
     }
 
     private void Finish()
@@ -76,5 +93,16 @@ public sealed class CutsceneSequencer : ICutscene
         var onComplete = _onComplete;
         _onComplete = null;
         onComplete?.Invoke();
+    }
+
+    private void Abort()
+    {
+        if (!IsPlaying)
+            return;
+
+        IsPlaying = false;
+        _input.IsBlocked = false;
+        _eventBus.Publish(new CutsceneEndedEvent(_cutsceneId));
+        _onComplete = null;
     }
 }

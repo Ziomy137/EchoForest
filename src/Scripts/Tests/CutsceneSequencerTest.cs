@@ -78,6 +78,46 @@ public class CutsceneSequencerTest
     }
 
     [Test]
+    public void Play_WhenStepThrows_UnblocksInputAndStopsPlaying()
+    {
+        var input = new MockInputHandler();
+        var sequencer = new CutsceneSequencer(
+        [
+            new ThrowingCutsceneStep(),
+        ],
+        input);
+
+        Assert.Throws<InvalidOperationException>(() => sequencer.Play(() => { }));
+        Assert.Multiple(() =>
+        {
+            Assert.That(input.IsBlocked, Is.False);
+            Assert.That(sequencer.IsPlaying, Is.False);
+        });
+    }
+
+    [Test]
+    public void Play_WhenContinuationThrows_UnblocksInputAndStopsPlaying()
+    {
+        var input = new MockInputHandler();
+        var firstStep = new DeferredCutsceneStep();
+        var sequencer = new CutsceneSequencer(
+        [
+            firstStep,
+            new ThrowingCutsceneStep(),
+        ],
+        input);
+
+        sequencer.Play(() => { });
+
+        Assert.Throws<InvalidOperationException>(() => firstStep.Complete());
+        Assert.Multiple(() =>
+        {
+            Assert.That(input.IsBlocked, Is.False);
+            Assert.That(sequencer.IsPlaying, Is.False);
+        });
+    }
+
+    [Test]
     public void Play_PublishesStartedAndEndedEventsAroundSteps()
     {
         var bus = new EventBus();
@@ -176,6 +216,12 @@ public class CutsceneSequencerTest
         public void Play(Action onComplete) => _onComplete = onComplete;
 
         public void Complete() => _onComplete?.Invoke();
+    }
+
+    private sealed class ThrowingCutsceneStep : ICutsceneStep
+    {
+        public void Play(Action onComplete) =>
+            throw new InvalidOperationException("Simulated cutscene step failure.");
     }
 
     private sealed class MockCutsceneFader : ICutsceneFader
