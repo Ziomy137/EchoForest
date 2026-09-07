@@ -57,14 +57,16 @@ public partial class FarmAreaNode : Node2D, IAreaSceneContext
             if (config is null)
                 continue;
 
+var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(placement.Col, placement.Row)));
+            var sorter = new IsometricYSorterNode { GlobalPosition = worldPosition };
             var sprite = new Sprite2D
             {
                 Texture = GD.Load<Texture2D>(config.ResourcePath),
                 Centered = true,
+                Position = new Vector2(0f, -config.Height / 2f),
             };
-            var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(placement.Col, placement.Row)));
-            sprite.GlobalPosition = worldPosition + new Vector2(0f, -config.Height / 2f);
-            AddChild(sprite);
+            sorter.AddChild(sprite);
+            AddChild(sorter);
 
             if (placement.IsBlocking)
                 AddPropCollider(worldPosition, config.Width * 0.3f, config.Height * 0.12f);
