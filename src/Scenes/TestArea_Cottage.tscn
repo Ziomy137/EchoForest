@@ -16,7 +16,7 @@
 size = Vector2(48, 832)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_forest_path_transition"]
-size = Vector2(1600, 48)
+size = Vector2(1488, 48)
 
 [node name="TestArea_Cottage" type="Node2D" unique_id=424375799]
 y_sort_enabled = true
