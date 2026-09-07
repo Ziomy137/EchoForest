@@ -74,7 +74,7 @@ public static class PropRegistry
         "prop_plow.png",
         width: 48,
         height: 32,
-        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416" });
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416", "5a5a5a" });
 
     // ─── Collection access ────────────────────────────────────────────────────
 
