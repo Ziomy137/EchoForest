@@ -634,8 +634,8 @@ public class PropRegistryTest
         Assert.That(PropRegistry.All.Length, Is.EqualTo(PropRegistry.ExpectedPropCount));
 
     [Test]
-    public void ExpectedPropCount_IsEight() =>
-        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(8));
+    public void ExpectedPropCount_IsTwelve() =>
+        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(12));
 
     // ─── Individual props exist ───────────────────────────────────────────────
 
@@ -647,6 +647,10 @@ public class PropRegistryTest
     [Test] public void Barn_IsRegistered() => Assert.That(PropRegistry.Barn, Is.Not.Null);
     [Test] public void Scarecrow_IsRegistered() => Assert.That(PropRegistry.Scarecrow, Is.Not.Null);
     [Test] public void Plow_IsRegistered() => Assert.That(PropRegistry.Plow, Is.Not.Null);
+    [Test] public void DenseTree_IsRegistered() => Assert.That(PropRegistry.DenseTree, Is.Not.Null);
+    [Test] public void FallenLog_IsRegistered() => Assert.That(PropRegistry.FallenLog, Is.Not.Null);
+    [Test] public void Mushrooms_AreRegistered() => Assert.That(PropRegistry.Mushrooms, Is.Not.Null);
+    [Test] public void Boulder_IsRegistered() => Assert.That(PropRegistry.Boulder, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -658,6 +662,10 @@ public class PropRegistryTest
     [TestCase("prop_barn.png")]
     [TestCase("prop_scarecrow.png")]
     [TestCase("prop_plow.png")]
+    [TestCase("prop_dense_tree.png")]
+    [TestCase("prop_fallen_log.png")]
+    [TestCase("prop_mushrooms.png")]
+    [TestCase("prop_boulder.png")]
     public void All_ContainsPropWithFileName(string fileName)
     {
         Assert.That(PropRegistry.All.Any(p => p.FileName == fileName), Is.True,

@@ -20,6 +20,9 @@ public static class MainMenuConfig
     /// <summary>Forest Path scene resource path.</summary>
     public const string ForestPathScenePath = "res://src/Scenes/Scene_ForestPath.tscn";
 
+    /// <summary>City scene resource path.</summary>
+    public const string CityScenePath = "res://src/Scenes/Scene_City.tscn";
+
     /// <summary>Load Game screen scene resource path.</summary>
     public const string LoadGameScenePath = "res://src/Scenes/LoadGameScreen.tscn";
 
