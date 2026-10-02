@@ -549,6 +549,7 @@ These are prerequisites for all quest and story content.
 | `FarmSceneConfigTest.cs`        | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                    |
 | `ForestPathSceneConfigTest.cs`  | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
 | `CityArtPackTest.cs`            | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                |
+| `CitySceneConfigTest.cs`        | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.               |
 
 ---
 
@@ -1227,7 +1228,7 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Tasks:**
 
-- [ ] Build `Scene_City.tscn` — 60×60 tile grid:
+- [x] Build `Scene_City.tscn` — 60×60 tile grid:
   - **South entrance** — city gate from forest road
   - **Market District** (south-central): 3–4 market stalls, `prop_fountain` at center square
   - **Residential District** (east) — tightly packed buildings with narrow streets
@@ -1235,10 +1236,11 @@ player can walk from Cottage → Farm → Forest Path.
   - **Guard posts** at gate and key intersections (NPC placeholders)
   - Lamp posts along main street (decorative, no lighting system yet)
   - Notice board at entrance square
-- [ ] Transition zones: south → Forest Path, north-inner → Mage's Tower entrance
-- [ ] Place NPC anchor points: Merchant (market stall), City Guard (gate), Townsperson × 3
-- [ ] All buildings impassable; doors are marked but non-functional (full interiors in future scope)
-- [ ] Mage's Tower visually dominates north quarter (multi-tile `prop_tower_wall`)
+- [x] Transition zones: south → Forest Path, north-inner → Mage's Tower entrance
+- [x] Place NPC anchor points: Merchant (market stall), City Guard (gate), Townsperson × 3
+- [x] All buildings impassable; doors are marked but non-functional (full interiors in future scope)
+- [x] Mage's Tower visually dominates north quarter (multi-tile `prop_tower_wall`)
+- [x] Load the Market District as a city sub-scene with prop placement markers
 
 **Acceptance Criteria:**
 
@@ -1281,7 +1283,7 @@ player can walk from Cottage → Farm → Forest Path.
 | Story                  | Points | Owner          |
 | ---------------------- | ------ | -------------- |
 | S9-01 City Art Pack ✅ | 8      | Artist         |
-| S9-02 City Area        | 13     | Level Designer |
+| S9-02 City Area ✅     | 13     | Level Designer |
 | S9-03 Mage's Tower     | 5      | Level Designer |
 | **Total**              | **26** |                |
 
