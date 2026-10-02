@@ -162,11 +162,8 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
 
     private void CreateMageAnchor()
     {
-        AddChild(new Marker2D
-        {
-            Name = "MageAnchor",
-            Position = ToVector(MagesTowerSceneConfig.GridToWorld(MagesTowerSceneConfig.MageAnchor)),
-        });
+        var anchor = GetNode<Marker2D>("MageAnchor");
+        anchor.Position = ToVector(MagesTowerSceneConfig.GridToWorld(MagesTowerSceneConfig.MageAnchor));
     }
 
     private void SpawnPlayer()
