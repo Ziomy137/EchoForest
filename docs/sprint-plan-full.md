@@ -547,7 +547,7 @@ These are prerequisites for all quest and story content.
 | `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.                   |
 | `AreaTransitionServiceTest.cs`  | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage. |
 | `FarmSceneConfigTest.cs`        | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.         |
-| `ForestPathSceneConfigTest.cs`  | 13    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
+| `ForestPathSceneConfigTest.cs`  | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
 
 ---
 
