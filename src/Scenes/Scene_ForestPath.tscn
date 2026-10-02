@@ -46,7 +46,7 @@ position = Vector2(32, 432)
 position = Vector2(-544, 912)
 
 [node name="OptionalItemPickup" type="Marker2D" parent="."]
-position = Vector2(-320, 848)
+position = Vector2(-320, 832)
 
 [node name="Boundary" type="StaticBody2D" parent="."]
 
