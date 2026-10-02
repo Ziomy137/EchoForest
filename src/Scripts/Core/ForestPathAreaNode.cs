@@ -28,6 +28,7 @@ public partial class ForestPathAreaNode : Node2D, IAreaSceneContext
 
     public override void _Ready()
     {
+        ConfigureSceneMarkers();
         PopulateTiles();
         SpawnProps();
         AddStreamColliders();
@@ -218,14 +219,18 @@ public partial class ForestPathAreaNode : Node2D, IAreaSceneContext
 
     private void ConfigureAreaTransitions()
     {
-        GetNode<AreaTransitionNode>("ToFarmTransition").Configure(
+        var farmTransition = GetNode<AreaTransitionNode>("ToFarmTransition");
+        farmTransition.Position = ToGodotPosition(ForestPathSceneConfig.SouthTransitionPosition);
+        farmTransition.Configure(
             MainMenuConfig.FarmScenePath,
             "north_entrance",
             TransitionType.FadeToBlack,
             AreaTransitionService,
             InputHandler,
             CreateTransitionSaveData);
-        GetNode<AreaTransitionNode>("ToCityTransition").Configure(
+        var cityTransition = GetNode<AreaTransitionNode>("ToCityTransition");
+        cityTransition.Position = ToGodotPosition(ForestPathSceneConfig.NorthTransitionPosition);
+        cityTransition.Configure(
             MainMenuConfig.CityScenePath,
             "south_entrance",
             TransitionType.FadeToBlack,
@@ -241,4 +246,13 @@ public partial class ForestPathAreaNode : Node2D, IAreaSceneContext
         PlayerY = player.GlobalPosition.Y,
         QuestStates = new Dictionary<string, QuestState>(QuestService.GetQuestStates()),
     };
+
+    private void ConfigureSceneMarkers()
+    {
+        GetNode<Marker2D>("PlayerSpawnPoint").Position = ToGodotPosition(ForestPathSceneConfig.SouthEntranceSpawnPosition);
+        GetNode<Marker2D>("SouthEntranceSpawnPoint").Position = ToGodotPosition(ForestPathSceneConfig.SouthEntranceSpawnPosition);
+        GetNode<Marker2D>("NorthEntranceSpawnPoint").Position = ToGodotPosition(ForestPathSceneConfig.NorthEntranceSpawnPosition);
+    }
+
+    private static Vector2 ToGodotPosition(ForestPathSceneConfig.WorldPosition position) => new(position.X, position.Y);
 }

@@ -28,6 +28,8 @@ public static class ForestPathSceneConfig
     public const float WorldBoundaryBottom = 1376f;
     public const float DenseTreeColliderWidth = 64f;
     public const float DenseTreeColliderHeight = 32f;
+    public const float TransitionHalfWidth = 64f;
+    public const float TransitionHalfHeight = 48f;
 
     /// <summary>Axis-aligned rectangle of cells within the Forest Path grid.</summary>
     public readonly record struct TileZone(int Col, int Row, int Width, int Height)
@@ -39,6 +41,9 @@ public static class ForestPathSceneConfig
 
     /// <summary>Grid position for future encounter and pickup content.</summary>
     public readonly record struct GridPosition(int Col, int Row);
+
+    /// <summary>Engine-neutral world position for scene markers and transition zones.</summary>
+    public readonly record struct WorldPosition(float X, float Y);
 
     /// <summary>File name and grid location for a Forest Path prop.</summary>
     public readonly record struct PropPlacement(string FileName, int Col, int Row, bool IsBlocking);
@@ -55,6 +60,11 @@ public static class ForestPathSceneConfig
     ];
 
     public static readonly GridPosition OptionalItemPickupPosition = new(21, 31);
+
+    public static readonly WorldPosition SouthTransitionPosition = new(-1024f, 1056f);
+    public static readonly WorldPosition NorthTransitionPosition = new(544f, 272f);
+    public static readonly WorldPosition SouthEntranceSpawnPosition = new(-896f, 992f);
+    public static readonly WorldPosition NorthEntranceSpawnPosition = new(416f, 336f);
 
     public static readonly PropPlacement[] Props = CreateProps();
 

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NUnit.Framework;
 using EchoForest.Core;
@@ -33,6 +34,26 @@ public class ForestPathSceneConfigTest
         {
             Assert.That(ForestPathSceneConfig.WorldBoundaryTop, Is.LessThanOrEqualTo(0f));
             Assert.That(ForestPathSceneConfig.WorldBoundaryBottom, Is.GreaterThan(furthestGridY));
+        });
+    }
+
+    [Test]
+    public void EntranceSpawnPoints_AreOutsideTheirExitTransitionZones()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                MathF.Abs(ForestPathSceneConfig.SouthEntranceSpawnPosition.X - ForestPathSceneConfig.SouthTransitionPosition.X),
+                Is.GreaterThan(ForestPathSceneConfig.TransitionHalfWidth));
+            Assert.That(
+                MathF.Abs(ForestPathSceneConfig.SouthEntranceSpawnPosition.Y - ForestPathSceneConfig.SouthTransitionPosition.Y),
+                Is.GreaterThan(ForestPathSceneConfig.TransitionHalfHeight));
+            Assert.That(
+                MathF.Abs(ForestPathSceneConfig.NorthEntranceSpawnPosition.X - ForestPathSceneConfig.NorthTransitionPosition.X),
+                Is.GreaterThan(ForestPathSceneConfig.TransitionHalfWidth));
+            Assert.That(
+                MathF.Abs(ForestPathSceneConfig.NorthEntranceSpawnPosition.Y - ForestPathSceneConfig.NorthTransitionPosition.Y),
+                Is.GreaterThan(ForestPathSceneConfig.TransitionHalfHeight));
         });
     }
 
