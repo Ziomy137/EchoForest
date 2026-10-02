@@ -548,6 +548,7 @@ These are prerequisites for all quest and story content.
 | `AreaTransitionServiceTest.cs`  | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage.            |
 | `FarmSceneConfigTest.cs`        | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                    |
 | `ForestPathSceneConfigTest.cs`  | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
+| `CityArtPackTest.cs`            | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                |
 
 ---
 
@@ -1202,6 +1203,12 @@ player can walk from Cottage → Farm → Forest Path.
 | Tower wall section | `prop_tower_wall.png`   |
 | Tower door         | `prop_tower_door.png`   |
 
+**Tasks:**
+
+- [x] Create six city tiles and seven city props using the approved palette
+- [x] Register city asset dimensions, palette metadata, and TileSet sources
+- [x] Validate all new sprite dimensions and pixel colors (`tools/generate_s901_assets.py`)
+
 **Acceptance Criteria:**
 
 - All tiles render correctly as isometric diamonds
@@ -1271,12 +1278,12 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Sprint 9 Summary:**
 
-| Story               | Points | Owner          |
-| ------------------- | ------ | -------------- |
-| S9-01 City Art Pack | 8      | Artist         |
-| S9-02 City Area     | 13     | Level Designer |
-| S9-03 Mage's Tower  | 5      | Level Designer |
-| **Total**           | **26** |                |
+| Story                  | Points | Owner          |
+| ---------------------- | ------ | -------------- |
+| S9-01 City Art Pack ✅ | 8      | Artist         |
+| S9-02 City Area        | 13     | Level Designer |
+| S9-03 Mage's Tower     | 5      | Level Designer |
+| **Total**              | **26** |                |
 
 ---
 

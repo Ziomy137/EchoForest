@@ -634,8 +634,8 @@ public class PropRegistryTest
         Assert.That(PropRegistry.All.Length, Is.EqualTo(PropRegistry.ExpectedPropCount));
 
     [Test]
-    public void ExpectedPropCount_IsTwelve() =>
-        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(12));
+    public void ExpectedPropCount_IsNineteen() =>
+        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(19));
 
     // ─── Individual props exist ───────────────────────────────────────────────
 
@@ -651,6 +651,13 @@ public class PropRegistryTest
     [Test] public void FallenLog_IsRegistered() => Assert.That(PropRegistry.FallenLog, Is.Not.Null);
     [Test] public void Mushrooms_AreRegistered() => Assert.That(PropRegistry.Mushrooms, Is.Not.Null);
     [Test] public void Boulder_IsRegistered() => Assert.That(PropRegistry.Boulder, Is.Not.Null);
+    [Test] public void LampPost_IsRegistered() => Assert.That(PropRegistry.LampPost, Is.Not.Null);
+    [Test] public void Fountain_IsRegistered() => Assert.That(PropRegistry.Fountain, Is.Not.Null);
+    [Test] public void MarketStall_IsRegistered() => Assert.That(PropRegistry.MarketStall, Is.Not.Null);
+    [Test] public void NoticeBoard_IsRegistered() => Assert.That(PropRegistry.NoticeBoard, Is.Not.Null);
+    [Test] public void CityGate_IsRegistered() => Assert.That(PropRegistry.CityGate, Is.Not.Null);
+    [Test] public void TowerWall_IsRegistered() => Assert.That(PropRegistry.TowerWall, Is.Not.Null);
+    [Test] public void TowerDoor_IsRegistered() => Assert.That(PropRegistry.TowerDoor, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -666,6 +673,13 @@ public class PropRegistryTest
     [TestCase("prop_fallen_log.png")]
     [TestCase("prop_mushrooms.png")]
     [TestCase("prop_boulder.png")]
+    [TestCase("prop_lamppost.png")]
+    [TestCase("prop_fountain.png")]
+    [TestCase("prop_market_stall.png")]
+    [TestCase("prop_notice_board.png")]
+    [TestCase("prop_city_gate.png")]
+    [TestCase("prop_tower_wall.png")]
+    [TestCase("prop_tower_door.png")]
     public void All_ContainsPropWithFileName(string fileName)
     {
         Assert.That(PropRegistry.All.Any(p => p.FileName == fileName), Is.True,

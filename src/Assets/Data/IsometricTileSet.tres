@@ -20,6 +20,12 @@
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_forest_shadow.png" id="tile_forest_shadow"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_mud.png" id="tile_mud"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_rock_small.png" id="tile_rock_small"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_cobble.png" id="tile_cobble"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_cobble_var.png" id="tile_cobble_var"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_city_stone.png" id="tile_city_stone"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_city_wall.png" id="tile_city_wall"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_city_roof.png" id="tile_city_roof"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_stall_top.png" id="tile_stall_top"]
 
 [sub_resource type="TileSetAtlasSource" id="src_grass"]
 texture = ExtResource("tile_grass")
@@ -136,6 +142,40 @@ texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
 
+[sub_resource type="TileSetAtlasSource" id="src_cobble"]
+texture = ExtResource("tile_cobble")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_cobble_var"]
+texture = ExtResource("tile_cobble_var")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_city_stone"]
+texture = ExtResource("tile_city_stone")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_city_wall"]
+texture = ExtResource("tile_city_wall")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="src_city_roof"]
+texture = ExtResource("tile_city_roof")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="src_stall_top"]
+texture = ExtResource("tile_stall_top")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
 [resource]
 tile_shape = 1
 tile_layout = 5
@@ -163,3 +203,9 @@ sources/16 = SubResource("src_forest_floor")
 sources/17 = SubResource("src_forest_shadow")
 sources/18 = SubResource("src_mud")
 sources/19 = SubResource("src_rock_small")
+sources/20 = SubResource("src_cobble")
+sources/21 = SubResource("src_cobble_var")
+sources/22 = SubResource("src_city_stone")
+sources/23 = SubResource("src_city_wall")
+sources/24 = SubResource("src_city_roof")
+sources/25 = SubResource("src_stall_top")

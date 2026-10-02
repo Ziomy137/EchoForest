@@ -5,7 +5,7 @@ namespace EchoForest.Core;
 /// <summary>
 /// Central registry of all environment prop sprite assets used by area scenes.
 ///
-/// Contains metadata for the props required by the Cottage and Farm areas.
+/// Contains metadata for the props required by the Cottage, Farm, Forest Path, and City areas.
 ///
 /// Note: <c>prop_tree.png</c> omits the non-approved color <c>#2d5a2d</c> that
 /// appears in the sprint plan spec; only palette-approved colors are used.
@@ -14,8 +14,8 @@ namespace EchoForest.Core;
 /// </summary>
 public static class PropRegistry
 {
-    /// <summary>Total number of prop sprites defined in S3-02.</summary>
-    public const int ExpectedPropCount = 12;
+    /// <summary>Total number of registered prop sprites.</summary>
+    public const int ExpectedPropCount = 19;
 
     // ─── Prop definitions ─────────────────────────────────────────────────────
 
@@ -104,6 +104,55 @@ public static class PropRegistry
         height: 64,
         expectedColorHexCodes: new[] { "5a5a5a", "3d3d3d", "1a1a1a" });
 
+    public static readonly PropConfig LampPost = new(
+        "City Lamp Post",
+        "prop_lamppost.png",
+        width: 24,
+        height: 80,
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "ffd700", "1a1a1a", "2d2416" });
+
+    public static readonly PropConfig Fountain = new(
+        "City Fountain",
+        "prop_fountain.png",
+        width: 96,
+        height: 80,
+        expectedColorHexCodes: new[] { "5a5a5a", "8b7355", "1a3a5c", "3d3d3d", "2d2416" });
+
+    public static readonly PropConfig MarketStall = new(
+        "Market Stall",
+        "prop_market_stall.png",
+        width: 96,
+        height: 80,
+        expectedColorHexCodes: new[] { "8b7355", "ffd700", "5c3d2e", "2d2416", "8b0000" });
+
+    public static readonly PropConfig NoticeBoard = new(
+        "City Notice Board",
+        "prop_notice_board.png",
+        width: 48,
+        height: 64,
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "ffd700", "2d2416" });
+
+    public static readonly PropConfig CityGate = new(
+        "City Gate",
+        "prop_city_gate.png",
+        width: 160,
+        height: 128,
+        expectedColorHexCodes: new[] { "5a5a5a", "8b7355", "5c3d2e", "3d3d3d" });
+
+    public static readonly PropConfig TowerWall = new(
+        "Mage Tower Wall",
+        "prop_tower_wall.png",
+        width: 192,
+        height: 224,
+        expectedColorHexCodes: new[] { "5a5a5a", "3d3d3d", "5c3d2e", "8b7355" });
+
+    public static readonly PropConfig TowerDoor = new(
+        "Mage Tower Door",
+        "prop_tower_door.png",
+        width: 64,
+        height: 96,
+        expectedColorHexCodes: new[] { "3d3d3d", "5c3d2e", "ffd700" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly PropConfig[] _all =
@@ -111,6 +160,7 @@ public static class PropRegistry
         Door, Well, Tree, HayBale, FencePost,
         Barn, Scarecrow, Plow,
         DenseTree, FallenLog, Mushrooms, Boulder,
+        LampPost, Fountain, MarketStall, NoticeBoard, CityGate, TowerWall, TowerDoor,
     };
 
     /// <summary>
