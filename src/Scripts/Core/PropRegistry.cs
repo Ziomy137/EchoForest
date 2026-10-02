@@ -15,7 +15,7 @@ namespace EchoForest.Core;
 public static class PropRegistry
 {
     /// <summary>Total number of registered prop sprites.</summary>
-    public const int ExpectedPropCount = 19;
+    public const int ExpectedPropCount = 23;
 
     // ─── Prop definitions ─────────────────────────────────────────────────────
 
@@ -153,6 +153,34 @@ public static class PropRegistry
         height: 96,
         expectedColorHexCodes: new[] { "3d3d3d", "5c3d2e", "ffd700" });
 
+    public static readonly PropConfig PortalInactive = new(
+        "Inactive Portal Circle",
+        "prop_portal_inactive.png",
+        width: 64,
+        height: 64,
+        expectedColorHexCodes: new[] { "2a1a4a", "1a1a1a", "ffd700", "3d3d3d" });
+
+    public static readonly PropConfig Bookshelf = new(
+        "Tower Bookshelf",
+        "prop_bookshelf.png",
+        width: 64,
+        height: 96,
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416", "ffd700" });
+
+    public static readonly PropConfig AlchemyTable = new(
+        "Alchemy Table",
+        "prop_alchemy_table.png",
+        width: 64,
+        height: 48,
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416", "1a3a5c" });
+
+    public static readonly PropConfig Fireplace = new(
+        "Tower Fireplace",
+        "prop_fireplace.png",
+        width: 64,
+        height: 64,
+        expectedColorHexCodes: new[] { "3d3d3d", "5c3d2e", "ff6b00", "8b0000" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly PropConfig[] _all =
@@ -161,6 +189,7 @@ public static class PropRegistry
         Barn, Scarecrow, Plow,
         DenseTree, FallenLog, Mushrooms, Boulder,
         LampPost, Fountain, MarketStall, NoticeBoard, CityGate, TowerWall, TowerDoor,
+        PortalInactive, Bookshelf, AlchemyTable, Fireplace,
     };
 
     /// <summary>

@@ -550,6 +550,7 @@ These are prerequisites for all quest and story content.
 | `ForestPathSceneConfigTest.cs`  | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
 | `CityArtPackTest.cs`            | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                |
 | `CitySceneConfigTest.cs`        | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.               |
+| `MagesTowerSceneConfigTest.cs`  | 10    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.              |
 
 ---
 
@@ -1259,16 +1260,16 @@ player can walk from Cottage → Farm → Forest Path.
 
 **Tasks:**
 
-- [ ] Build `Scene_MagesTower.tscn` — two-room layout (exterior + interior):
+- [x] Build `Scene_MagesTower.tscn` — two-room layout (exterior + interior):
   - **Exterior approach:** narrow cobblestone path, tower facade, guarded entrance
   - **Interior (ground floor):** bookshelves, alchemy table, fireplace, portal circle on floor
   - `prop_portal_inactive.png` — stone circle with faint glowing runes (placeholder sprite)
   - `prop_bookshelf.png` — prop for tower walls
   - `prop_alchemy_table.png` — prop for tower interior
-- [ ] Create required art props (Artist): `prop_portal_inactive.png`, `prop_bookshelf.png`, `prop_alchemy_table.png`
-- [ ] Tower interior collision: narrow walkable path between furniture
-- [ ] Local Mage NPC anchor point inside tower
-- [ ] Transition: exterior ↔ interior (door), interior → City (exit)
+- [x] Create required art props (Artist): `prop_portal_inactive.png`, `prop_bookshelf.png`, `prop_alchemy_table.png`, plus the fireplace sprite shown in the interior layout
+- [x] Tower interior collision: narrow walkable path between furniture
+- [x] Local Mage NPC anchor point inside tower
+- [x] Transition: exterior ↔ interior (door), interior → City (exit)
 
 **Acceptance Criteria:**
 
@@ -1284,7 +1285,7 @@ player can walk from Cottage → Farm → Forest Path.
 | ---------------------- | ------ | -------------- |
 | S9-01 City Art Pack ✅ | 8      | Artist         |
 | S9-02 City Area ✅     | 13     | Level Designer |
-| S9-03 Mage's Tower     | 5      | Level Designer |
+| S9-03 Mage's Tower ✅  | 5      | Level Designer |
 | **Total**              | **26** |                |
 
 ---
