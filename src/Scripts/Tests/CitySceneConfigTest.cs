@@ -99,7 +99,11 @@ public class CitySceneConfigTest
             }
         }
 
-        Assert.That(visited, Does.Contain(CitySceneConfig.TowerTransitionGridPosition));
+        Assert.Multiple(() =>
+        {
+            Assert.That(visited, Does.Contain(CitySceneConfig.TowerTransitionGridPosition));
+            Assert.That(visited, Does.Contain(CitySceneConfig.TowerExitSpawnGridPosition));
+        });
     }
 
     [Test]
