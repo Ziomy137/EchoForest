@@ -98,8 +98,8 @@ public class TileRegistryTest
         Assert.That(TileRegistry.All.Length, Is.EqualTo(TileRegistry.ExpectedTileCount));
 
     [Test]
-    public void ExpectedTileCount_IsTwenty() =>
-        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(20));
+    public void ExpectedTileCount_IsTwentySix() =>
+        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(26));
 
     // ─── Dimensions ───────────────────────────────────────────────────────────
 
@@ -176,6 +176,12 @@ public class TileRegistryTest
     [Test] public void ForestShadow_IsRegistered() => Assert.That(TileRegistry.ForestShadow, Is.Not.Null);
     [Test] public void Mud_IsRegistered() => Assert.That(TileRegistry.Mud, Is.Not.Null);
     [Test] public void RockSmall_IsRegistered() => Assert.That(TileRegistry.RockSmall, Is.Not.Null);
+    [Test] public void Cobblestone_IsRegistered() => Assert.That(TileRegistry.Cobblestone, Is.Not.Null);
+    [Test] public void CobblestoneVariation_IsRegistered() => Assert.That(TileRegistry.CobblestoneVariation, Is.Not.Null);
+    [Test] public void CityStone_IsRegistered() => Assert.That(TileRegistry.CityStone, Is.Not.Null);
+    [Test] public void CityWall_IsRegistered() => Assert.That(TileRegistry.CityWall, Is.Not.Null);
+    [Test] public void CityRoof_IsRegistered() => Assert.That(TileRegistry.CityRoof, Is.Not.Null);
+    [Test] public void StallTop_IsRegistered() => Assert.That(TileRegistry.StallTop, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -199,6 +205,12 @@ public class TileRegistryTest
     [TestCase("tile_forest_shadow.png")]
     [TestCase("tile_mud.png")]
     [TestCase("tile_rock_small.png")]
+    [TestCase("tile_cobble.png")]
+    [TestCase("tile_cobble_var.png")]
+    [TestCase("tile_city_stone.png")]
+    [TestCase("tile_city_wall.png")]
+    [TestCase("tile_city_roof.png")]
+    [TestCase("tile_stall_top.png")]
     public void All_ContainsTileWithFileName(string fileName)
     {
         Assert.That(TileRegistry.All.Any(t => t.FileName == fileName), Is.True,
@@ -268,11 +280,29 @@ public class TileRegistryTest
     public void RockSmall_IsWalkable() => Assert.That(TileRegistry.RockSmall.IsWalkable, Is.True);
 
     [Test]
+    public void Cobblestone_IsWalkable() => Assert.That(TileRegistry.Cobblestone.IsWalkable, Is.True);
+
+    [Test]
+    public void CobblestoneVariation_IsWalkable() => Assert.That(TileRegistry.CobblestoneVariation.IsWalkable, Is.True);
+
+    [Test]
+    public void CityStone_IsWalkable() => Assert.That(TileRegistry.CityStone.IsWalkable, Is.True);
+
+    [Test]
+    public void CityWall_IsBlocking() => Assert.That(TileRegistry.CityWall.IsWalkable, Is.False);
+
+    [Test]
+    public void CityRoof_IsBlocking() => Assert.That(TileRegistry.CityRoof.IsWalkable, Is.False);
+
+    [Test]
+    public void StallTop_IsWalkable() => Assert.That(TileRegistry.StallTop.IsWalkable, Is.True);
+
+    [Test]
     public void Walkable_ReturnsOnlyWalkableTiles()
     {
         var walkable = TileRegistry.Walkable;
         Assert.That(walkable.All(t => t.IsWalkable), Is.True);
-        Assert.That(walkable.Length, Is.EqualTo(15));
+        Assert.That(walkable.Length, Is.EqualTo(19));
     }
 
     [Test]
@@ -280,7 +310,7 @@ public class TileRegistryTest
     {
         var blocking = TileRegistry.Blocking;
         Assert.That(blocking.All(t => !t.IsWalkable), Is.True);
-        Assert.That(blocking.Length, Is.EqualTo(5));
+        Assert.That(blocking.Length, Is.EqualTo(7));
     }
 
     // ─── Color compliance — all tile colors are approved palette colors ───────

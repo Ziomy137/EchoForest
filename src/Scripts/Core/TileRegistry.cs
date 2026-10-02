@@ -20,8 +20,8 @@ public static class TileRegistry
     /// <summary>Standard isometric tile height (pixels).</summary>
     public const int TileHeight = 32;
 
-    /// <summary>Total number of tile sprites required for S3-01.</summary>
-    public const int ExpectedTileCount = 20;
+    /// <summary>Total number of registered tile sprites.</summary>
+    public const int ExpectedTileCount = 26;
 
     // ─── Tile definitions ─────────────────────────────────────────────────────
 
@@ -105,6 +105,30 @@ public static class TileRegistry
         "Small Rock Ground", "tile_rock_small.png", TileWidth, TileHeight, true,
         new[] { "5a5a5a", "3d3d3d", "2d2416" });
 
+    public static readonly TileConfig Cobblestone = new(
+        "City Cobblestone", "tile_cobble.png", TileWidth, TileHeight, true,
+        new[] { "5a5a5a", "8b7355" });
+
+    public static readonly TileConfig CobblestoneVariation = new(
+        "City Cobblestone Variation", "tile_cobble_var.png", TileWidth, TileHeight, true,
+        new[] { "5a5a5a", "8b7355", "1a1a1a" });
+
+    public static readonly TileConfig CityStone = new(
+        "City Stone Floor", "tile_city_stone.png", TileWidth, TileHeight, true,
+        new[] { "5a5a5a", "3d3d3d" });
+
+    public static readonly TileConfig CityWall = new(
+        "City Wall", "tile_city_wall.png", TileWidth, TileHeight, false,
+        new[] { "5a5a5a", "8b7355" });
+
+    public static readonly TileConfig CityRoof = new(
+        "City Roof", "tile_city_roof.png", TileWidth, TileHeight, false,
+        new[] { "3d3d3d", "5c3d2e" });
+
+    public static readonly TileConfig StallTop = new(
+        "Market Stall Top", "tile_stall_top.png", TileWidth, TileHeight, true,
+        new[] { "8b7355", "ffd700" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly TileConfig[] _all =
@@ -114,6 +138,7 @@ public static class TileRegistry
         FenceHorizontal, FenceVertical, Shadow,
         CropYoung, CropMature, SoilDry, Irrigation, Hay,
         ForestFloor, ForestShadow, Mud, RockSmall,
+        Cobblestone, CobblestoneVariation, CityStone, CityWall, CityRoof, StallTop,
     };
 
     /// <summary>
