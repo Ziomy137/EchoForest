@@ -158,7 +158,7 @@ public static class PropRegistry
         "prop_portal_inactive.png",
         width: 64,
         height: 64,
-        expectedColorHexCodes: new[] { "2a1a4a", "1a1a1a", "ffd700", "3d3d3d" });
+        expectedColorHexCodes: new[] { "2a1a4a", "1a1a1a", "ffd700", "3d3d3d", "5a5a5a", "2d2416" });
 
     public static readonly PropConfig Bookshelf = new(
         "Tower Bookshelf",
