@@ -23,6 +23,9 @@ public static class MainMenuConfig
     /// <summary>City scene resource path.</summary>
     public const string CityScenePath = "res://src/Scenes/Scene_City.tscn";
 
+    /// <summary>Mage's Tower scene resource path.</summary>
+    public const string MagesTowerScenePath = "res://src/Scenes/Scene_MagesTower.tscn";
+
     /// <summary>Load Game screen scene resource path.</summary>
     public const string LoadGameScenePath = "res://src/Scenes/LoadGameScreen.tscn";
 

@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[node name="CityMarketDistrict" type="Node2D"]
+y_sort_enabled = true
+
+[node name="StallMarkerOne" type="Marker2D" parent="."]
+position = Vector2(-576, 736)
+
+[node name="StallMarkerTwo" type="Marker2D" parent="."]
+position = Vector2(-640, 960)
+
+[node name="StallMarkerThree" type="Marker2D" parent="."]
+position = Vector2(256, 1152)
+
+[node name="StallMarkerFour" type="Marker2D" parent="."]
+position = Vector2(192, 1376)
+
+[node name="FountainCenter" type="Marker2D" parent="."]
+position = Vector2(-64, 1120)
