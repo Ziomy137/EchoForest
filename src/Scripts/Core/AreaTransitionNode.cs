@@ -53,6 +53,7 @@ public partial class AreaTransitionNode : Area2D
         TargetArea = targetArea;
         SpawnPointId = spawnPointId;
         TransitionType = transitionType;
+        Monitoring = ResourceLoader.Exists(TargetArea);
         _transitionService = transitionService;
         _input = input;
         _saveDataFactory = saveDataFactory;

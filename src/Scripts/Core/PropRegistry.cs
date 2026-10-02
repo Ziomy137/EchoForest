@@ -15,7 +15,7 @@ namespace EchoForest.Core;
 public static class PropRegistry
 {
     /// <summary>Total number of prop sprites defined in S3-02.</summary>
-    public const int ExpectedPropCount = 8;
+    public const int ExpectedPropCount = 12;
 
     // ─── Prop definitions ─────────────────────────────────────────────────────
 
@@ -76,12 +76,41 @@ public static class PropRegistry
         height: 32,
         expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "2d2416", "5a5a5a" });
 
+    public static readonly PropConfig DenseTree = new(
+        "Dense Forest Tree",
+        "prop_dense_tree.png",
+        width: 64,
+        height: 96,
+        expectedColorHexCodes: new[] { "1a3a1a", "2d2416", "5c3d2e" });
+
+    public static readonly PropConfig FallenLog = new(
+        "Fallen Log",
+        "prop_fallen_log.png",
+        width: 96,
+        height: 48,
+        expectedColorHexCodes: new[] { "2d2416", "5c3d2e", "8b7355" });
+
+    public static readonly PropConfig Mushrooms = new(
+        "Mushrooms",
+        "prop_mushrooms.png",
+        width: 32,
+        height: 24,
+        expectedColorHexCodes: new[] { "8b7355", "5a5a5a", "1a3a1a" });
+
+    public static readonly PropConfig Boulder = new(
+        "Forest Boulder",
+        "prop_boulder.png",
+        width: 64,
+        height: 64,
+        expectedColorHexCodes: new[] { "5a5a5a", "3d3d3d", "1a1a1a" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly PropConfig[] _all =
     {
         Door, Well, Tree, HayBale, FencePost,
         Barn, Scarecrow, Plow,
+        DenseTree, FallenLog, Mushrooms, Boulder,
     };
 
     /// <summary>

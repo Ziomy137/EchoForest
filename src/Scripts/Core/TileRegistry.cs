@@ -21,7 +21,7 @@ public static class TileRegistry
     public const int TileHeight = 32;
 
     /// <summary>Total number of tile sprites required for S3-01.</summary>
-    public const int ExpectedTileCount = 16;
+    public const int ExpectedTileCount = 20;
 
     // ─── Tile definitions ─────────────────────────────────────────────────────
 
@@ -89,6 +89,22 @@ public static class TileRegistry
         "Hay Ground", "tile_hay.png", TileWidth, TileHeight, true,
         new[] { "8b7355", "ffd700", "2d2416" });
 
+    public static readonly TileConfig ForestFloor = new(
+        "Forest Floor", "tile_forest_floor.png", TileWidth, TileHeight, true,
+        new[] { "1a3a1a", "2d2416", "3d3d3d" });
+
+    public static readonly TileConfig ForestShadow = new(
+        "Forest Shadow", "tile_forest_shadow.png", TileWidth, TileHeight, true,
+        new[] { "1a1a1a", "1a3a1a", "2d2416" });
+
+    public static readonly TileConfig Mud = new(
+        "Forest Mud", "tile_mud.png", TileWidth, TileHeight, true,
+        new[] { "2d2416", "3d3d3d", "8b7355" });
+
+    public static readonly TileConfig RockSmall = new(
+        "Small Rock Ground", "tile_rock_small.png", TileWidth, TileHeight, true,
+        new[] { "5a5a5a", "3d3d3d", "2d2416" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly TileConfig[] _all =
@@ -97,6 +113,7 @@ public static class TileRegistry
         Water, CottageWall, CottageRoof,
         FenceHorizontal, FenceVertical, Shadow,
         CropYoung, CropMature, SoilDry, Irrigation, Hay,
+        ForestFloor, ForestShadow, Mud, RockSmall,
     };
 
     /// <summary>

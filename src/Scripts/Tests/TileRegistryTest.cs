@@ -98,8 +98,8 @@ public class TileRegistryTest
         Assert.That(TileRegistry.All.Length, Is.EqualTo(TileRegistry.ExpectedTileCount));
 
     [Test]
-    public void ExpectedTileCount_IsSixteen() =>
-        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(16));
+    public void ExpectedTileCount_IsTwenty() =>
+        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(20));
 
     // ─── Dimensions ───────────────────────────────────────────────────────────
 
@@ -172,6 +172,10 @@ public class TileRegistryTest
     [Test] public void SoilDry_IsRegistered() => Assert.That(TileRegistry.SoilDry, Is.Not.Null);
     [Test] public void Irrigation_IsRegistered() => Assert.That(TileRegistry.Irrigation, Is.Not.Null);
     [Test] public void Hay_IsRegistered() => Assert.That(TileRegistry.Hay, Is.Not.Null);
+    [Test] public void ForestFloor_IsRegistered() => Assert.That(TileRegistry.ForestFloor, Is.Not.Null);
+    [Test] public void ForestShadow_IsRegistered() => Assert.That(TileRegistry.ForestShadow, Is.Not.Null);
+    [Test] public void Mud_IsRegistered() => Assert.That(TileRegistry.Mud, Is.Not.Null);
+    [Test] public void RockSmall_IsRegistered() => Assert.That(TileRegistry.RockSmall, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -191,6 +195,10 @@ public class TileRegistryTest
     [TestCase("tile_soil_dry.png")]
     [TestCase("tile_irrigation.png")]
     [TestCase("tile_hay.png")]
+    [TestCase("tile_forest_floor.png")]
+    [TestCase("tile_forest_shadow.png")]
+    [TestCase("tile_mud.png")]
+    [TestCase("tile_rock_small.png")]
     public void All_ContainsTileWithFileName(string fileName)
     {
         Assert.That(TileRegistry.All.Any(t => t.FileName == fileName), Is.True,
@@ -248,11 +256,23 @@ public class TileRegistryTest
     public void Hay_IsWalkable() => Assert.That(TileRegistry.Hay.IsWalkable, Is.True);
 
     [Test]
+    public void ForestFloor_IsWalkable() => Assert.That(TileRegistry.ForestFloor.IsWalkable, Is.True);
+
+    [Test]
+    public void ForestShadow_IsWalkable() => Assert.That(TileRegistry.ForestShadow.IsWalkable, Is.True);
+
+    [Test]
+    public void Mud_IsWalkable() => Assert.That(TileRegistry.Mud.IsWalkable, Is.True);
+
+    [Test]
+    public void RockSmall_IsWalkable() => Assert.That(TileRegistry.RockSmall.IsWalkable, Is.True);
+
+    [Test]
     public void Walkable_ReturnsOnlyWalkableTiles()
     {
         var walkable = TileRegistry.Walkable;
         Assert.That(walkable.All(t => t.IsWalkable), Is.True);
-        Assert.That(walkable.Length, Is.EqualTo(11));
+        Assert.That(walkable.Length, Is.EqualTo(15));
     }
 
     [Test]

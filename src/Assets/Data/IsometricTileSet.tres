@@ -16,6 +16,10 @@
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_soil_dry.png" id="tile_soil_dry"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_irrigation.png" id="tile_irrigation"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_hay.png" id="tile_hay"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_forest_floor.png" id="tile_forest_floor"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_forest_shadow.png" id="tile_forest_shadow"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_mud.png" id="tile_mud"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_rock_small.png" id="tile_rock_small"]
 
 [sub_resource type="TileSetAtlasSource" id="src_grass"]
 texture = ExtResource("tile_grass")
@@ -108,6 +112,30 @@ texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
 
+[sub_resource type="TileSetAtlasSource" id="src_forest_floor"]
+texture = ExtResource("tile_forest_floor")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_forest_shadow"]
+texture = ExtResource("tile_forest_shadow")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_mud"]
+texture = ExtResource("tile_mud")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_rock_small"]
+texture = ExtResource("tile_rock_small")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
 [resource]
 tile_shape = 1
 tile_layout = 5
@@ -131,3 +159,7 @@ sources/12 = SubResource("src_crop_mature")
 sources/13 = SubResource("src_soil_dry")
 sources/14 = SubResource("src_irrigation")
 sources/15 = SubResource("src_hay")
+sources/16 = SubResource("src_forest_floor")
+sources/17 = SubResource("src_forest_shadow")
+sources/18 = SubResource("src_mud")
+sources/19 = SubResource("src_rock_small")
