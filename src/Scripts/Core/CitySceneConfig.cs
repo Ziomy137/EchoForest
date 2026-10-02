@@ -77,7 +77,7 @@ public static class CitySceneConfig
     public static readonly GridPosition SouthEntranceSpawnGridPosition = new(30, 53);
     public static readonly GridPosition DefaultSpawnPosition = SouthEntranceSpawnGridPosition;
     public static readonly GridPosition TowerTransitionGridPosition = new(44, 17);
-    public static readonly GridPosition TowerExitSpawnGridPosition = new(44, 21);
+    public static readonly GridPosition TowerExitSpawnGridPosition = new(44, 20);
     public static readonly GridPosition CityGateGridPosition = new(30, 57);
     public static readonly GridPosition TowerDoorGridPosition = new(44, 16);
 
