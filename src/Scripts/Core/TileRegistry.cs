@@ -107,7 +107,7 @@ public static class TileRegistry
 
     public static readonly TileConfig Cobblestone = new(
         "City Cobblestone", "tile_cobble.png", TileWidth, TileHeight, true,
-        new[] { "5a5a5a", "8b7355" });
+        new[] { "5a5a5a", "8b7355", "2d2416", "3d3d3d" });
 
     public static readonly TileConfig CobblestoneVariation = new(
         "City Cobblestone Variation", "tile_cobble_var.png", TileWidth, TileHeight, true,
