@@ -109,21 +109,21 @@ public static class PropRegistry
         "prop_lamppost.png",
         width: 24,
         height: 80,
-        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "ffd700", "1a1a1a" });
+        expectedColorHexCodes: new[] { "5c3d2e", "8b7355", "ffd700", "1a1a1a", "2d2416" });
 
     public static readonly PropConfig Fountain = new(
         "City Fountain",
         "prop_fountain.png",
         width: 96,
         height: 80,
-        expectedColorHexCodes: new[] { "5a5a5a", "8b7355", "1a3a5c", "3d3d3d" });
+        expectedColorHexCodes: new[] { "5a5a5a", "8b7355", "1a3a5c", "3d3d3d", "2d2416" });
 
     public static readonly PropConfig MarketStall = new(
         "Market Stall",
         "prop_market_stall.png",
         width: 96,
         height: 80,
-        expectedColorHexCodes: new[] { "8b7355", "ffd700", "5c3d2e", "2d2416" });
+        expectedColorHexCodes: new[] { "8b7355", "ffd700", "5c3d2e", "2d2416", "8b0000" });
 
     public static readonly PropConfig NoticeBoard = new(
         "City Notice Board",
