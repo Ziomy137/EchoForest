@@ -39,7 +39,19 @@ public class MinimapControllerTest
         var controller = new MinimapController(new EventBus(), MainMenuConfig.FarmScenePath);
         controller.UpdatePlayerPosition(FarmSceneConfig.WorldBoundaryRight + 100f, FarmSceneConfig.WorldBoundaryTop - 100f);
 
-        Assert.That(controller.PlayerDotPosition, Is.EqualTo(new MinimapPoint(63f, 0f)));
+        Assert.That(controller.PlayerDotPosition, Is.EqualTo(new MinimapPoint(63f, MinimapController.IsometricMapTop)));
+    }
+
+    [Test]
+    public void UpdatePlayerPosition_MapsWorldVerticalBoundsToIsometricBand()
+    {
+        var controller = new MinimapController(new EventBus(), FarmSceneConfig.SceneResPath);
+        controller.UpdatePlayerPosition(0f, FarmSceneConfig.WorldBoundaryTop);
+        Assert.That(controller.PlayerDotPosition.Y, Is.EqualTo(MinimapController.IsometricMapTop));
+
+        controller.UpdatePlayerPosition(0f, FarmSceneConfig.WorldBoundaryBottom);
+        Assert.That(controller.PlayerDotPosition.Y, Is.EqualTo(
+            MinimapController.IsometricMapTop + MinimapController.IsometricMapHeight - 1f));
     }
 
     [Test]
