@@ -11,6 +11,8 @@ public sealed class MinimapController : IDisposable
 {
     public const int MapWidth = 64;
     public const int MapHeight = 64;
+    public const int IsometricMapTop = 16;
+    public const int IsometricMapHeight = 32;
 
     private const string TextureDirectory = "res://src/Assets/Sprites/Minimaps";
 
@@ -65,10 +67,10 @@ public sealed class MinimapController : IDisposable
     public void UpdatePlayerPosition(float worldX, float worldY)
     {
         var mapX = (worldX - _currentArea.Left) / _currentArea.Width * MapWidth;
-        var mapY = (worldY - _currentArea.Top) / _currentArea.Height * MapHeight;
+        var mapY = IsometricMapTop + (worldY - _currentArea.Top) / _currentArea.Height * IsometricMapHeight;
         PlayerDotPosition = new MinimapPoint(
             Math.Clamp(mapX, 0f, MapWidth - 1f),
-            Math.Clamp(mapY, 0f, MapHeight - 1f));
+            Math.Clamp(mapY, IsometricMapTop, IsometricMapTop + IsometricMapHeight - 1f));
     }
 
     public void ToggleVisibility() => IsVisible = !IsVisible;
