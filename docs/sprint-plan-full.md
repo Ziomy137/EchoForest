@@ -550,7 +550,7 @@ These are prerequisites for all quest and story content.
 | `ForestPathSceneConfigTest.cs`    | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage.  |
 | `CityArtPackTest.cs`              | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                 |
 | `CitySceneConfigTest.cs`          | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.                |
-| `MagesTowerSceneConfigTest.cs`    | 10    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
+| `MagesTowerSceneConfigTest`    | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
 | `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return. |
 
 ---
