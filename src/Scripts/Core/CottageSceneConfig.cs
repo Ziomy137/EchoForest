@@ -32,6 +32,12 @@ public static class CottageSceneConfig
     /// <summary>Godot resource path for the TestArea_Cottage scene.</summary>
     public const string SceneResPath = "res://src/Scenes/TestArea_Cottage.tscn";
 
+    public static readonly AreaTransitionDefinition[] Transitions =
+    [
+        new("ToFarmTransition", MainMenuConfig.FarmScenePath, "west_entrance"),
+        new("ToForestPathTransition", MainMenuConfig.ForestPathScenePath, "north_entrance"),
+    ];
+
     /// <summary>Godot resource path for the shared IsometricTileSet.</summary>
     public const string TileSetResPath = "res://src/Assets/Data/IsometricTileSet.tres";
 

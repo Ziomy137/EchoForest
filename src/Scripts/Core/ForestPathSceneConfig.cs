@@ -16,6 +16,12 @@ public static class ForestPathSceneConfig
     public const string CameraNodeName = "Camera";
     public const string PlayerSpawnName = "PlayerSpawnPoint";
 
+    public static readonly AreaTransitionDefinition[] Transitions =
+    [
+        new("ToFarmTransition", MainMenuConfig.FarmScenePath, "north_entrance"),
+        new("ToCityTransition", MainMenuConfig.CityScenePath, "south_entrance"),
+    ];
+
     public const int SourceIdWater = 5;
     public const int SourceIdForestFloor = 16;
     public const int SourceIdForestShadow = 17;

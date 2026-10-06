@@ -201,20 +201,14 @@ var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(placement.C
 
     private void ConfigureAreaTransitions()
     {
-        GetNode<AreaTransitionNode>("ToCottageTransition").Configure(
-            CottageSceneConfig.SceneResPath,
-            "farm_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
-        GetNode<AreaTransitionNode>("ToForestPathTransition").Configure(
-            MainMenuConfig.ForestPathScenePath,
-            "south_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
+        foreach (var endpoint in FarmSceneConfig.Transitions)
+            GetNode<AreaTransitionNode>(endpoint.NodePath).Configure(
+                endpoint.TargetArea,
+                endpoint.SpawnPointId,
+                TransitionType.FadeToBlack,
+                AreaTransitionService,
+                InputHandler,
+                CreateTransitionSaveData);
     }
 
     private SaveData CreateTransitionSaveData(PlayerControllerNode player) => new()

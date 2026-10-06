@@ -12,37 +12,6 @@ namespace EchoForest.Tests;
 [TestFixture]
 public class WorldNavigationTest
 {
-    private static readonly NavigationLeg[] ForwardRoute =
-    [
-        new(MainMenuConfig.ContinueScenePath, MainMenuConfig.FarmScenePath, "west_entrance"),
-        new(MainMenuConfig.FarmScenePath, MainMenuConfig.ForestPathScenePath, "south_entrance"),
-        new(MainMenuConfig.ForestPathScenePath, MainMenuConfig.CityScenePath, "south_entrance"),
-        new(MainMenuConfig.CityScenePath, MainMenuConfig.MagesTowerScenePath, "city_entrance"),
-        new(MainMenuConfig.MagesTowerScenePath, MainMenuConfig.PortalChamberScenePath, PortalChamberSceneConfig.TowerEntranceSpawnPointId),
-    ];
-
-    private static readonly NavigationLeg[] ReverseRoute =
-    [
-        new(MainMenuConfig.PortalChamberScenePath, MainMenuConfig.MagesTowerScenePath, MagesTowerSceneConfig.PortalExitSpawnPointId),
-        new(MainMenuConfig.MagesTowerScenePath, MainMenuConfig.CityScenePath, "tower_exit"),
-        new(MainMenuConfig.CityScenePath, MainMenuConfig.ForestPathScenePath, "north_entrance"),
-        new(MainMenuConfig.ForestPathScenePath, MainMenuConfig.FarmScenePath, "north_entrance"),
-        new(MainMenuConfig.FarmScenePath, MainMenuConfig.ContinueScenePath, "farm_entrance"),
-    ];
-
-    private static readonly NavigationLeg[] AllTransitionZones =
-    [
-        .. ForwardRoute,
-        new(MainMenuConfig.ContinueScenePath, MainMenuConfig.ForestPathScenePath, "north_entrance"),
-        new(MainMenuConfig.FarmScenePath, MainMenuConfig.ContinueScenePath, "farm_entrance"),
-        new(MainMenuConfig.ForestPathScenePath, MainMenuConfig.FarmScenePath, "north_entrance"),
-        new(MainMenuConfig.CityScenePath, MainMenuConfig.ForestPathScenePath, "north_entrance"),
-        new(MainMenuConfig.MagesTowerScenePath, MainMenuConfig.CityScenePath, "tower_exit"),
-        new(MainMenuConfig.MagesTowerScenePath, MainMenuConfig.MagesTowerScenePath, "interior_door"),
-        new(MainMenuConfig.MagesTowerScenePath, MainMenuConfig.MagesTowerScenePath, "exterior_door"),
-        new(MainMenuConfig.PortalChamberScenePath, MainMenuConfig.MagesTowerScenePath, MagesTowerSceneConfig.PortalExitSpawnPointId),
-    ];
-
     private static readonly string[] AreaScenes =
     [
         MainMenuConfig.ContinueScenePath,
@@ -52,6 +21,32 @@ public class WorldNavigationTest
         MainMenuConfig.MagesTowerScenePath,
         MainMenuConfig.PortalChamberScenePath,
     ];
+
+    private static readonly NavigationLeg[] AllTransitionZones =
+    [
+        .. ToNavigationLegs(CottageSceneConfig.SceneResPath, CottageSceneConfig.Transitions),
+        .. ToNavigationLegs(FarmSceneConfig.SceneResPath, FarmSceneConfig.Transitions),
+        .. ToNavigationLegs(ForestPathSceneConfig.SceneResPath, ForestPathSceneConfig.Transitions),
+        .. ToNavigationLegs(CitySceneConfig.SceneResPath, CitySceneConfig.Transitions),
+        .. MagesTowerSceneConfig.Transitions.Select(endpoint =>
+            new NavigationLeg(MagesTowerSceneConfig.SceneResPath, endpoint.TargetArea, endpoint.SpawnPointId, $"Transitions/{endpoint.Type}")),
+        .. PortalChamberSceneConfig.Transitions.Select(endpoint =>
+            new NavigationLeg(PortalChamberSceneConfig.SceneResPath, endpoint.TargetArea, endpoint.SpawnPointId, $"Transitions/{endpoint.Type}")),
+    ];
+
+    private static readonly NavigationLeg[] ForwardRoute = GetRoute(
+        (AreaScenes[0], AreaScenes[1]),
+        (AreaScenes[1], AreaScenes[2]),
+        (AreaScenes[2], AreaScenes[3]),
+        (AreaScenes[3], AreaScenes[4]),
+        (AreaScenes[4], AreaScenes[5]));
+
+    private static readonly NavigationLeg[] ReverseRoute = GetRoute(
+        (AreaScenes[5], AreaScenes[4]),
+        (AreaScenes[4], AreaScenes[3]),
+        (AreaScenes[3], AreaScenes[2]),
+        (AreaScenes[2], AreaScenes[1]),
+        (AreaScenes[1], AreaScenes[0]));
 
     [SetUp]
     public void SetUp() => GameSession.Clear();
@@ -76,8 +71,17 @@ public class WorldNavigationTest
     [Test]
     public void Navigation_AllTransitionZones_PublishEventsSaveAndQueueSpawn()
     {
+        Assert.That(AllTransitionZones, Has.Length.EqualTo(13));
+        Assert.That(AllTransitionZones.Select(leg => (leg.FromArea, leg.TransitionNodePath)), Is.Unique);
+
+        var repositoryRoot = FindRepositoryRoot();
         foreach (var route in AllTransitionZones)
+        {
+            var sourceScene = File.ReadAllText(ToFilePath(repositoryRoot, route.FromArea));
+            Assert.That(ContainsAreaTransitionNode(sourceScene, route.TransitionNodePath), Is.True,
+                $"{route.FromArea} has no transition zone '{route.TransitionNodePath}'");
             AssertTransition(route);
+        }
     }
 
     [Test]
@@ -151,10 +155,32 @@ public class WorldNavigationTest
         });
     }
 
+    private static NavigationLeg[] ToNavigationLegs(string fromArea, IEnumerable<AreaTransitionDefinition> transitions) =>
+        transitions.Select(endpoint =>
+            new NavigationLeg(fromArea, endpoint.TargetArea, endpoint.SpawnPointId, endpoint.NodePath)).ToArray();
+
+    private static NavigationLeg[] GetRoute(params (string FromArea, string TargetArea)[] edges) =>
+        edges.Select(edge => AllTransitionZones.Single(leg =>
+            leg.FromArea == edge.FromArea && leg.TargetArea == edge.TargetArea)).ToArray();
+
     private static bool ContainsSpawnPoint(string sceneContents, string spawnPointId) =>
-        Regex.IsMatch(sceneContents,
-            $"SpawnPointId\\s*=\\s*\\\"{Regex.Escape(spawnPointId)}\\\"",
+        Regex.IsMatch(sceneContents, $"SpawnPointId\\s*=\\s*\\\"{Regex.Escape(spawnPointId)}\\\"", RegexOptions.CultureInvariant);
+
+    private static bool ContainsAreaTransitionNode(string sceneContents, string nodePath)
+    {
+        var separator = nodePath.LastIndexOf('/');
+        var nodeName = nodePath[(separator + 1)..];
+        var parentPath = separator < 0 ? "." : nodePath[..separator];
+        var node = Regex.Match(sceneContents,
+            $"\\[node name=\"{Regex.Escape(nodeName)}\" type=\"Area2D\" parent=\"{Regex.Escape(parentPath)}\"[^\\]]*\\](?<body>.*?)(?=\\r?\\n\\[node |\\z)",
+            RegexOptions.Singleline | RegexOptions.CultureInvariant);
+        var script = Regex.Match(sceneContents,
+            "\\[ext_resource(?=[^\\]]*type=\"Script\")(?=[^\\]]*path=\"res://src/Scripts/Core/AreaTransitionNode.cs\")[^\\]]*id=\"([^\"]+)\"[^\\]]*\\]",
             RegexOptions.CultureInvariant);
+        return node.Success && script.Success && Regex.IsMatch(node.Groups["body"].Value,
+            $"^script\\s*=\\s*ExtResource\\(\"{Regex.Escape(script.Groups[1].Value)}\"\\)$",
+            RegexOptions.Multiline | RegexOptions.CultureInvariant);
+    }
 
     private static string ToFilePath(string repositoryRoot, string scenePath) =>
         Path.Combine(repositoryRoot, scenePath["res://".Length..].Replace('/', Path.DirectorySeparatorChar));
@@ -173,7 +199,7 @@ public class WorldNavigationTest
         throw new DirectoryNotFoundException("Could not locate the repository root from the NUnit test directory.");
     }
 
-    private readonly record struct NavigationLeg(string FromArea, string TargetArea, string SpawnPointId);
+    private readonly record struct NavigationLeg(string FromArea, string TargetArea, string SpawnPointId, string TransitionNodePath);
 
     private sealed class RecordingSceneLoader(List<string> operations) : ISceneLoader
     {

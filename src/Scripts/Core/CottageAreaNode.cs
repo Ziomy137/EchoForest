@@ -242,20 +242,14 @@ public partial class CottageAreaNode : Node2D, IAreaSceneContext
 
 	private void ConfigureAreaTransitions()
 	{
-		GetNode<AreaTransitionNode>("ToFarmTransition").Configure(
-			MainMenuConfig.FarmScenePath,
-			"west_entrance",
-			TransitionType.FadeToBlack,
-			AreaTransitionService,
-			InputHandler,
-			CreateTransitionSaveData);
-		GetNode<AreaTransitionNode>("ToForestPathTransition").Configure(
-			MainMenuConfig.ForestPathScenePath,
-			"north_entrance",
-			TransitionType.FadeToBlack,
-			AreaTransitionService,
-			InputHandler,
-			CreateTransitionSaveData);
+		foreach (var endpoint in CottageSceneConfig.Transitions)
+			GetNode<AreaTransitionNode>(endpoint.NodePath).Configure(
+				endpoint.TargetArea,
+				endpoint.SpawnPointId,
+				TransitionType.FadeToBlack,
+				AreaTransitionService,
+				InputHandler,
+				CreateTransitionSaveData);
 	}
 
 	private SaveData CreateTransitionSaveData(PlayerControllerNode player) => new()

@@ -230,25 +230,19 @@ public partial class CityAreaNode : Node2D, IAreaSceneContext
 
     private void ConfigureTransitions()
     {
-        var forestTransition = GetNode<AreaTransitionNode>("ToForestPathTransition");
+        var forestTransition = GetNode<AreaTransitionNode>(CitySceneConfig.Transitions[0].NodePath);
         forestTransition.Position = ToVector(CitySceneConfig.GridToWorld(CitySceneConfig.SouthTransitionGridPosition));
-        forestTransition.Configure(
-            MainMenuConfig.ForestPathScenePath,
-            "north_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
 
-        var towerTransition = GetNode<AreaTransitionNode>("ToMagesTowerTransition");
+        var towerTransition = GetNode<AreaTransitionNode>(CitySceneConfig.Transitions[1].NodePath);
         towerTransition.Position = ToVector(CitySceneConfig.GridToWorld(CitySceneConfig.TowerTransitionGridPosition));
-        towerTransition.Configure(
-            MainMenuConfig.MagesTowerScenePath,
-            "city_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
+        foreach (var endpoint in CitySceneConfig.Transitions)
+            GetNode<AreaTransitionNode>(endpoint.NodePath).Configure(
+                endpoint.TargetArea,
+                endpoint.SpawnPointId,
+                TransitionType.FadeToBlack,
+                AreaTransitionService,
+                InputHandler,
+                CreateTransitionSaveData);
     }
 
     private SaveData CreateTransitionSaveData(PlayerControllerNode player) => new()

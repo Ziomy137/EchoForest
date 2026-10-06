@@ -219,24 +219,18 @@ public partial class ForestPathAreaNode : Node2D, IAreaSceneContext
 
     private void ConfigureAreaTransitions()
     {
-        var farmTransition = GetNode<AreaTransitionNode>("ToFarmTransition");
+        var farmTransition = GetNode<AreaTransitionNode>(ForestPathSceneConfig.Transitions[0].NodePath);
         farmTransition.Position = ToGodotPosition(ForestPathSceneConfig.SouthTransitionPosition);
-        farmTransition.Configure(
-            MainMenuConfig.FarmScenePath,
-            "north_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
-        var cityTransition = GetNode<AreaTransitionNode>("ToCityTransition");
+        var cityTransition = GetNode<AreaTransitionNode>(ForestPathSceneConfig.Transitions[1].NodePath);
         cityTransition.Position = ToGodotPosition(ForestPathSceneConfig.NorthTransitionPosition);
-        cityTransition.Configure(
-            MainMenuConfig.CityScenePath,
-            "south_entrance",
-            TransitionType.FadeToBlack,
-            AreaTransitionService,
-            InputHandler,
-            CreateTransitionSaveData);
+        foreach (var endpoint in ForestPathSceneConfig.Transitions)
+            GetNode<AreaTransitionNode>(endpoint.NodePath).Configure(
+                endpoint.TargetArea,
+                endpoint.SpawnPointId,
+                TransitionType.FadeToBlack,
+                AreaTransitionService,
+                InputHandler,
+                CreateTransitionSaveData);
     }
 
     private SaveData CreateTransitionSaveData(PlayerControllerNode player) => new()
