@@ -533,26 +533,27 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                         | Tests | Sprint | Notes                                                                                                   |
-| --------------------------------- | ----- | ------ | ------------------------------------------------------------------------------------------------------- |
-| `PauseMenuControllerTest.cs`      | 12    | S6-02  | Pause menu controller coverage; CI fix.                                                                 |
-| `InteractionDetectorTest.cs`      | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                                               |
-| `NpcControllerTest.cs`            | 4     | S6-03  | NPC interaction contract and validation coverage.                                                       |
-| `DialogueServiceTest.cs`          | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                                              |
-| `DialogueControllerTest.cs`       | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.                               |
-| `EventBusTest.cs`                 | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                                          |
-| `QuestServiceTest.cs`             | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                                         |
-| `QuestDatabaseTest.cs`            | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                                          |
-| `QuestJournalControllerTest.cs`   | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                                          |
-| `CutsceneSequencerTest.cs`        | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.                               |
-| `AreaTransitionServiceTest.cs`    | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage.             |
-| `FarmSceneConfigTest.cs`          | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                     |
-| `ForestPathSceneConfigTest.cs`    | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage.  |
-| `CityArtPackTest.cs`              | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                 |
-| `CitySceneConfigTest.cs`          | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.                |
-| `MagesTowerSceneConfigTest`       | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
-| `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return. |
-| `WorldNavigationTest.cs`          | 5     | S10-02 | Forward/reverse traversal, all transition events, save state, default markers, and target spawn IDs.    |
+| Test File                         | Tests | Sprint | Notes                                                                                                       |
+| --------------------------------- | ----- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs`      | 12    | S6-02  | Pause menu controller coverage; CI fix.                                                                     |
+| `InteractionDetectorTest.cs`      | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                                                   |
+| `NpcControllerTest.cs`            | 4     | S6-03  | NPC interaction contract and validation coverage.                                                           |
+| `DialogueServiceTest.cs`          | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                                                  |
+| `DialogueControllerTest.cs`       | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.                                   |
+| `EventBusTest.cs`                 | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                                              |
+| `QuestServiceTest.cs`             | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                                             |
+| `QuestDatabaseTest.cs`            | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                                              |
+| `QuestJournalControllerTest.cs`   | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                                              |
+| `CutsceneSequencerTest.cs`        | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.                                   |
+| `AreaTransitionServiceTest.cs`    | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage.                 |
+| `FarmSceneConfigTest.cs`          | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                         |
+| `ForestPathSceneConfigTest.cs`    | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage.      |
+| `CityArtPackTest.cs`              | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                     |
+| `CitySceneConfigTest.cs`          | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.                    |
+| `MagesTowerSceneConfigTest`       | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.                   |
+| `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return.     |
+| `WorldNavigationTest.cs`          | 5     | S10-02 | Forward/reverse traversal, all transition events, save state, default markers, and target spawn IDs.        |
+| `MinimapControllerTest.cs`        | 7     | S10-03 | World-to-map transform, clamping, area event/map selection, asset presence, visibility toggle, and cleanup. |
 
 ---
 
@@ -1380,14 +1381,14 @@ area transition chain is fully tested end-to-end.
 
 **Tasks:**
 
-- [ ] Create `MinimapController.cs`:
+- [x] Create `MinimapController.cs`:
   - Renders simplified top-down overview of current area (sub-viewport or pre-rendered texture)
   - Player dot (white pixel) shows current position, updating every frame
   - Area name displayed above minimap
   - Toggle show/hide with a keybind (default: `M`)
-- [ ] Each area has a `minimap_texture` resource (hand-drawn 64×64 px overview PNG per area) — Artist provides
-- [ ] Minimap does NOT show enemies or NPCs (static map only for this scope)
-- [ ] Connect to `AreaTransitionEvent` to switch minimap texture on area change
+- [x] Each area has a `minimap_texture` resource (64×64 px overview PNG per area)
+- [x] Minimap does NOT show enemies or NPCs (static map only for this scope)
+- [x] Connect to `AreaTransitionEvent` to switch minimap texture on area change
 
 **Acceptance Criteria:**
 
@@ -1400,15 +1401,15 @@ area transition chain is fully tested end-to-end.
 ```csharp
 // MinimapControllerTest.cs
 [Test] public void Minimap_PlayerDot_UpdatesOnPositionChange() {
-    var ctrl = new MinimapController(mapSize: new Vector2I(64, 64),
-                                     worldSize: new Vector2(1920, 1500));
-    ctrl.UpdatePlayerPosition(new Vector2(960, 750)); // center of world
-    Assert.AreEqual(new Vector2(32, 32), ctrl.PlayerDotPosition);
+    var ctrl = new MinimapController(new EventBus(), MainMenuConfig.CityScenePath);
+    ctrl.UpdatePlayerPosition(0f, 960f); // center of the City bounds
+    Assert.AreEqual(new MinimapPoint(32f, 32f), ctrl.PlayerDotPosition);
 }
 [Test] public void Minimap_OnAreaTransition_SwitchesTexture() {
     var bus = new EventBus();
     var ctrl = new MinimapController(bus);
-    bus.Publish(new AreaTransitionEvent("cottage", "farm"));
+    bus.Publish(new AreaTransitionEvent(MainMenuConfig.ContinueScenePath,
+                      MainMenuConfig.FarmScenePath));
     Assert.AreEqual("farm", ctrl.CurrentAreaId);
 }
 ```
@@ -1421,7 +1422,7 @@ area transition chain is fully tested end-to-end.
 | ------------------------------- | ------ | -------------------- |
 | S10-01 Portal Chamber ✅        | 8      | Level Designer + Art |
 | S10-02 World Navigation Test ✅ | 5      | Lead Dev             |
-| S10-03 Minimap System           | 5      | Developer            |
+| S10-03 Minimap System ✅        | 5      | Developer            |
 | **Total**                       | **18** |                      |
 
 ---

@@ -120,25 +120,50 @@ visible = false
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
 
-; ── Bottom-right: minimap placeholder ────────────────────────────────────────
+; ── Bottom-right: minimap ─────────────────────────────────────────────────────
 
-[node name="MinimapPlaceholder" type="ColorRect" parent="."]
-anchors_preset = 4
+[node name="MinimapContainer" type="VBoxContainer" parent="."]
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -120.0
+offset_left = -132.0
+offset_top = -150.0
 offset_right = -12.0
 offset_bottom = -12.0
-color = Color(0.063, 0.043, 0.024, 0.7)
+theme_override_constants/separation = 3
 
-[node name="MinimapLabel" type="Label" parent="MinimapPlaceholder"]
+[node name="AreaNameLabel" type="Label" parent="MinimapContainer"]
+layout_mode = 2
+text = "Cottage"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1.0, 0.843, 0.0, 1)
+horizontal_alignment = 1
+
+[node name="MinimapPanel" type="ColorRect" parent="MinimapContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(112, 112)
+color = Color(0.063, 0.043, 0.024, 0.92)
+mouse_filter = 2
+
+[node name="MinimapTexture" type="TextureRect" parent="MinimapContainer/MinimapPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "Map"
-horizontal_alignment = 1
-vertical_alignment = 1
-theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+texture_filter = 1
+expand_mode = 1
+stretch_mode = 0
+mouse_filter = 2
+
+[node name="PlayerDot" type="ColorRect" parent="MinimapContainer/MinimapPanel"]
+offset_left = 56.5
+offset_top = 56.5
+offset_right = 61.5
+offset_bottom = 61.5
+color = Color(1, 1, 1, 1)
+mouse_filter = 2
