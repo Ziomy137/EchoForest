@@ -32,6 +32,7 @@ public static class MagesTowerSceneConfig
         DoorToInterior,
         DoorToExterior,
         ExitToCity,
+        PortalToChamber,
     }
 
     public readonly record struct TileZone(int Col, int Row, int Width, int Height)
@@ -64,6 +65,9 @@ public static class MagesTowerSceneConfig
     public static readonly GridPosition InteriorEntryPosition = new(25, 14);
     public static readonly GridPosition CityExitTransitionPosition = new(37, 20);
     public static readonly GridPosition CityExitSpawnPosition = new(32, 20);
+    public static readonly GridPosition PortalTransitionPosition = new(30, 10);
+    public static readonly GridPosition PortalExitSpawnPosition = new(34, 11);
+    public const string PortalExitSpawnPointId = "portal_exit";
     public static readonly GridPosition MageAnchor = new(30, 7);
 
     public static readonly WorldPosition DefaultSpawnWorldPosition = GridToWorld(DefaultSpawnPosition);
@@ -80,7 +84,6 @@ public static class MagesTowerSceneConfig
     [
         new(PropRegistry.TowerWall.FileName, 5, 4, true),
         new(PropRegistry.TowerDoor.FileName, 17, 13, false),
-        new(PropRegistry.PortalInactive.FileName, 30, 10, false),
         new(PropRegistry.Bookshelf.FileName, 24, 6, true),
         new(PropRegistry.Bookshelf.FileName, 35, 6, true),
         new(PropRegistry.Bookshelf.FileName, 24, 18, true),
@@ -93,6 +96,7 @@ public static class MagesTowerSceneConfig
         new(TransitionType.DoorToInterior, SceneResPath, "interior_door", ExteriorDoorTransitionPosition),
         new(TransitionType.DoorToExterior, SceneResPath, "exterior_door", InteriorDoorTransitionPosition),
         new(TransitionType.ExitToCity, MainMenuConfig.CityScenePath, "tower_exit", CityExitTransitionPosition),
+        new(TransitionType.PortalToChamber, MainMenuConfig.PortalChamberScenePath, PortalChamberSceneConfig.TowerEntranceSpawnPointId, PortalTransitionPosition),
     ];
 
     /// <summary>Converts grid coordinates to world-space pixels for the shared isometric TileSet.</summary>

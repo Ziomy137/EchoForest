@@ -4,9 +4,9 @@ using Godot;
 
 namespace EchoForest.Core;
 
-/// <summary>Godot root that composes the Tower approach, interior and local Mage anchor.</summary>
+/// <summary>Godot root that composes the Portal Chamber arena and its return portal.</summary>
 [ExcludeFromCodeCoverage(Justification = "Godot Node2D wrapper - requires scene tree")]
-public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
+public partial class PortalChamberAreaNode : Node2D, IAreaSceneContext
 {
     public IEventBus EventBus { get; private set; } = null!;
     public IInputHandler InputHandler { get; private set; } = null!;
@@ -32,10 +32,8 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
         ConfigureMarkers();
         PopulateTiles();
         SetupBoundaries();
-        AddNonWalkableTileColliders();
         SpawnProps();
-        SpawnActivePortal();
-        CreateMageAnchor();
+        SpawnPortals();
         SpawnPlayer();
         SetupCamera();
         ConfigureTransitions();
@@ -68,56 +66,35 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
 
     private void ConfigureMarkers()
     {
-        GetNode<Marker2D>(MagesTowerSceneConfig.PlayerSpawnName).Position = ToVector(MagesTowerSceneConfig.DefaultSpawnWorldPosition);
-        GetNode<Marker2D>("CityEntranceSpawnPoint").Position = ToVector(MagesTowerSceneConfig.CityEntranceWorldPosition);
-        GetNode<Marker2D>("ExteriorDoorSpawnPoint").Position = ToVector(MagesTowerSceneConfig.ExteriorDoorSpawnWorldPosition);
-        GetNode<Marker2D>("InteriorDoorSpawnPoint").Position = ToVector(MagesTowerSceneConfig.InteriorEntryWorldPosition);
-        GetNode<Marker2D>("CityExitSpawnPoint").Position = ToVector(MagesTowerSceneConfig.CityExitSpawnWorldPosition);
-        GetNode<Marker2D>("PortalExitSpawnPoint").Position = ToVector(MagesTowerSceneConfig.GridToWorld(MagesTowerSceneConfig.PortalExitSpawnPosition));
+        GetNode<Marker2D>(PortalChamberSceneConfig.PlayerSpawnName).Position = ToVector(PortalChamberSceneConfig.GridToWorld(PortalChamberSceneConfig.TowerEntranceSpawnPosition));
+        GetNode<Marker2D>("TowerEntranceSpawnPoint").Position = ToVector(PortalChamberSceneConfig.GridToWorld(PortalChamberSceneConfig.TowerEntranceSpawnPosition));
     }
 
     private void PopulateTiles()
     {
-        var tileMap = GetNode<TileMapLayer>(MagesTowerSceneConfig.TileMapLayerName);
-        for (var row = 0; row < MagesTowerSceneConfig.GridRows; row++)
+        var tileMap = GetNode<TileMapLayer>(PortalChamberSceneConfig.TileMapLayerName);
+        for (var row = 0; row < PortalChamberSceneConfig.GridRows; row++)
         {
-            for (var col = 0; col < MagesTowerSceneConfig.GridColumns; col++)
+            for (var col = 0; col < PortalChamberSceneConfig.GridColumns; col++)
             {
-                var tileFileName = MagesTowerSceneConfig.GetTileFileName(col, row);
-                tileMap.SetCell(new Vector2I(col, row), MagesTowerSceneConfig.GetSourceId(tileFileName), Vector2I.Zero);
-            }
-        }
-    }
-
-    private void AddNonWalkableTileColliders()
-    {
-        var tileMap = GetNode<TileMapLayer>(MagesTowerSceneConfig.TileMapLayerName);
-        for (var row = 0; row < MagesTowerSceneConfig.GridRows; row++)
-        {
-            for (var col = 0; col < MagesTowerSceneConfig.GridColumns; col++)
-            {
-                var tileFileName = MagesTowerSceneConfig.GetTileFileName(col, row);
-                if (TileRegistry.GetByFileName(tileFileName)?.IsWalkable != false)
-                    continue;
-
-                var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(col, row)));
-                AddCollider(worldPosition, TileRegistry.TileWidth * 0.75f, TileRegistry.TileHeight * 0.75f);
+                var fileName = PortalChamberSceneConfig.GetTileFileName(col, row);
+                tileMap.SetCell(new Vector2I(col, row), PortalChamberSceneConfig.GetSourceId(fileName), Vector2I.Zero);
             }
         }
     }
 
     private void SetupBoundaries()
     {
-        var boundary = GetNode<StaticBody2D>(MagesTowerSceneConfig.BoundaryNodeName);
-        var width = MagesTowerSceneConfig.WorldBoundaryRight - MagesTowerSceneConfig.WorldBoundaryLeft;
-        var height = MagesTowerSceneConfig.WorldBoundaryBottom - MagesTowerSceneConfig.WorldBoundaryTop;
-        AddWallSegment(boundary, new Vector2(320f, MagesTowerSceneConfig.WorldBoundaryTop - 32f), width + 128f, 64f);
-        AddWallSegment(boundary, new Vector2(320f, MagesTowerSceneConfig.WorldBoundaryBottom + 32f), width + 128f, 64f);
-        AddWallSegment(boundary, new Vector2(MagesTowerSceneConfig.WorldBoundaryLeft - 32f, 560f), 64f, height + 128f);
-        AddWallSegment(boundary, new Vector2(MagesTowerSceneConfig.WorldBoundaryRight + 32f, 560f), 64f, height + 128f);
+        var boundary = GetNode<StaticBody2D>(PortalChamberSceneConfig.BoundaryNodeName);
+        var width = PortalChamberSceneConfig.WorldBoundaryRight - PortalChamberSceneConfig.WorldBoundaryLeft;
+        var height = PortalChamberSceneConfig.WorldBoundaryBottom - PortalChamberSceneConfig.WorldBoundaryTop;
+        AddBoundarySegment(boundary, new Vector2(0f, PortalChamberSceneConfig.WorldBoundaryTop - 32f), width + 128f, 64f);
+        AddBoundarySegment(boundary, new Vector2(0f, PortalChamberSceneConfig.WorldBoundaryBottom + 32f), width + 128f, 64f);
+        AddBoundarySegment(boundary, new Vector2(PortalChamberSceneConfig.WorldBoundaryLeft - 32f, 496f), 64f, height + 128f);
+        AddBoundarySegment(boundary, new Vector2(PortalChamberSceneConfig.WorldBoundaryRight + 32f, 496f), 64f, height + 128f);
     }
 
-    private static void AddWallSegment(StaticBody2D parent, Vector2 center, float width, float height)
+    private static void AddBoundarySegment(StaticBody2D parent, Vector2 center, float width, float height)
     {
         parent.AddChild(new CollisionShape2D
         {
@@ -128,8 +105,8 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
 
     private void SpawnProps()
     {
-        var tileMap = GetNode<TileMapLayer>(MagesTowerSceneConfig.TileMapLayerName);
-        foreach (var placement in MagesTowerSceneConfig.Props)
+        var tileMap = GetNode<TileMapLayer>(PortalChamberSceneConfig.TileMapLayerName);
+        foreach (var placement in PortalChamberSceneConfig.Props)
         {
             var config = PropRegistry.GetByFileName(placement.FileName);
             if (config is null)
@@ -146,28 +123,30 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
             AddChild(sorter);
 
             if (placement.IsBlocking)
-                AddCollider(worldPosition, config.Width * 0.38f, config.Height * 0.14f);
+                AddPropCollider(worldPosition, config.Width * 0.38f, config.Height * 0.14f);
         }
     }
 
-    private void SpawnActivePortal()
+    private void SpawnPortals()
     {
-        var tileMap = GetNode<TileMapLayer>(MagesTowerSceneConfig.TileMapLayerName);
-        var gridPosition = MagesTowerSceneConfig.PortalTransitionPosition;
-        var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(gridPosition.Col, gridPosition.Row)));
-        var sorter = new IsometricYSorterNode { GlobalPosition = worldPosition };
-        sorter.AddChild(new AnimatedSprite2D
+        var tileMap = GetNode<TileMapLayer>(PortalChamberSceneConfig.TileMapLayerName);
+        foreach (var position in PortalChamberSceneConfig.AnimatedPortalPositions)
         {
-            SpriteFrames = GD.Load<SpriteFrames>(PortalChamberSceneConfig.PortalFramesResPath),
-            Animation = "portal",
-            Centered = true,
-            Position = new Vector2(0f, -48f),
-        });
-        AddChild(sorter);
-        sorter.GetChild<AnimatedSprite2D>(0).Play("portal");
+            var worldPosition = tileMap.ToGlobal(tileMap.MapToLocal(new Vector2I(position.Col, position.Row)));
+            var sorter = new IsometricYSorterNode { GlobalPosition = worldPosition };
+            sorter.AddChild(new AnimatedSprite2D
+            {
+                SpriteFrames = GD.Load<SpriteFrames>(PortalChamberSceneConfig.PortalFramesResPath),
+                Animation = "portal",
+                Centered = true,
+                Position = new Vector2(0f, -48f),
+            });
+            AddChild(sorter);
+            sorter.GetChild<AnimatedSprite2D>(0).Play("portal");
+        }
     }
 
-    private void AddCollider(Vector2 worldPosition, float width, float height)
+    private void AddPropCollider(Vector2 worldPosition, float width, float height)
     {
         var body = new StaticBody2D
         {
@@ -179,12 +158,6 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
         AddChild(body);
     }
 
-    private void CreateMageAnchor()
-    {
-        var anchor = GetNode<Marker2D>("MageAnchor");
-        anchor.Position = ToVector(MagesTowerSceneConfig.GridToWorld(MagesTowerSceneConfig.MageAnchor));
-    }
-
     private void SpawnPlayer()
     {
         var player = GetNode<Node2D>("Player");
@@ -194,7 +167,7 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
         else if (GameSession.HasPlayerPosition)
             player.GlobalPosition = new Vector2(GameSession.LastPlayerX, GameSession.LastPlayerY);
         else
-            player.GlobalPosition = GetNode<Marker2D>(MagesTowerSceneConfig.PlayerSpawnName).GlobalPosition;
+            player.GlobalPosition = GetNode<Marker2D>(PortalChamberSceneConfig.PlayerSpawnName).GlobalPosition;
     }
 
     private bool TryGetSpawnPoint(string spawnPointId, out SpawnPointNode spawnPoint)
@@ -214,23 +187,23 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
 
     private void SetupCamera()
     {
-        var camera = GetNode<IsometricCameraNode>(MagesTowerSceneConfig.CameraNodeName);
+        var camera = GetNode<IsometricCameraNode>(PortalChamberSceneConfig.CameraNodeName);
         camera.FollowTarget = GetNode<Node2D>("Player");
         camera.SetBounds(new Rect2(
-            MagesTowerSceneConfig.WorldBoundaryLeft,
-            MagesTowerSceneConfig.WorldBoundaryTop,
-            MagesTowerSceneConfig.WorldBoundaryRight - MagesTowerSceneConfig.WorldBoundaryLeft,
-            MagesTowerSceneConfig.WorldBoundaryBottom - MagesTowerSceneConfig.WorldBoundaryTop));
+            PortalChamberSceneConfig.WorldBoundaryLeft,
+            PortalChamberSceneConfig.WorldBoundaryTop,
+            PortalChamberSceneConfig.WorldBoundaryRight - PortalChamberSceneConfig.WorldBoundaryLeft,
+            PortalChamberSceneConfig.WorldBoundaryBottom - PortalChamberSceneConfig.WorldBoundaryTop));
         camera.SnapToPixels = true;
         camera.SnapToTarget();
     }
 
     private void ConfigureTransitions()
     {
-        foreach (var endpoint in MagesTowerSceneConfig.Transitions)
+        foreach (var endpoint in PortalChamberSceneConfig.Transitions)
         {
             var transition = GetNode<AreaTransitionNode>($"Transitions/{endpoint.Type}");
-            transition.Position = ToVector(MagesTowerSceneConfig.GridToWorld(endpoint.Position));
+            transition.Position = ToVector(PortalChamberSceneConfig.GridToWorld(endpoint.Position));
             transition.Configure(
                 endpoint.TargetArea,
                 endpoint.SpawnPointId,
@@ -279,5 +252,5 @@ public partial class MagesTowerAreaNode : Node2D, IAreaSceneContext
         _hud.SetQuestObjective(quest.Title, objectives[0].Text, quest.Objectives.Count - objectives.Count, quest.Objectives.Count);
     }
 
-    private static Vector2 ToVector(MagesTowerSceneConfig.WorldPosition position) => new(position.X, position.Y);
+    private static Vector2 ToVector(PortalChamberSceneConfig.WorldPosition position) => new(position.X, position.Y);
 }
