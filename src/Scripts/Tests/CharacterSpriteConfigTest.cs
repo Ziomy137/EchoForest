@@ -634,8 +634,8 @@ public class PropRegistryTest
         Assert.That(PropRegistry.All.Length, Is.EqualTo(PropRegistry.ExpectedPropCount));
 
     [Test]
-    public void ExpectedPropCount_IsTwentyThree() =>
-        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(23));
+    public void ExpectedPropCount_IsTwentySix() =>
+        Assert.That(PropRegistry.ExpectedPropCount, Is.EqualTo(26));
 
     // ─── Individual props exist ───────────────────────────────────────────────
 
@@ -662,6 +662,9 @@ public class PropRegistryTest
     [Test] public void Bookshelf_IsRegistered() => Assert.That(PropRegistry.Bookshelf, Is.Not.Null);
     [Test] public void AlchemyTable_IsRegistered() => Assert.That(PropRegistry.AlchemyTable, Is.Not.Null);
     [Test] public void Fireplace_IsRegistered() => Assert.That(PropRegistry.Fireplace, Is.Not.Null);
+    [Test] public void MagicPillar_IsRegistered() => Assert.That(PropRegistry.MagicPillar, Is.Not.Null);
+    [Test] public void Chains_IsRegistered() => Assert.That(PropRegistry.Chains, Is.Not.Null);
+    [Test] public void ChildCage_IsRegistered() => Assert.That(PropRegistry.ChildCage, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -688,6 +691,9 @@ public class PropRegistryTest
     [TestCase("prop_bookshelf.png")]
     [TestCase("prop_alchemy_table.png")]
     [TestCase("prop_fireplace.png")]
+    [TestCase("prop_magic_pillar.png")]
+    [TestCase("prop_chains.png")]
+    [TestCase("prop_child_cage.png")]
     public void All_ContainsPropWithFileName(string fileName)
     {
         Assert.That(PropRegistry.All.Any(p => p.FileName == fileName), Is.True,

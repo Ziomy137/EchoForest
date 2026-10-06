@@ -533,24 +533,25 @@ These are prerequisites for all quest and story content.
 
 **Test Suite Breakdown:**
 
-| Test File                       | Tests | Sprint | Notes                                                                                                  |
-| ------------------------------- | ----- | ------ | ------------------------------------------------------------------------------------------------------ |
-| `PauseMenuControllerTest.cs`    | 12    | S6-02  | Pause menu controller coverage; CI fix.                                                                |
-| `InteractionDetectorTest.cs`    | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                                              |
-| `NpcControllerTest.cs`          | 4     | S6-03  | NPC interaction contract and validation coverage.                                                      |
-| `DialogueServiceTest.cs`        | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                                             |
-| `DialogueControllerTest.cs`     | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.                              |
-| `EventBusTest.cs`               | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                                         |
-| `QuestServiceTest.cs`           | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                                        |
-| `QuestDatabaseTest.cs`          | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                                         |
-| `QuestJournalControllerTest.cs` | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                                         |
-| `CutsceneSequencerTest.cs`      | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.                              |
-| `AreaTransitionServiceTest.cs`  | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage.            |
-| `FarmSceneConfigTest.cs`        | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                    |
-| `ForestPathSceneConfigTest.cs`  | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage. |
-| `CityArtPackTest.cs`            | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                |
-| `CitySceneConfigTest.cs`        | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.               |
-| `MagesTowerSceneConfigTest.cs`  | 10    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.              |
+| Test File                         | Tests | Sprint | Notes                                                                                                   |
+| --------------------------------- | ----- | ------ | ------------------------------------------------------------------------------------------------------- |
+| `PauseMenuControllerTest.cs`      | 12    | S6-02  | Pause menu controller coverage; CI fix.                                                                 |
+| `InteractionDetectorTest.cs`      | 9     | S6-03  | NPC range, nearest-target, HUD, and interaction coverage.                                               |
+| `NpcControllerTest.cs`            | 4     | S6-03  | NPC interaction contract and validation coverage.                                                       |
+| `DialogueServiceTest.cs`          | 7     | S6-04  | JSON dialogue loading, links, and malformed-data coverage.                                              |
+| `DialogueControllerTest.cs`       | 6     | S6-04  | Conversation lifecycle, named-line start, events, and auto-save coverage.                               |
+| `EventBusTest.cs`                 | 7     | S7-01  | Typed delivery, unsubscribe, clear, and safe handler mutation.                                          |
+| `QuestServiceTest.cs`             | 10    | S7-02  | Quest states, objective events, chaining, and save restoration.                                         |
+| `QuestDatabaseTest.cs`            | 2     | S7-02  | Loading multiple JSON quest definitions by ID.                                                          |
+| `QuestJournalControllerTest.cs`   | 5     | S7-03  | Event-driven quest sections, checkboxes, and cleanup coverage.                                          |
+| `CutsceneSequencerTest.cs`        | 10    | S7-04  | Sequencing, empty/async input block, lifecycle events, and step adapters.                               |
+| `AreaTransitionServiceTest.cs`    | 6     | S8-01  | Transition event, save order/snapshot, target scene, named spawn, and quest-state coverage.             |
+| `FarmSceneConfigTest.cs`          | 9     | S8-02  | Farm grid, terrain zones, source IDs, prop collisions, and asset metadata coverage.                     |
+| `ForestPathSceneConfigTest.cs`    | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage.  |
+| `CityArtPackTest.cs`              | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                 |
+| `CitySceneConfigTest.cs`          | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.                |
+| `MagesTowerSceneConfigTest`    | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
+| `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return. |
 
 ---
 
@@ -1306,22 +1307,22 @@ area transition chain is fully tested end-to-end.
 
 **Tasks:**
 
-- [ ] Create unique tile set for Portal Chamber (otherworldly aesthetic):
+- [x] Create unique tile set for Portal Chamber (otherworldly aesthetic):
   - `tile_void_floor.png` — dark purple/black cracked stone (`#2a1a4a`, `#1a1a1a`)
-  - `tile_rune_floor.png` — glowing rune inlay (`#2a1a4a`, `#9d4edd`)
-- [ ] Create props:
+  - `tile_rune_floor.png` — glowing rune inlay using approved palette colors (`#2a1a4a`, `#ffd700`, `#cccccc`)
+- [x] Create props:
   - `prop_portal_active.png` — swirling active portal (4-frame animated sprite)
   - `prop_magic_pillar.png` — ornate dark pillar
   - `prop_chains.png` — decorative hanging chains
   - `prop_child_cage.png` — cage where child is held (boss arena prop)
-- [ ] Build `Scene_PortalChamber.tscn` — 30×30 grid:
+- [x] Build `Scene_PortalChamber.tscn` — 30×30 grid:
   - Central raised platform with active portal
   - Surrounding ring of magic pillars
   - Child cage at far end (north)
   - Boss arena: open space for combat
   - Entrance portal (south — where player arrives)
-- [ ] Animate `prop_portal_active.png` (AnimatedSprite2D, 4 frames, loop)
-- [ ] PaletteValidator pass for all new assets
+- [x] Animate `prop_portal_active.png` (AnimatedSprite2D, 4 frames, loop)
+- [x] PaletteValidator pass for all new assets (`tools/generate_s1001_assets.py`)
 
 **Acceptance Criteria:**
 
@@ -1417,7 +1418,7 @@ area transition chain is fully tested end-to-end.
 
 | Story                        | Points | Owner                |
 | ---------------------------- | ------ | -------------------- |
-| S10-01 Portal Chamber        | 8      | Level Designer + Art |
+| S10-01 Portal Chamber ✅     | 8      | Level Designer + Art |
 | S10-02 World Navigation Test | 5      | Lead Dev             |
 | S10-03 Minimap System        | 5      | Developer            |
 | **Total**                    | **18** |                      |

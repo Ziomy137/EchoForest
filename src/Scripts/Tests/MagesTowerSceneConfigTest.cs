@@ -44,7 +44,6 @@ public class MagesTowerSceneConfigTest
         var propFileNames = MagesTowerSceneConfig.Props.Select(prop => prop.FileName).ToHashSet();
         Assert.That(propFileNames, Is.SupersetOf(new[]
         {
-            PropRegistry.PortalInactive.FileName,
             PropRegistry.Bookshelf.FileName,
             PropRegistry.AlchemyTable.FileName,
             PropRegistry.Fireplace.FileName,
@@ -59,7 +58,20 @@ public class MagesTowerSceneConfigTest
             MagesTowerSceneConfig.TransitionType.DoorToInterior,
             MagesTowerSceneConfig.TransitionType.DoorToExterior,
             MagesTowerSceneConfig.TransitionType.ExitToCity,
+            MagesTowerSceneConfig.TransitionType.PortalToChamber,
         }));
+    }
+
+    [Test]
+    public void PortalTransition_LeadsToChamberAndUsesSeparatedSpawnPoints()
+    {
+        var transition = MagesTowerSceneConfig.Transitions.Single(endpoint => endpoint.Type == MagesTowerSceneConfig.TransitionType.PortalToChamber);
+        Assert.Multiple(() =>
+        {
+            Assert.That(transition.TargetArea, Is.EqualTo(MainMenuConfig.PortalChamberScenePath));
+            Assert.That(transition.SpawnPointId, Is.EqualTo(PortalChamberSceneConfig.TowerEntranceSpawnPointId));
+            Assert.That(MagesTowerSceneConfig.PortalExitSpawnPosition, Is.Not.EqualTo(MagesTowerSceneConfig.PortalTransitionPosition));
+        });
     }
 
     [Test]
@@ -89,7 +101,7 @@ public class MagesTowerSceneConfigTest
             {
                 var tileFileName = MagesTowerSceneConfig.GetTileFileName(col, row);
                 Assert.That(registeredTileFiles.Contains(tileFileName), Is.True, $"Unknown tile at ({col}, {row})");
-                Assert.That(MagesTowerSceneConfig.GetSourceId(tileFileName), Is.InRange(0, 25));
+                Assert.That(MagesTowerSceneConfig.GetSourceId(tileFileName), Is.InRange(0, 27));
             }
         }
     }

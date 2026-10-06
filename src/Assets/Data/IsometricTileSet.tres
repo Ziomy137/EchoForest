@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_city_wall.png" id="tile_city_wall"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_city_roof.png" id="tile_city_roof"]
 [ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_stall_top.png" id="tile_stall_top"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_void_floor.png" id="tile_void_floor"]
+[ext_resource type="Texture2D" path="res://src/Assets/Sprites/Tiles/tile_rune_floor.png" id="tile_rune_floor"]
 
 [sub_resource type="TileSetAtlasSource" id="src_grass"]
 texture = ExtResource("tile_grass")
@@ -176,6 +178,18 @@ texture_region_size = Vector2i(64, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
 
+[sub_resource type="TileSetAtlasSource" id="src_void_floor"]
+texture = ExtResource("tile_void_floor")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSetAtlasSource" id="src_rune_floor"]
+texture = ExtResource("tile_rune_floor")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
 [resource]
 tile_shape = 1
 tile_layout = 5
@@ -209,3 +223,5 @@ sources/22 = SubResource("src_city_stone")
 sources/23 = SubResource("src_city_wall")
 sources/24 = SubResource("src_city_roof")
 sources/25 = SubResource("src_stall_top")
+sources/26 = SubResource("src_void_floor")
+sources/27 = SubResource("src_rune_floor")

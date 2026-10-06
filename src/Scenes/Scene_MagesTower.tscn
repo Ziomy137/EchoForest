@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" uid="uid://dhcv1mjnex341" path="res://src/Scripts/Core/MagesTowerAreaNode.cs" id="1_tower"]
 [ext_resource type="TileSet" uid="uid://casdwwy7lo7q" path="res://src/Assets/Data/IsometricTileSet.tres" id="2_tileset"]
@@ -16,6 +16,9 @@ size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_city_exit"]
 size = Vector2(128, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
+size = Vector2(64, 64)
 
 [node name="Scene_MagesTower" type="Node2D"]
 y_sort_enabled = true
@@ -46,6 +49,10 @@ SpawnPointId = "interior_door"
 [node name="CityExitSpawnPoint" type="Marker2D" parent="."]
 script = ExtResource("6_spawn")
 SpawnPointId = "city_exit"
+
+[node name="PortalExitSpawnPoint" type="Marker2D" parent="."]
+script = ExtResource("6_spawn")
+SpawnPointId = "portal_exit"
 
 [node name="MageAnchor" type="Marker2D" parent="."]
 
@@ -87,3 +94,12 @@ script = ExtResource("7_transition")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToCity"]
 shape = SubResource("RectangleShape2D_city_exit")
+
+[node name="PortalToChamber" type="Area2D" parent="Transitions"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("7_transition")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/PortalToChamber"]
+shape = SubResource("RectangleShape2D_portal")

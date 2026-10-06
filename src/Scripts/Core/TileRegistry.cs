@@ -21,7 +21,7 @@ public static class TileRegistry
     public const int TileHeight = 32;
 
     /// <summary>Total number of registered tile sprites.</summary>
-    public const int ExpectedTileCount = 26;
+    public const int ExpectedTileCount = 28;
 
     // ─── Tile definitions ─────────────────────────────────────────────────────
 
@@ -129,6 +129,14 @@ public static class TileRegistry
         "Market Stall Top", "tile_stall_top.png", TileWidth, TileHeight, true,
         new[] { "8b7355", "ffd700" });
 
+    public static readonly TileConfig VoidFloor = new(
+        "Void Floor", "tile_void_floor.png", TileWidth, TileHeight, true,
+        new[] { "2a1a4a", "1a1a1a", "3d3d3d" });
+
+    public static readonly TileConfig RuneFloor = new(
+        "Rune Floor", "tile_rune_floor.png", TileWidth, TileHeight, true,
+        new[] { "2a1a4a", "1a1a1a", "ffd700", "cccccc" });
+
     // ─── Collection access ────────────────────────────────────────────────────
 
     private static readonly TileConfig[] _all =
@@ -139,6 +147,7 @@ public static class TileRegistry
         CropYoung, CropMature, SoilDry, Irrigation, Hay,
         ForestFloor, ForestShadow, Mud, RockSmall,
         Cobblestone, CobblestoneVariation, CityStone, CityWall, CityRoof, StallTop,
+        VoidFloor, RuneFloor,
     };
 
     /// <summary>

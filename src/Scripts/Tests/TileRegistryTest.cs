@@ -98,8 +98,8 @@ public class TileRegistryTest
         Assert.That(TileRegistry.All.Length, Is.EqualTo(TileRegistry.ExpectedTileCount));
 
     [Test]
-    public void ExpectedTileCount_IsTwentySix() =>
-        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(26));
+    public void ExpectedTileCount_IsTwentyEight() =>
+        Assert.That(TileRegistry.ExpectedTileCount, Is.EqualTo(28));
 
     // ─── Dimensions ───────────────────────────────────────────────────────────
 
@@ -182,6 +182,8 @@ public class TileRegistryTest
     [Test] public void CityWall_IsRegistered() => Assert.That(TileRegistry.CityWall, Is.Not.Null);
     [Test] public void CityRoof_IsRegistered() => Assert.That(TileRegistry.CityRoof, Is.Not.Null);
     [Test] public void StallTop_IsRegistered() => Assert.That(TileRegistry.StallTop, Is.Not.Null);
+    [Test] public void VoidFloor_IsRegistered() => Assert.That(TileRegistry.VoidFloor, Is.Not.Null);
+    [Test] public void RuneFloor_IsRegistered() => Assert.That(TileRegistry.RuneFloor, Is.Not.Null);
 
     // ─── File names match spec ────────────────────────────────────────────────
 
@@ -211,6 +213,8 @@ public class TileRegistryTest
     [TestCase("tile_city_wall.png")]
     [TestCase("tile_city_roof.png")]
     [TestCase("tile_stall_top.png")]
+    [TestCase("tile_void_floor.png")]
+    [TestCase("tile_rune_floor.png")]
     public void All_ContainsTileWithFileName(string fileName)
     {
         Assert.That(TileRegistry.All.Any(t => t.FileName == fileName), Is.True,
@@ -298,11 +302,17 @@ public class TileRegistryTest
     public void StallTop_IsWalkable() => Assert.That(TileRegistry.StallTop.IsWalkable, Is.True);
 
     [Test]
+    public void VoidFloor_IsWalkable() => Assert.That(TileRegistry.VoidFloor.IsWalkable, Is.True);
+
+    [Test]
+    public void RuneFloor_IsWalkable() => Assert.That(TileRegistry.RuneFloor.IsWalkable, Is.True);
+
+    [Test]
     public void Walkable_ReturnsOnlyWalkableTiles()
     {
         var walkable = TileRegistry.Walkable;
         Assert.That(walkable.All(t => t.IsWalkable), Is.True);
-        Assert.That(walkable.Length, Is.EqualTo(19));
+        Assert.That(walkable.Length, Is.EqualTo(21));
     }
 
     [Test]
