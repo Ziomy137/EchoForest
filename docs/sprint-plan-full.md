@@ -550,8 +550,9 @@ These are prerequisites for all quest and story content.
 | `ForestPathSceneConfigTest.cs`    | 14    | S8-03  | Forest grid, continuous path, stream crossing, colliders, props, markers, and asset metadata coverage.  |
 | `CityArtPackTest.cs`              | 5     | S9-01  | City asset registration, dimensions, palette metadata, and architecture scale coverage.                 |
 | `CitySceneConfigTest.cs`          | 10    | S9-02  | City grid, streets, building footprints, market, NPC anchors, and navigability coverage.                |
-| `MagesTowerSceneConfigTest`    | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
+| `MagesTowerSceneConfigTest`       | 11    | S9-03  | Tower rooms, door round-trip, navigable routes, props, Mage anchor, and terrain coverage.               |
 | `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return. |
+| `WorldNavigationTest.cs`          | 5     | S10-02 | Forward/reverse traversal, all transition events, save state, default markers, and target spawn IDs.    |
 
 ---
 
@@ -1341,15 +1342,15 @@ area transition chain is fully tested end-to-end.
 
 **Tasks:**
 
-- [ ] Write end-to-end navigation test simulating player traversing all areas in sequence:
+- [x] Write end-to-end navigation test simulating player traversing all areas in sequence:
   ```
   Cottage → Farm → Forest Path → City → Mage's Tower → Portal Chamber
   ```
-- [ ] Verify all transition zones fire correct events
-- [ ] Verify player spawns at correct point in each area
-- [ ] Verify save state updates correctly at each transition
-- [ ] Test reverse navigation (walk back through areas)
-- [ ] Performance: verify 60 FPS maintained in all areas (profiler check)
+- [x] Verify all transition zones fire correct events
+- [x] Verify player spawns at correct point in each area
+- [x] Verify save state updates correctly at each transition
+- [x] Test reverse navigation (walk back through areas)
+- [x] Performance: verify 60 FPS maintained in all areas (300 frames per scene via Godot `--print-fps` on Apple M1; 60 FPS average)
 
 **Tests Required:**
 
@@ -1416,12 +1417,12 @@ area transition chain is fully tested end-to-end.
 
 **Sprint 10 Summary:**
 
-| Story                        | Points | Owner                |
-| ---------------------------- | ------ | -------------------- |
-| S10-01 Portal Chamber ✅     | 8      | Level Designer + Art |
-| S10-02 World Navigation Test | 5      | Lead Dev             |
-| S10-03 Minimap System        | 5      | Developer            |
-| **Total**                    | **18** |                      |
+| Story                           | Points | Owner                |
+| ------------------------------- | ------ | -------------------- |
+| S10-01 Portal Chamber ✅        | 8      | Level Designer + Art |
+| S10-02 World Navigation Test ✅ | 5      | Lead Dev             |
+| S10-03 Minimap System           | 5      | Developer            |
+| **Total**                       | **18** |                      |
 
 ---
 

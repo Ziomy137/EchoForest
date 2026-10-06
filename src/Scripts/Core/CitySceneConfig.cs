@@ -18,6 +18,12 @@ public static class CitySceneConfig
     public const string PlayerSpawnName = "PlayerSpawnPoint";
     public const string MarketDistrictNodeName = "MarketDistrict";
 
+    public static readonly AreaTransitionDefinition[] Transitions =
+    [
+        new("ToForestPathTransition", MainMenuConfig.ForestPathScenePath, "north_entrance"),
+        new("ToMagesTowerTransition", MainMenuConfig.MagesTowerScenePath, "city_entrance"),
+    ];
+
     public const int SourceIdWater = 5;
     public const int SourceIdCobblestone = 20;
     public const int SourceIdCobblestoneVariation = 21;

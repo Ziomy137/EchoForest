@@ -14,6 +14,12 @@ public static class FarmSceneConfig
     public const string CameraNodeName = "Camera";
     public const string PlayerSpawnName = "PlayerSpawnPoint";
 
+    public static readonly AreaTransitionDefinition[] Transitions =
+    [
+        new("ToCottageTransition", CottageSceneConfig.SceneResPath, "farm_entrance"),
+        new("ToForestPathTransition", MainMenuConfig.ForestPathScenePath, "south_entrance"),
+    ];
+
     public const int SourceIdGrass = 0;
     public const int SourceIdDirt = 2;
     public const int SourceIdCropYoung = 11;
