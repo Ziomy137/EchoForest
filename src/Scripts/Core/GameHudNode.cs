@@ -8,9 +8,8 @@ namespace EchoForest.Core;
 ///
 /// Reads state from <see cref="GameHudController"/> during the initial
 /// <see cref="_Ready"/> refresh and when explicit update methods are called,
-/// then updates scene-tree child nodes: health bar, health label, quest
-/// objective panel, interaction prompt, active weapon slot, and minimap
-/// placeholder.
+/// then updates scene-tree child nodes: health bar, quest panel, interaction
+/// prompt, active weapon slot, and area minimap.
 ///
 /// All HUD logic lives in the pure-C# <see cref="GameHudController"/> so it
 /// can be unit-tested independently of the Godot runtime.
@@ -25,6 +24,8 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     private Tween? _damageFlashTween;
     private Tween? _questPanelTween;
     private float _lastKnownHealth;
+    private MinimapController _minimap = null!;
+    private string _lastRenderedMinimapArea = string.Empty;
 
     // Cached node references resolved once in _Ready.
     private ProgressBar _healthBar = null!;
@@ -35,6 +36,10 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     private Label _questProgressLabel = null!;
     private Label _interactionPromptLabel = null!;
     private Label _weaponLabel = null!;
+    private Control _minimapContainer = null!;
+    private TextureRect _minimapTexture = null!;
+    private Label _minimapAreaLabel = null!;
+    private ColorRect _minimapPlayerDot = null!;
 
     public float HealthFillRatio => _ctrl.HealthFillRatio;
     public float CurrentHealth => _ctrl.CurrentHealth;
@@ -48,9 +53,11 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
 
     public override void _Ready()
     {
-        _eventBus = (GetTree().CurrentScene as IAreaSceneContext)?.EventBus ?? new EventBus();
+        var currentScene = GetTree().CurrentScene;
+        _eventBus = (currentScene as IAreaSceneContext)?.EventBus ?? new EventBus();
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _ctrl = new GameHudController(_eventBus);
+        _minimap = new MinimapController(_eventBus, currentScene?.SceneFilePath ?? string.Empty);
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
         _questPanel = GetNode<PanelContainer>("TopLeft/QuestPanel");
@@ -60,9 +67,40 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _questProgressLabel = GetNode<Label>("TopLeft/QuestPanel/QuestVBox/QuestProgressLabel");
         _interactionPromptLabel = GetNode<Label>("BottomCenter/InteractionPromptLabel");
         _weaponLabel = GetNode<Label>("TopRight/WeaponLabel");
+        _minimapContainer = GetNode<Control>("MinimapContainer");
+        _minimapTexture = GetNode<TextureRect>("MinimapContainer/MinimapPanel/MinimapTexture");
+        _minimapAreaLabel = GetNode<Label>("MinimapContainer/AreaNameLabel");
+        _minimapPlayerDot = GetNode<ColorRect>("MinimapContainer/MinimapPanel/PlayerDot");
 
         RefreshHud();
+        RefreshMinimapArea();
         _lastKnownHealth = _ctrl.CurrentHealth;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_minimap is null)
+            return;
+
+        var player = GetTree().CurrentScene?.GetNodeOrNull<Node2D>("Player");
+        if (player is not null)
+        {
+            _minimap.UpdatePlayerPosition(player.GlobalPosition.X, player.GlobalPosition.Y);
+            _ctrl.UpdateMinimap(player.GlobalPosition.X, player.GlobalPosition.Y, _minimap.CurrentAreaId);
+            RefreshMinimapPlayerDot();
+        }
+
+        RefreshMinimapArea();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (_minimap is null || !@event.IsActionPressed(InputActionNames.ToggleMinimap))
+            return;
+
+        _minimap.ToggleVisibility();
+        _minimapContainer.Visible = _minimap.IsVisible;
+        GetViewport().SetInputAsHandled();
     }
 
     // ── Public API — called by other Godot nodes ──────────────────────────────
@@ -80,6 +118,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     {
         _eventBus?.Unsubscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _questPanelTween?.Kill();
+        _minimap?.Dispose();
     }
 
     /// <summary>Updates the active weapon slot label.</summary>
@@ -115,7 +154,6 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     public void UpdateMinimap(float playerX, float playerY, string? areaId)
     {
         _ctrl.UpdateMinimap(playerX, playerY, areaId);
-        // Minimap rendering is placeholder — future sprint will add minimap nodes.
     }
 
     // ── Private refresh helpers ───────────────────────────────────────────────
@@ -180,6 +218,27 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _weaponLabel.Text = string.IsNullOrEmpty(_ctrl.ActiveWeaponId)
             ? "—"
             : _ctrl.ActiveWeaponId;
+    }
+
+    private void RefreshMinimapArea()
+    {
+        if (_lastRenderedMinimapArea == _minimap.CurrentAreaId)
+            return;
+
+        _lastRenderedMinimapArea = _minimap.CurrentAreaId;
+        _minimapAreaLabel.Text = _minimap.CurrentAreaName;
+        _minimapTexture.Texture = GD.Load<Texture2D>(_minimap.CurrentMapTexturePath);
+        RefreshMinimapPlayerDot();
+    }
+
+    private void RefreshMinimapPlayerDot()
+    {
+        var point = _minimap.PlayerDotPosition;
+        var mapSize = _minimapTexture.Size;
+        const float dotSize = 5f;
+        _minimapPlayerDot.Position = new Vector2(
+            4f + point.X / (MinimapController.MapWidth - 1f) * mapSize.X - dotSize / 2f,
+            4f + point.Y / (MinimapController.MapHeight - 1f) * mapSize.Y - dotSize / 2f);
     }
 
     // Pause input is handled by CottageAreaNode (root Node2D) — CanvasLayer
