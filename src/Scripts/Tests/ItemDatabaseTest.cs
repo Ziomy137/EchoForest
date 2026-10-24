@@ -197,7 +197,7 @@ public class ItemDatabaseTest
     [TestCase("-1")]
     public void InvalidMaxStackSize_ThrowsItemLoadException(string maxStackSize)
     {
-        var catalog = SampleCatalog.Replace("\"max_stack_size\": 1", $"\"max_stack_size\": {maxStackSize}");
+        var catalog = SampleCatalog.Replace("\"max_stack_size\": 1,", $"\"max_stack_size\": {maxStackSize},");
 
         Assert.Throws<ItemLoadException>(() => CreateDatabase(catalog).GetAllItems());
     }
