@@ -15,6 +15,7 @@ public sealed class ItemDefinition
     public string Description { get; set; } = string.Empty;
 
     [JsonPropertyName("item_type")]
+    [JsonRequired]
     public ItemType ItemType { get; set; }
 
     [JsonPropertyName("max_stack_size")]
