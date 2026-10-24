@@ -5,7 +5,7 @@
     "description": "A simple sword for close combat.",
     "item_type": "Weapon",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_sword_basic.png"
   },
   {
     "id": "item_bow_basic",
@@ -13,15 +13,15 @@
     "description": "A simple bow for ranged combat.",
     "item_type": "Weapon",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_bow_basic.png"
   },
   {
     "id": "item_shield_basic",
     "display_name": "Basic Shield",
     "description": "A sturdy wooden shield.",
-    "item_type": "Armor",
+    "item_type": "Weapon",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_shield_basic.png"
   },
   {
     "id": "item_tunic_peasant",
@@ -29,7 +29,7 @@
     "description": "A comfortable everyday tunic.",
     "item_type": "Armor",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_tunic_peasant.png"
   },
   {
     "id": "item_tunic_leather",
@@ -37,7 +37,7 @@
     "description": "A reinforced leather tunic.",
     "item_type": "Armor",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_tunic_leather.png"
   },
   {
     "id": "item_tincture_small",
@@ -45,7 +45,7 @@
     "description": "Restores 25 health.",
     "item_type": "Consumable",
     "max_stack_size": 10,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_tincture_small.png"
   },
   {
     "id": "item_tincture_large",
@@ -53,7 +53,7 @@
     "description": "Restores 75 health.",
     "item_type": "Consumable",
     "max_stack_size": 10,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_tincture_large.png"
   },
   {
     "id": "item_portal_key",
@@ -61,6 +61,6 @@
     "description": "A key connected to the portal chamber.",
     "item_type": "Artifact",
     "max_stack_size": 1,
-    "icon_texture_path": ""
+    "icon_texture_path": "res://src/Assets/Sprites/Items/item_portal_key.png"
   }
 ]

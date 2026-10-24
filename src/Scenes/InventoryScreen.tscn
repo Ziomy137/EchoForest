@@ -1,0 +1,168 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" uid="uid://d0d5qeipjc86a" path="res://src/Scripts/Core/InventoryScreenNode.cs" id="1_inventory"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory_panel"]
+bg_color = Color(0.063, 0.043, 0.024, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.68, 0.53, 0.19, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 18.0
+content_margin_right = 18.0
+content_margin_top = 14.0
+content_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory_section"]
+bg_color = Color(0.1, 0.075, 0.04, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.33, 0.2, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[node name="InventoryScreen" type="CanvasLayer"]
+layer = 100
+process_mode = 3
+script = ExtResource("1_inventory")
+
+[node name="Overlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.68)
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(920, 540)
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory_panel")
+
+[node name="Layout" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Center/Panel/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "INVENTORY"
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="CloseButton" type="Button" parent="Center/Panel/Layout/Header"]
+custom_minimum_size = Vector2(96, 34)
+layout_mode = 2
+text = "Close  [I]"
+
+[node name="Content" type="HBoxContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+
+[node name="SlotsPanel" type="PanelContainer" parent="Center/Panel/Layout/Content"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory_section")
+
+[node name="Slots" type="GridContainer" parent="Center/Panel/Layout/Content/SlotsPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="DetailsPanel" type="PanelContainer" parent="Center/Panel/Layout/Content"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory_section")
+
+[node name="Details" type="VBoxContainer" parent="Center/Panel/Layout/Content/DetailsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="SelectedIcon" type="TextureRect" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+texture_filter = 1
+
+[node name="SelectedName" type="Label" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+layout_mode = 2
+text = "Select an item"
+autowrap_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="SelectedType" type="Label" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.64, 0.42, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="SelectedQuantity" type="Label" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="SelectedDescription" type="Label" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Choose an occupied slot to see item details."
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="Actions" type="HBoxContainer" parent="Center/Panel/Layout/Content/DetailsPanel/Details"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UseButton" type="Button" parent="Center/Panel/Layout/Content/DetailsPanel/Details/Actions"]
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+visible = false
+text = "Use"
+
+[node name="EquipButton" type="Button" parent="Center/Panel/Layout/Content/DetailsPanel/Details/Actions"]
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+visible = false
+text = "Equip"
+
+[node name="Footer" type="HBoxContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+
+[node name="HintLabel" type="Label" parent="Center/Panel/Layout/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "I / Esc  Close"
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="SlotCountLabel" type="Label" parent="Center/Panel/Layout/Footer"]
+layout_mode = 2
+text = "0 / 20 slots"
+theme_override_colors/font_color = Color(0.878, 0.863, 0.824, 1)
+theme_override_font_sizes/font_size = 11

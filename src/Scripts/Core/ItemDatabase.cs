@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace EchoForest.Core;
 
 /// <summary>Pure-C# item definition catalog backed by one JSON file.</summary>
-public sealed class ItemDatabase
+public sealed class ItemDatabase : IItemDatabase
 {
     public const string DefaultFilePath = "res://src/Assets/Data/Items/items.json";
 

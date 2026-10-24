@@ -554,7 +554,8 @@ These are prerequisites for all quest and story content.
 | `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return.     |
 | `WorldNavigationTest.cs`          | 5     | S10-02 | Forward/reverse traversal, all transition events, save state, default markers, and target spawn IDs.        |
 | `MinimapControllerTest.cs`        | 7     | S10-03 | World-to-map transform, clamping, area event/map selection, asset presence, visibility toggle, and cleanup. |
-| `ItemDatabaseTest.cs`             | 25    | S11-01 | Item catalog loading, enum parsing, validation, duplicate IDs, and runtime item instances.                  |
+| `ItemDatabaseTest.cs`             | 27    | S11-01 | Item catalog loading, enum parsing, validation, duplicate IDs, icon assets, and runtime item instances.     |
+| `InventoryManagerTest.cs`         | 22    | S11-02 | Slot limits, stacking, atomic mutations, quantity validation, overflow protection, and change events.       |
 
 ---
 
@@ -1464,7 +1465,7 @@ on the character sprite. Tinctures (potions) restore health.
 
 **Tests Required:**
 
-Test coverage: `ItemDatabaseTest.cs` (25 cases).
+Test coverage: `ItemDatabaseTest.cs` (27 cases).
 
 ```csharp
 // ItemDatabaseTest.cs
@@ -1495,7 +1496,7 @@ Test coverage: `ItemDatabaseTest.cs` (25 cases).
 
 **Tasks:**
 
-- [ ] Create `InventoryManager.cs` implementing `IInventoryManager`:
+- [x] Create `InventoryManager.cs` implementing `IInventoryManager`:
   - `AddItem(string itemId, int quantity = 1) → bool` — returns false if full
   - `RemoveItem(string itemId, int quantity = 1) → bool`
   - `HasItem(string itemId, int minQuantity = 1) → bool`
@@ -1503,10 +1504,10 @@ Test coverage: `ItemDatabaseTest.cs` (25 cases).
   - `GetAllItems() → List<InventoryItem>`
   - `MaxSlots = 20` (configurable via Constants)
   - Publishes `ItemPickedUpEvent` on add, `ItemRemovedEvent` on remove
-- [ ] Create `InventoryScreen.tscn` — 4×5 grid of item slots; item icon + quantity overlay
-- [ ] Item tooltip on hover: name, description, type
-- [ ] "Use" button on consumables, "Equip" button on equippable items
-- [ ] Accessible via `inventory` input (pauses game)
+- [x] Create `InventoryScreen.tscn` — 4×5 grid of item slots; item icon + quantity overlay
+- [x] Item tooltip on hover: name, description, type
+- [x] "Use" button on consumables, "Equip" button on equippable items (published as typed requests for S11-03 handlers)
+- [x] Accessible via `inventory` input (pauses game)
 
 **Acceptance Criteria:**
 
@@ -1626,12 +1627,12 @@ Test coverage: `ItemDatabaseTest.cs` (25 cases).
 
 **Sprint 11 Summary:**
 
-| Story                      | Points | Owner     |
-| -------------------------- | ------ | --------- |
-| S11-01 Item Data System ✅ | 5      | Developer |
-| S11-02 Inventory Manager   | 5      | Developer |
-| S11-03 Equipment System    | 8      | Developer |
-| **Total**                  | **18** |           |
+| Story                       | Points | Owner     |
+| --------------------------- | ------ | --------- |
+| S11-01 Item Data System ✅  | 5      | Developer |
+| S11-02 Inventory Manager ✅ | 5      | Developer |
+| S11-03 Equipment System     | 8      | Developer |
+| **Total**                   | **18** |           |
 
 ---
 

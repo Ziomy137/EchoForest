@@ -24,6 +24,15 @@ public sealed record PlayerDiedEvent;
 /// <summary>Published after items are added to the inventory.</summary>
 public sealed record ItemPickedUpEvent(string ItemId, int Quantity);
 
+/// <summary>Published after items are removed from the inventory.</summary>
+public sealed record ItemRemovedEvent(string ItemId, int Quantity);
+
+/// <summary>Published when the player requests to use an inventory item.</summary>
+public sealed record ItemUseRequestedEvent(string ItemId);
+
+/// <summary>Published when the player requests to equip an inventory item.</summary>
+public sealed record ItemEquipRequestedEvent(string ItemId);
+
 /// <summary>Published when a named cutscene begins.</summary>
 public sealed record CutsceneStartedEvent(string CutsceneId);
 
