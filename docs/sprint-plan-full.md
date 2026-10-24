@@ -554,6 +554,7 @@ These are prerequisites for all quest and story content.
 | `PortalChamberSceneConfigTest.cs` | 9     | S10-01 | Chamber layout, portal positions, pillar/cage collision, route reachability, terrain, and Tower return.     |
 | `WorldNavigationTest.cs`          | 5     | S10-02 | Forward/reverse traversal, all transition events, save state, default markers, and target spawn IDs.        |
 | `MinimapControllerTest.cs`        | 7     | S10-03 | World-to-map transform, clamping, area event/map selection, asset presence, visibility toggle, and cleanup. |
+| `ItemDatabaseTest.cs`             | 25    | S11-01 | Item catalog loading, enum parsing, validation, duplicate IDs, and runtime item instances.                  |
 
 ---
 
@@ -1450,12 +1451,12 @@ on the character sprite. Tinctures (potions) restore health.
 
 **Tasks:**
 
-- [ ] Define `ItemDefinition.cs` (pure data, no Godot dependency):
+- [x] Define `ItemDefinition.cs` (pure data, no Godot dependency):
   - `Id` (string), `DisplayName`, `Description`, `ItemType` (enum), `MaxStackSize`, `IconTexturePath`
   - `ItemType` enum: `Weapon`, `Armor`, `Consumable`, `Artifact`, `Key`
-- [ ] Create `ItemDatabase.cs` — loads all item definitions from `res://Assets/Data/Items/items.json`
-- [ ] Create `InventoryItem.cs` — runtime instance: `ItemDefinition + Quantity`
-- [ ] Define initial item catalog (JSON):
+- [x] Create `ItemDatabase.cs` — loads all item definitions from `res://src/Assets/Data/Items/items.json`
+- [x] Create `InventoryItem.cs` — runtime instance: `ItemDefinition + Quantity`
+- [x] Define initial item catalog (JSON):
   - Weapons: `item_sword_basic`, `item_bow_basic`, `item_shield_basic`
   - Armor: `item_tunic_peasant`, `item_tunic_leather`
   - Consumables: `item_tincture_small` (restores 25 HP), `item_tincture_large` (restores 75 HP)
@@ -1463,15 +1464,23 @@ on the character sprite. Tinctures (potions) restore health.
 
 **Tests Required:**
 
+Test coverage: `ItemDatabaseTest.cs` (25 cases).
+
 ```csharp
 // ItemDatabaseTest.cs
 [Test] public void ItemDatabase_LoadsCorrectly_HasExpectedItems() {
-    var db = new ItemDatabase(new MockFileSystem(itemJson: SampleItemJson));
+    var fileSystem = new MockFileSystem(new Dictionary<string, string> {
+        [ItemDatabase.DefaultFilePath] = SampleItemCatalogJson
+    });
+    var db = new ItemDatabase(fileSystem);
     Assert.IsNotNull(db.GetItem("item_sword_basic"));
     Assert.IsNotNull(db.GetItem("item_tincture_small"));
 }
 [Test] public void Item_Sword_HasCorrectType() {
-    var db = new ItemDatabase(new MockFileSystem(itemJson: SampleItemJson));
+    var fileSystem = new MockFileSystem(new Dictionary<string, string> {
+        [ItemDatabase.DefaultFilePath] = SampleItemCatalogJson
+    });
+    var db = new ItemDatabase(fileSystem);
     Assert.AreEqual(ItemType.Weapon, db.GetItem("item_sword_basic").ItemType);
 }
 ```
@@ -1617,12 +1626,12 @@ on the character sprite. Tinctures (potions) restore health.
 
 **Sprint 11 Summary:**
 
-| Story                    | Points | Owner     |
-| ------------------------ | ------ | --------- |
-| S11-01 Item Data System  | 5      | Developer |
-| S11-02 Inventory Manager | 5      | Developer |
-| S11-03 Equipment System  | 8      | Developer |
-| **Total**                | **18** |           |
+| Story                      | Points | Owner     |
+| -------------------------- | ------ | --------- |
+| S11-01 Item Data System ✅ | 5      | Developer |
+| S11-02 Inventory Manager   | 5      | Developer |
+| S11-03 Equipment System    | 8      | Developer |
+| **Total**                  | **18** |           |
 
 ---
 
