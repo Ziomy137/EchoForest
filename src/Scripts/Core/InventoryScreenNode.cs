@@ -18,7 +18,7 @@ public partial class InventoryScreenNode : CanvasLayer
     private Label _selectedDescription = null!;
     private Button _useButton = null!;
     private Button _equipButton = null!;
-    private string? _selectedItemId;
+    private InventoryItem? _selectedItem;
 
     public event Action? Closed;
 
@@ -71,8 +71,8 @@ public partial class InventoryScreenNode : CanvasLayer
     {
         ClearChildren(_slotGrid);
         var items = _inventory.GetAllItems();
-        if (_selectedItemId is null || _inventory.GetItem(_selectedItemId) is null)
-            _selectedItemId = items.Count > 0 ? items[0].Definition.Id : null;
+        if (_selectedItem is null || !items.Contains(_selectedItem))
+            _selectedItem = items.Count > 0 ? items[0] : null;
 
         for (var index = 0; index < _inventory.MaxSlots; index++)
         {
@@ -127,7 +127,7 @@ public partial class InventoryScreenNode : CanvasLayer
         button.AddChild(quantity);
         button.Pressed += () =>
         {
-            _selectedItemId = item.Definition.Id;
+            _selectedItem = item;
             RefreshDetails();
         };
         return button;
@@ -142,7 +142,7 @@ public partial class InventoryScreenNode : CanvasLayer
 
     private void RefreshDetails()
     {
-        var item = _selectedItemId is null ? null : _inventory.GetItem(_selectedItemId);
+        var item = _selectedItem;
         if (item is null)
         {
             _selectedIcon.Texture = null;
@@ -166,14 +166,14 @@ public partial class InventoryScreenNode : CanvasLayer
 
     private void RequestUse()
     {
-        if (_selectedItemId is not null)
-            _eventBus.Publish(new ItemUseRequestedEvent(_selectedItemId));
+        if (_selectedItem is not null)
+            _eventBus.Publish(new ItemUseRequestedEvent(_selectedItem.Definition.Id));
     }
 
     private void RequestEquip()
     {
-        if (_selectedItemId is not null)
-            _eventBus.Publish(new ItemEquipRequestedEvent(_selectedItemId));
+        if (_selectedItem is not null)
+            _eventBus.Publish(new ItemEquipRequestedEvent(_selectedItem.Definition.Id));
     }
 
     private void Close()
