@@ -1,0 +1,66 @@
+[
+  {
+    "id": "item_sword_basic",
+    "display_name": "Basic Sword",
+    "description": "A simple sword for close combat.",
+    "item_type": "Weapon",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_bow_basic",
+    "display_name": "Basic Bow",
+    "description": "A simple bow for ranged combat.",
+    "item_type": "Weapon",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_shield_basic",
+    "display_name": "Basic Shield",
+    "description": "A sturdy wooden shield.",
+    "item_type": "Armor",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_tunic_peasant",
+    "display_name": "Peasant Tunic",
+    "description": "A comfortable everyday tunic.",
+    "item_type": "Armor",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_tunic_leather",
+    "display_name": "Leather Tunic",
+    "description": "A reinforced leather tunic.",
+    "item_type": "Armor",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_tincture_small",
+    "display_name": "Small Tincture",
+    "description": "Restores 25 health.",
+    "item_type": "Consumable",
+    "max_stack_size": 10,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_tincture_large",
+    "display_name": "Large Tincture",
+    "description": "Restores 75 health.",
+    "item_type": "Consumable",
+    "max_stack_size": 10,
+    "icon_texture_path": ""
+  },
+  {
+    "id": "item_portal_key",
+    "display_name": "Portal Key",
+    "description": "A key connected to the portal chamber.",
+    "item_type": "Artifact",
+    "max_stack_size": 1,
+    "icon_texture_path": ""
+  }
+]
