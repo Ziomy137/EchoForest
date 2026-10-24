@@ -15,6 +15,7 @@ public static class InputActionNames
     public const string Interact = "interact";
     public const string Pause = "pause";
     public const string Inventory = "inventory";
+    public const string QuestJournal = "quest_journal";
     public const string ToggleFullscreen = "toggle_fullscreen";
     public const string ToggleMinimap = "toggle_minimap";
 }

@@ -33,6 +33,7 @@ public class InputHandlerTest
             InputActionNames.Interact,
             InputActionNames.Pause,
             InputActionNames.Inventory,
+            InputActionNames.QuestJournal,
         };
 
         foreach (var action in required)
@@ -53,6 +54,7 @@ public class InputHandlerTest
             InputActionNames.Interact,
             InputActionNames.Pause,
             InputActionNames.Inventory,
+            InputActionNames.QuestJournal,
         };
         Assert.That(all.Distinct().Count(), Is.EqualTo(all.Length), "Action names must be unique");
     }
@@ -92,6 +94,10 @@ public class InputHandlerTest
     [Test]
     public void InputActionNames_Inventory_IsCorrectString() =>
         Assert.That(InputActionNames.Inventory, Is.EqualTo("inventory"));
+
+    [Test]
+    public void InputActionNames_QuestJournal_IsCorrectString() =>
+        Assert.That(InputActionNames.QuestJournal, Is.EqualTo("quest_journal"));
 
     // ── MockInputHandler ──────────────────────────────────────────────────────
 

@@ -44,7 +44,7 @@ public partial class QuestJournalNode : CanvasLayer
         if (cottage?.InputHandler.IsBlocked == true)
             return;
 
-        if (!@event.IsActionPressed(InputActionNames.Inventory)
+        if (!@event.IsActionPressed(InputActionNames.QuestJournal)
             && !(Visible && @event.IsActionPressed(InputActionNames.Pause)))
         {
             return;
