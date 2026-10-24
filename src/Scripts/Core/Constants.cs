@@ -61,6 +61,9 @@ public static class Constants
     /// <summary>Number of available save slots.</summary>
     public const int SaveSlotCount = 5;
 
+    /// <summary>Maximum number of distinct inventory stacks held by the player.</summary>
+    public const int MaxInventorySlots = 20;
+
     /// <summary>Default player health at the start of a new game or when loading a save without health data.</summary>
     public const float DefaultPlayerHealth = 100f;
 

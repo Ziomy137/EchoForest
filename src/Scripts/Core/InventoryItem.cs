@@ -15,4 +15,20 @@ public sealed class InventoryItem
 
     public ItemDefinition Definition { get; }
     public int Quantity { get; private set; }
+
+    internal void AddQuantity(int quantity)
+    {
+        if (quantity <= 0)
+            throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be greater than zero.");
+
+        Quantity = checked(Quantity + quantity);
+    }
+
+    internal void RemoveQuantity(int quantity)
+    {
+        if (quantity <= 0 || quantity >= Quantity)
+            throw new ArgumentOutOfRangeException(nameof(quantity), "Removed quantity must be positive and leave this stack non-empty.");
+
+        Quantity -= quantity;
+    }
 }

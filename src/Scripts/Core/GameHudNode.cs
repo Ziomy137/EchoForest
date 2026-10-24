@@ -26,6 +26,8 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     private float _lastKnownHealth;
     private MinimapController _minimap = null!;
     private string _lastRenderedMinimapArea = string.Empty;
+    private InventoryManager _inventoryManager = null!;
+    private InventoryScreenNode? _inventoryScreen;
 
     // Cached node references resolved once in _Ready.
     private ProgressBar _healthBar = null!;
@@ -50,6 +52,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     public string CurrentObjectiveText => _ctrl.CurrentObjectiveText;
     public string ObjectiveProgress => _ctrl.ObjectiveProgress;
     public string ActiveWeaponId => _ctrl.ActiveWeaponId;
+    public IInventoryManager InventoryManager => _inventoryManager;
 
     public override void _Ready()
     {
@@ -58,6 +61,10 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _ctrl = new GameHudController(_eventBus);
         _minimap = new MinimapController(_eventBus, currentScene?.SceneFilePath ?? string.Empty);
+        _inventoryManager = new InventoryManager(
+            Constants.MaxInventorySlots,
+            new ItemDatabase(new GodotFileSystem()),
+            _eventBus);
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
         _questPanel = GetNode<PanelContainer>("TopLeft/QuestPanel");
@@ -95,6 +102,27 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
 
     public override void _Input(InputEvent @event)
     {
+        if (@event.IsActionPressed(InputActionNames.Inventory))
+        {
+            if (_inventoryScreen is null
+                && (GetTree().CurrentScene as IAreaSceneContext)?.InputHandler.IsBlocked == true)
+            {
+                return;
+            }
+
+            if (_inventoryScreen is not null)
+            {
+                _inventoryScreen.CloseScreen();
+            }
+            else if (GetTree().Root.FindChild("PauseMenu", recursive: false, owned: false) is null)
+            {
+                OpenInventory();
+            }
+
+            GetViewport().SetInputAsHandled();
+            return;
+        }
+
         if (_minimap is null || !@event.IsActionPressed(InputActionNames.ToggleMinimap))
             return;
 
@@ -119,6 +147,12 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _eventBus?.Unsubscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _questPanelTween?.Kill();
         _minimap?.Dispose();
+        if (_inventoryScreen is not null)
+        {
+            _inventoryScreen.Closed -= OnInventoryClosed;
+            _inventoryScreen.QueueFree();
+            _inventoryScreen = null;
+        }
     }
 
     /// <summary>Updates the active weapon slot label.</summary>
@@ -239,6 +273,33 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _minimapPlayerDot.Position = new Vector2(
             4f + point.X / (MinimapController.MapWidth - 1f) * mapSize.X - dotSize / 2f,
             4f + point.Y / (MinimapController.MapHeight - 1f) * mapSize.Y - dotSize / 2f);
+    }
+
+    private void OpenInventory()
+    {
+        var player = GetTree().CurrentScene?.GetNodeOrNull<Node>("Player");
+        if (player is null)
+            return;
+
+        player.ProcessMode = ProcessModeEnum.Disabled;
+        _inventoryScreen = GD.Load<PackedScene>(MainMenuConfig.InventoryScreenScenePath)
+            .Instantiate<InventoryScreenNode>();
+        _inventoryScreen.Configure(_inventoryManager, _eventBus);
+        _inventoryScreen.Closed += OnInventoryClosed;
+        GetTree().Root.AddChild(_inventoryScreen);
+    }
+
+    private void OnInventoryClosed()
+    {
+        if (_inventoryScreen is not null)
+        {
+            _inventoryScreen.Closed -= OnInventoryClosed;
+            _inventoryScreen = null;
+        }
+
+        var player = GetTree().CurrentScene?.GetNodeOrNull<Node>("Player");
+        if (player is not null && GodotObject.IsInstanceValid(player))
+            player.ProcessMode = ProcessModeEnum.Inherit;
     }
 
     // Pause input is handled by CottageAreaNode (root Node2D) — CanvasLayer

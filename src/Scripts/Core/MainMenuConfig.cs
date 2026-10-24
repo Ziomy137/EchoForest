@@ -46,4 +46,7 @@ public static class MainMenuConfig
 
     /// <summary>Quest journal overlay scene resource path.</summary>
     public const string QuestJournalScenePath = "res://src/Scenes/QuestJournal.tscn";
+
+    /// <summary>Inventory screen overlay scene resource path.</summary>
+    public const string InventoryScreenScenePath = "res://src/Scenes/InventoryScreen.tscn";
 }

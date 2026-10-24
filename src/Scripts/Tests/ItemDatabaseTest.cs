@@ -111,6 +111,38 @@ public class ItemDatabaseTest
     }
 
     [Test]
+    public void StartingCatalog_ClassifiesShieldWithWeapons()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var filePath = Path.Combine(repositoryRoot, "src", "Assets", "Data", "Items", "items.json");
+        var fileSystem = new MockFileSystem(new Dictionary<string, string>
+        {
+            [ItemDatabase.DefaultFilePath] = File.ReadAllText(filePath),
+        });
+
+        Assert.That(new ItemDatabase(fileSystem).GetItem("item_shield_basic").ItemType, Is.EqualTo(ItemType.Weapon));
+    }
+
+    [Test]
+    public void AllItems_HaveExistingIconTextures()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var filePath = Path.Combine(repositoryRoot, "src", "Assets", "Data", "Items", "items.json");
+        var fileSystem = new MockFileSystem(new Dictionary<string, string>
+        {
+            [ItemDatabase.DefaultFilePath] = File.ReadAllText(filePath),
+        });
+        var items = new ItemDatabase(fileSystem).GetAllItems();
+
+        foreach (var item in items)
+        {
+            var iconFilePath = Path.Combine(repositoryRoot,
+                item.IconTexturePath["res://".Length..].Replace('/', Path.DirectorySeparatorChar));
+            Assert.That(File.Exists(iconFilePath), Is.True, $"Missing icon for {item.Id}: {item.IconTexturePath}");
+        }
+    }
+
+    [Test]
     public void Constructor_UsesDefaultCatalogPath()
     {
         var database = new ItemDatabase(new MockFileSystem(new Dictionary<string, string>
