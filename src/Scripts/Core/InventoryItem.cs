@@ -14,5 +14,5 @@ public sealed class InventoryItem
     }
 
     public ItemDefinition Definition { get; }
-    public int Quantity { get; internal set; }
+    public int Quantity { get; private set; }
 }
