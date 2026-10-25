@@ -65,7 +65,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _eventBus.Subscribe<EquipmentChangedEvent>(OnEquipmentChanged);
         _eventBus.Subscribe<ItemEquipRequestedEvent>(OnItemEquipRequested);
-        _ctrl = new GameHudController(_eventBus);
+        _ctrl = new GameHudController();
         _minimap = new MinimapController(_eventBus, currentScene?.SceneFilePath ?? string.Empty);
         _itemDatabase = new ItemDatabase(new GodotFileSystem());
         _inventoryManager = new InventoryManager(
@@ -150,7 +150,12 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     /// </summary>
     public void UpdateHealth(float current, float max)
     {
+        var tookDamage = current < _ctrl.CurrentHealth;
         _ctrl.UpdateHealth(current, max);
+        _lastKnownHealth = _ctrl.CurrentHealth;
+        RefreshHealthBar();
+        if (tookDamage)
+            PlayDamageFlash();
     }
 
     public override void _ExitTree()
@@ -224,6 +229,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     {
         var tookDamage = healthEvent.NewHealth < _lastKnownHealth;
         _lastKnownHealth = healthEvent.NewHealth;
+        _ctrl.UpdateHealth(healthEvent.NewHealth, healthEvent.MaxHealth);
         RefreshHealthBar();
 
         if (tookDamage)
