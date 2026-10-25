@@ -33,6 +33,9 @@ public sealed record ItemUseRequestedEvent(string ItemId);
 /// <summary>Published when the player requests to equip an inventory item.</summary>
 public sealed record ItemEquipRequestedEvent(string ItemId);
 
+/// <summary>Published after an equipment slot changes.</summary>
+public sealed record EquipmentChangedEvent(EquipmentSlot Slot, string? NewItemId);
+
 /// <summary>Published when a named cutscene begins.</summary>
 public sealed record CutsceneStartedEvent(string CutsceneId);
 

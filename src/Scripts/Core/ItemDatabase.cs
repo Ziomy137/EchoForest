@@ -104,5 +104,11 @@ public sealed class ItemDatabase : IItemDatabase
 
         if (item.MaxStackSize <= 0)
             throw new ItemLoadException($"Item '{item.Id}' has an invalid maximum stack size.");
+
+        if (item.HealthRestore is float healthRestore
+            && (item.ItemType != ItemType.Consumable || !float.IsFinite(healthRestore) || healthRestore <= 0f))
+        {
+            throw new ItemLoadException($"Item '{item.Id}' has an invalid health restore value.");
+        }
     }
 }

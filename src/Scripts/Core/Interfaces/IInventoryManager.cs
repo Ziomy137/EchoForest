@@ -13,5 +13,7 @@ public interface IInventoryManager
     bool HasItem(string itemId, int minQuantity = 1);
     InventoryItem? GetItem(string itemId);
     List<InventoryItem> GetAllItems();
+    Dictionary<string, int> GetItemQuantities();
+    void RestoreItems(IReadOnlyDictionary<string, int> quantities);
     event Action? Changed;
 }

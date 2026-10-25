@@ -18,9 +18,15 @@ public sealed class ItemDefinition
     [JsonRequired]
     public ItemType ItemType { get; set; }
 
+    [JsonPropertyName("equipment_slot")]
+    public EquipmentSlot? EquipmentSlot { get; set; }
+
     [JsonPropertyName("max_stack_size")]
     public int MaxStackSize { get; set; } = 1;
 
     [JsonPropertyName("icon_texture_path")]
     public string IconTexturePath { get; set; } = string.Empty;
+
+    [JsonPropertyName("health_restore")]
+    public float? HealthRestore { get; set; }
 }

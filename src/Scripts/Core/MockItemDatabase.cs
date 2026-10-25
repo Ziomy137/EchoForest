@@ -26,13 +26,13 @@ public sealed class MockItemDatabase : IItemDatabase
 
     private static ItemDefinition[] CreateDefaults() =>
     [
-        new() { Id = "item_sword_basic", DisplayName = "Basic Sword", Description = "A simple sword for close combat.", ItemType = ItemType.Weapon, MaxStackSize = 1 },
-        new() { Id = "item_bow_basic", DisplayName = "Basic Bow", Description = "A simple bow for ranged combat.", ItemType = ItemType.Weapon, MaxStackSize = 1 },
-        new() { Id = "item_shield_basic", DisplayName = "Basic Shield", Description = "A sturdy wooden shield.", ItemType = ItemType.Weapon, MaxStackSize = 1 },
-        new() { Id = "item_tunic_peasant", DisplayName = "Peasant Tunic", Description = "A comfortable everyday tunic.", ItemType = ItemType.Armor, MaxStackSize = 1 },
-        new() { Id = "item_tunic_leather", DisplayName = "Leather Tunic", Description = "A reinforced leather tunic.", ItemType = ItemType.Armor, MaxStackSize = 1 },
-        new() { Id = "item_tincture_small", DisplayName = "Small Tincture", Description = "Restores 25 health.", ItemType = ItemType.Consumable, MaxStackSize = 10 },
-        new() { Id = "item_tincture_large", DisplayName = "Large Tincture", Description = "Restores 75 health.", ItemType = ItemType.Consumable, MaxStackSize = 10 },
+        new() { Id = "item_sword_basic", DisplayName = "Basic Sword", Description = "A simple sword for close combat.", ItemType = ItemType.Weapon, EquipmentSlot = EquipmentSlot.Weapon, MaxStackSize = 1 },
+        new() { Id = "item_bow_basic", DisplayName = "Basic Bow", Description = "A simple bow for ranged combat.", ItemType = ItemType.Weapon, EquipmentSlot = EquipmentSlot.Weapon, MaxStackSize = 1 },
+        new() { Id = "item_shield_basic", DisplayName = "Basic Shield", Description = "A sturdy wooden shield.", ItemType = ItemType.Weapon, EquipmentSlot = EquipmentSlot.OffHand, MaxStackSize = 1 },
+        new() { Id = "item_tunic_peasant", DisplayName = "Peasant Tunic", Description = "A comfortable everyday tunic.", ItemType = ItemType.Armor, EquipmentSlot = EquipmentSlot.Armor, MaxStackSize = 1 },
+        new() { Id = "item_tunic_leather", DisplayName = "Leather Tunic", Description = "A reinforced leather tunic.", ItemType = ItemType.Armor, EquipmentSlot = EquipmentSlot.Armor, MaxStackSize = 1 },
+        new() { Id = "item_tincture_small", DisplayName = "Small Tincture", Description = "Restores 25 health.", ItemType = ItemType.Consumable, MaxStackSize = 10, HealthRestore = 25f },
+        new() { Id = "item_tincture_large", DisplayName = "Large Tincture", Description = "Restores 75 health.", ItemType = ItemType.Consumable, MaxStackSize = 10, HealthRestore = 75f },
         new() { Id = "item_portal_key", DisplayName = "Portal Key", Description = "A key connected to the portal chamber.", ItemType = ItemType.Artifact, MaxStackSize = 1 },
     ];
 }

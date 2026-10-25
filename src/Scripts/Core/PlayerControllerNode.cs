@@ -24,6 +24,9 @@ public partial class PlayerControllerNode : CharacterBody2D
 {
     private PlayerController _controller = null!;
     private PlayerAnimationController _animController = null!;
+    private Sprite2D _equipmentOverlay = null!;
+    private IEventBus? _eventBus;
+    private ItemDatabase? _itemDatabase;
 
     /// <summary>Pure-C# controller used by gameplay components that interact with the player.</summary>
     public IPlayerController Controller => _controller;
@@ -40,7 +43,16 @@ public partial class PlayerControllerNode : CharacterBody2D
 
         var sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         _animController = new PlayerAnimationController(new GodotAnimatedSprite(sprite));
+        _equipmentOverlay = GetNode<Sprite2D>("EquipmentOverlay");
+        _eventBus = (GetTree().CurrentScene as IAreaSceneContext)?.EventBus;
+        if (_eventBus is not null)
+        {
+            _itemDatabase = new ItemDatabase(new GodotFileSystem());
+            _eventBus.Subscribe<EquipmentChangedEvent>(OnEquipmentChanged);
+        }
     }
+
+    public override void _ExitTree() => _eventBus?.Unsubscribe<EquipmentChangedEvent>(OnEquipmentChanged);
 
     public override void _PhysicsProcess(double delta)
     {
@@ -50,5 +62,22 @@ public partial class PlayerControllerNode : CharacterBody2D
 
         _animController.UpdateAnimation(_controller.CurrentState, _controller.FacingDirection);
         ZIndex = IsometricSorter.CalculateZIndex(GlobalPosition);
+    }
+
+    private void OnEquipmentChanged(EquipmentChangedEvent gameEvent)
+    {
+        if (gameEvent.Slot != EquipmentSlot.Weapon)
+            return;
+
+        if (gameEvent.NewItemId is null)
+        {
+            _equipmentOverlay.Texture = null;
+            _equipmentOverlay.Visible = false;
+            return;
+        }
+
+        var item = _itemDatabase!.GetItem(gameEvent.NewItemId);
+        _equipmentOverlay.Texture = GD.Load<Texture2D>(item.IconTexturePath);
+        _equipmentOverlay.Visible = true;
     }
 }

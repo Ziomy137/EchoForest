@@ -120,7 +120,31 @@ public class ItemDatabaseTest
             [ItemDatabase.DefaultFilePath] = File.ReadAllText(filePath),
         });
 
-        Assert.That(new ItemDatabase(fileSystem).GetItem("item_shield_basic").ItemType, Is.EqualTo(ItemType.Weapon));
+        var shield = new ItemDatabase(fileSystem).GetItem("item_shield_basic");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(shield.ItemType, Is.EqualTo(ItemType.Weapon));
+            Assert.That(shield.EquipmentSlot, Is.EqualTo(EquipmentSlot.OffHand));
+        });
+    }
+
+    [Test]
+    public void StartingCatalog_ProvidesTinctureHealingAmounts()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var filePath = Path.Combine(repositoryRoot, "src", "Assets", "Data", "Items", "items.json");
+        var fileSystem = new MockFileSystem(new Dictionary<string, string>
+        {
+            [ItemDatabase.DefaultFilePath] = File.ReadAllText(filePath),
+        });
+        var database = new ItemDatabase(fileSystem);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(database.GetItem("item_tincture_small").HealthRestore, Is.EqualTo(25f));
+            Assert.That(database.GetItem("item_tincture_large").HealthRestore, Is.EqualTo(75f));
+        });
     }
 
     [Test]
