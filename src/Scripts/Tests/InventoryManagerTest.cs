@@ -242,7 +242,7 @@ public class InventoryManagerTest
         new(maxSlots, _itemDatabase, _eventBus);
 
     private static MockItemDatabase CreateItemDatabase() => new(
-        new ItemDefinition { Id = "item_sword_basic", DisplayName = "Basic Sword", Description = "Sword.", ItemType = ItemType.Weapon, MaxStackSize = 1 },
-        new ItemDefinition { Id = "item_bow_basic", DisplayName = "Basic Bow", Description = "Bow.", ItemType = ItemType.Weapon, MaxStackSize = 1 },
+        new ItemDefinition { Id = "item_sword_basic", DisplayName = "Basic Sword", Description = "Sword.", ItemType = ItemType.Weapon, EquipmentSlot = EquipmentSlot.Weapon, MaxStackSize = 1 },
+        new ItemDefinition { Id = "item_bow_basic", DisplayName = "Basic Bow", Description = "Bow.", ItemType = ItemType.Weapon, EquipmentSlot = EquipmentSlot.Weapon, MaxStackSize = 1 },
         new ItemDefinition { Id = "item_tincture_small", DisplayName = "Small Tincture", Description = "Restores health.", ItemType = ItemType.Consumable, MaxStackSize = 10 });
 }

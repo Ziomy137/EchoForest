@@ -556,6 +556,9 @@ These are prerequisites for all quest and story content.
 | `MinimapControllerTest.cs`        | 7     | S10-03 | World-to-map transform, clamping, area event/map selection, asset presence, visibility toggle, and cleanup. |
 | `ItemDatabaseTest.cs`             | 27    | S11-01 | Item catalog loading, enum parsing, validation, duplicate IDs, icon assets, and runtime item instances.     |
 | `InventoryManagerTest.cs`         | 22    | S11-02 | Slot limits, stacking, atomic mutations, quantity validation, overflow protection, and change events.       |
+| `EquipmentManagerTest.cs`         | 15    | S11-03 | Slot/type matching, replacement/unequip, inventory exchange, invalid IDs, and equipment events.             |
+| `PlayerHealthManagerTest.cs`      | 10    | S11-03 | Damage/healing clamps, health events, one-time death event, and input validation.                           |
+| `InventoryItemUseServiceTest.cs`  | 5     | S11-03 | Tincture consumption/healing, max-health cap, invalid uses, and event unsubscribe.                          |
 
 ---
 
@@ -1555,23 +1558,23 @@ Test coverage: `ItemDatabaseTest.cs` (27 cases).
 
 **Tasks:**
 
-- [ ] Create `EquipmentSlot` enum: `Weapon`, `OffHand`, `Armor`, `Head`
-- [ ] Create `EquipmentManager.cs` implementing `IEquipmentManager`:
+- [x] Create `EquipmentSlot` enum: `Weapon`, `OffHand`, `Armor`, `Head`
+- [x] Create `EquipmentManager.cs` implementing `IEquipmentManager`:
   - `Equip(string itemId, EquipmentSlot slot) → bool`
   - `Unequip(EquipmentSlot slot) → InventoryItem?`
   - `GetEquipped(EquipmentSlot slot) → InventoryItem?`
   - `IsSlotOccupied(EquipmentSlot slot) → bool`
-  - Validates item type matches slot (sword → Weapon, shield → OffHand, etc.)
+  - Validates item type and explicit slot metadata (sword → Weapon, shield → OffHand, etc.)
   - Publishes `EquipmentChangedEvent(EquipmentSlot, string? newItemId)`
-- [ ] Create `PlayerHealthManager.cs` implementing `IPlayerHealthManager`:
+- [x] Create `PlayerHealthManager.cs` implementing `IPlayerHealthManager`:
   - `MaxHealth`, `CurrentHealth`
   - `TakeDamage(float amount)`
   - `Heal(float amount)`
   - `IsDead → bool`
   - Publishes `PlayerHealthChangedEvent` and `PlayerDiedEvent` via EventBus
-- [ ] On `EquipmentChangedEvent`: HUD equipment display updates
-- [ ] On `item_tincture_small` used from inventory: calls `PlayerHealthManager.Heal(25f)`
-- [ ] Player character sprite layer updates to show equipped weapon icon (overlay sprite)
+- [x] On `EquipmentChangedEvent`: HUD equipment display updates
+- [x] On `item_tincture_small` used from inventory: calls `PlayerHealthManager.Heal(25f)` via catalog `health_restore`
+- [x] Player character sprite layer updates to show equipped weapon icon (overlay sprite)
 
 **Acceptance Criteria:**
 
@@ -1631,7 +1634,7 @@ Test coverage: `ItemDatabaseTest.cs` (27 cases).
 | --------------------------- | ------ | --------- |
 | S11-01 Item Data System ✅  | 5      | Developer |
 | S11-02 Inventory Manager ✅ | 5      | Developer |
-| S11-03 Equipment System     | 8      | Developer |
+| S11-03 Equipment System ✅  | 8      | Developer |
 | **Total**                   | **18** |           |
 
 ---
