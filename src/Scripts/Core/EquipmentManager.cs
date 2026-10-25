@@ -79,6 +79,45 @@ public sealed class EquipmentManager : IEquipmentManager
         return _equipped.ContainsKey(slot);
     }
 
+    public Dictionary<string, string?> GetEquippedItems()
+    {
+        var items = new Dictionary<string, string?>(StringComparer.Ordinal);
+        foreach (var slot in Enum.GetValues<EquipmentSlot>())
+            items[slot.ToString()] = _equipped.TryGetValue(slot, out var item) ? item.Definition.Id : null;
+
+        return items;
+    }
+
+    public void RestoreEquippedItems(IReadOnlyDictionary<string, string?> items)
+    {
+        ArgumentNullException.ThrowIfNull(items);
+        var restored = new Dictionary<EquipmentSlot, InventoryItem>();
+        foreach (var entry in items)
+        {
+            if (!Enum.TryParse<EquipmentSlot>(entry.Key, ignoreCase: false, out var slot) || !Enum.IsDefined(slot))
+                throw new ArgumentException($"Unknown equipment slot '{entry.Key}'.", nameof(items));
+
+            if (entry.Value is null)
+                continue;
+
+            ArgumentException.ThrowIfNullOrWhiteSpace(entry.Value);
+            var definition = _itemDatabase.GetItem(entry.Value);
+            if (!IsCompatible(definition, slot))
+                throw new InvalidOperationException($"Item '{definition.Id}' cannot be restored to slot '{slot}'.");
+
+            restored.Add(slot, new InventoryItem(definition));
+        }
+
+        _equipped.Clear();
+        foreach (var slot in Enum.GetValues<EquipmentSlot>())
+        {
+            if (restored.TryGetValue(slot, out var item))
+                _equipped.Add(slot, item);
+
+            _eventBus.Publish(new EquipmentChangedEvent(slot, item?.Definition.Id));
+        }
+    }
+
     private static bool IsCompatible(ItemDefinition item, EquipmentSlot slot)
     {
         if (item.EquipmentSlot != slot)

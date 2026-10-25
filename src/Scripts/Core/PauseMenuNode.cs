@@ -80,12 +80,14 @@ public partial class PauseMenuNode : CanvasLayer
         var questStates = (GetTree().CurrentScene as IAreaSceneContext)?.QuestService.GetQuestStates()
             ?? new System.Collections.Generic.Dictionary<string, QuestState>();
 
-        _ctrl.OnSaveGame(new SaveData
+        var saveData = new SaveData
         {
             CurrentArea = currentArea,
             PlayerX = player?.GlobalPosition.X ?? 0f,
             PlayerY = player?.GlobalPosition.Y ?? 0f,
             QuestStates = questStates,
-        });
+        };
+        GameSession.CopyGameplayStateTo(saveData);
+        _ctrl.OnSaveGame(saveData);
     }
 }

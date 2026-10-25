@@ -7,13 +7,17 @@ public sealed class PlayerHealthManager : IPlayerHealthManager
 {
     private readonly IEventBus _eventBus;
 
-    public PlayerHealthManager(float maxHealth, IEventBus eventBus)
+    public PlayerHealthManager(float maxHealth, IEventBus eventBus, float? initialHealth = null)
     {
-        if (maxHealth <= 0f)
+        if (!float.IsFinite(maxHealth) || maxHealth <= 0f)
             throw new ArgumentOutOfRangeException(nameof(maxHealth), "Maximum health must be greater than zero.");
 
+        var currentHealth = initialHealth ?? maxHealth;
+        if (!float.IsFinite(currentHealth) || currentHealth < 0f || currentHealth > maxHealth)
+            throw new ArgumentOutOfRangeException(nameof(initialHealth), "Initial health must be between zero and maximum health.");
+
         MaxHealth = maxHealth;
-        CurrentHealth = maxHealth;
+        CurrentHealth = currentHealth;
         _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
     }
 

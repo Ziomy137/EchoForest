@@ -72,8 +72,14 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
             Constants.MaxInventorySlots,
             _itemDatabase,
             _eventBus);
+        if (GameSession.HasGameplayState)
+            _inventoryManager.RestoreItems(GameSession.InventoryItems);
+
         _equipmentManager = new EquipmentManager(_itemDatabase, _inventoryManager, _eventBus);
-        _playerHealthManager = new PlayerHealthManager(Constants.DefaultPlayerHealth, _eventBus);
+        _playerHealthManager = new PlayerHealthManager(
+            Constants.DefaultPlayerHealth,
+            _eventBus,
+            GameSession.HasGameplayState ? GameSession.PlayerHealth : null);
         _itemUseService = new InventoryItemUseService(_inventoryManager, _playerHealthManager, _eventBus);
 
         _healthBar = GetNode<ProgressBar>("TopLeft/HealthBar");
@@ -89,8 +95,13 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _minimapAreaLabel = GetNode<Label>("MinimapContainer/AreaNameLabel");
         _minimapPlayerDot = GetNode<ColorRect>("MinimapContainer/MinimapPanel/PlayerDot");
 
+        _inventoryManager.Changed += OnInventoryChanged;
+        if (GameSession.HasGameplayState)
+            _equipmentManager.RestoreEquippedItems(GameSession.EquippedItems);
+
         _lastKnownHealth = _playerHealthManager.CurrentHealth;
         _ctrl.UpdateHealth(_playerHealthManager.CurrentHealth, _playerHealthManager.MaxHealth);
+        SyncGameplayState();
         RefreshHud();
         RefreshMinimapArea();
     }
@@ -163,6 +174,8 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         _eventBus?.Unsubscribe<PlayerHealthChangedEvent>(OnPlayerHealthChanged);
         _eventBus?.Unsubscribe<EquipmentChangedEvent>(OnEquipmentChanged);
         _eventBus?.Unsubscribe<ItemEquipRequestedEvent>(OnItemEquipRequested);
+        if (_inventoryManager is not null)
+            _inventoryManager.Changed -= OnInventoryChanged;
         _itemUseService?.Dispose();
         _questPanelTween?.Kill();
         _minimap?.Dispose();
@@ -230,6 +243,7 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
         var tookDamage = healthEvent.NewHealth < _lastKnownHealth;
         _lastKnownHealth = healthEvent.NewHealth;
         _ctrl.UpdateHealth(healthEvent.NewHealth, healthEvent.MaxHealth);
+        SyncGameplayState();
         RefreshHealthBar();
 
         if (tookDamage)
@@ -240,7 +254,16 @@ public partial class GameHudNode : CanvasLayer, IGameHudController
     {
         if (gameEvent.Slot == EquipmentSlot.Weapon)
             SetActiveWeapon(gameEvent.NewItemId);
+
+        SyncGameplayState();
     }
+
+    private void OnInventoryChanged() => SyncGameplayState();
+
+    private void SyncGameplayState() => GameSession.SetGameplayState(
+        _inventoryManager.GetItemQuantities(),
+        _equipmentManager.GetEquippedItems(),
+        _playerHealthManager.CurrentHealth);
 
     private void OnItemEquipRequested(ItemEquipRequestedEvent gameEvent)
     {

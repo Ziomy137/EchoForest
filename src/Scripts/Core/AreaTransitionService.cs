@@ -27,6 +27,7 @@ public sealed class AreaTransitionService : IAreaTransitionService
         ArgumentException.ThrowIfNullOrWhiteSpace(spawnPointId);
         ArgumentNullException.ThrowIfNull(saveData);
 
+        GameSession.CopyGameplayStateTo(saveData);
         _saveService.Save(saveData, slot: 1);
         GameSession.SetQuestStates(saveData.QuestStates);
         GameSession.RequestTransitionSpawnPointId(spawnPointId);

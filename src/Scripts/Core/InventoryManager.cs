@@ -135,4 +135,44 @@ public sealed class InventoryManager : IInventoryManager
     }
 
     public List<InventoryItem> GetAllItems() => [.. _items];
+
+    public Dictionary<string, int> GetItemQuantities()
+    {
+        var quantities = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var item in _items)
+        {
+            quantities.TryGetValue(item.Definition.Id, out var currentQuantity);
+            quantities[item.Definition.Id] = checked(currentQuantity + item.Quantity);
+        }
+
+        return quantities;
+    }
+
+    public void RestoreItems(IReadOnlyDictionary<string, int> quantities)
+    {
+        ArgumentNullException.ThrowIfNull(quantities);
+        var restoredItems = new List<InventoryItem>();
+        foreach (var entry in quantities.OrderBy(entry => entry.Key, StringComparer.Ordinal))
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(entry.Key);
+            if (entry.Value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(quantities), $"Item '{entry.Key}' must have a positive quantity.");
+
+            var definition = _itemDatabase.GetItem(entry.Key);
+            var remaining = entry.Value;
+            while (remaining > 0)
+            {
+                if (restoredItems.Count >= MaxSlots)
+                    throw new InvalidOperationException("Saved inventory exceeds the available slot count.");
+
+                var stackQuantity = Math.Min(remaining, definition.MaxStackSize);
+                restoredItems.Add(new InventoryItem(definition, stackQuantity));
+                remaining -= stackQuantity;
+            }
+        }
+
+        _items.Clear();
+        _items.AddRange(restoredItems);
+        Changed?.Invoke();
+    }
 }

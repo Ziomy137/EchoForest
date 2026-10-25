@@ -17,6 +17,9 @@ namespace EchoForest.Core;
 public static class GameSession
 {
     private static Dictionary<string, QuestState> _questStates = new(StringComparer.Ordinal);
+    private static Dictionary<string, int> _inventoryItems = new(StringComparer.Ordinal);
+    private static Dictionary<string, string?> _equippedItems = new(StringComparer.Ordinal);
+    private static float _playerHealth = Constants.DefaultPlayerHealth;
     private static bool _introCutsceneRequested;
     private static string? _transitionSpawnPointId;
 
@@ -34,6 +37,13 @@ public static class GameSession
 
     /// <summary>Quest states supplied by the currently loaded save, if any.</summary>
     public static IReadOnlyDictionary<string, QuestState> QuestStates => _questStates;
+
+    /// <summary>Whether inventory, equipment, and health have been initialized for this session.</summary>
+    public static bool HasGameplayState { get; private set; }
+
+    public static IReadOnlyDictionary<string, int> InventoryItems => _inventoryItems;
+    public static IReadOnlyDictionary<string, string?> EquippedItems => _equippedItems;
+    public static float PlayerHealth => _playerHealth;
 
     /// <summary>Records the destination spawn point for the next area scene.</summary>
     public static void RequestTransitionSpawnPointId(string spawnPointId)
@@ -70,6 +80,10 @@ public static class GameSession
         HasSession = true;
         HasPlayerPosition = false;
         _questStates.Clear();
+        _inventoryItems.Clear();
+        _equippedItems.Clear();
+        _playerHealth = Constants.DefaultPlayerHealth;
+        HasGameplayState = false;
         _introCutsceneRequested = false;
         _transitionSpawnPointId = null;
     }
@@ -81,6 +95,53 @@ public static class GameSession
         _questStates = new Dictionary<string, QuestState>(questStates, StringComparer.Ordinal);
     }
 
+    /// <summary>Replaces the session-level inventory, equipment, and health snapshot.</summary>
+    public static void SetGameplayState(
+        IReadOnlyDictionary<string, int> inventoryItems,
+        IReadOnlyDictionary<string, string?> equippedItems,
+        float playerHealth)
+    {
+        ArgumentNullException.ThrowIfNull(inventoryItems);
+        ArgumentNullException.ThrowIfNull(equippedItems);
+        if (!float.IsFinite(playerHealth) || playerHealth < 0f || playerHealth > Constants.DefaultPlayerHealth)
+            throw new ArgumentOutOfRangeException(nameof(playerHealth));
+
+        var inventoryCopy = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var item in inventoryItems)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(item.Key);
+            if (item.Value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(inventoryItems), $"Item '{item.Key}' must have a positive quantity.");
+            inventoryCopy.Add(item.Key, item.Value);
+        }
+
+        var equipmentCopy = new Dictionary<string, string?>(StringComparer.Ordinal);
+        foreach (var item in equippedItems)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(item.Key);
+            if (item.Value is not null)
+                ArgumentException.ThrowIfNullOrWhiteSpace(item.Value);
+            equipmentCopy.Add(item.Key, item.Value);
+        }
+
+        _inventoryItems = inventoryCopy;
+        _equippedItems = equipmentCopy;
+        _playerHealth = playerHealth;
+        HasGameplayState = true;
+    }
+
+    /// <summary>Copies the current session snapshot into a save or transition payload.</summary>
+    public static void CopyGameplayStateTo(SaveData saveData)
+    {
+        ArgumentNullException.ThrowIfNull(saveData);
+        if (!HasGameplayState)
+            return;
+
+        saveData.InventoryItems = new Dictionary<string, int>(_inventoryItems, StringComparer.Ordinal);
+        saveData.EquippedItems = new Dictionary<string, string?>(_equippedItems, StringComparer.Ordinal);
+        saveData.PlayerHealth = _playerHealth;
+    }
+
     /// <summary>Applies the session state required after a save is selected.</summary>
     public static void ApplyLoadedSave(SaveData saveData)
     {
@@ -88,6 +149,7 @@ public static class GameSession
         Start();
         SavePlayerPosition(saveData.PlayerX, saveData.PlayerY);
         SetQuestStates(saveData.QuestStates);
+        SetGameplayState(saveData.InventoryItems, saveData.EquippedItems, saveData.PlayerHealth);
     }
 
     /// <summary>
@@ -109,6 +171,10 @@ public static class GameSession
         LastPlayerX = 0f;
         LastPlayerY = 0f;
         _questStates.Clear();
+        _inventoryItems.Clear();
+        _equippedItems.Clear();
+        _playerHealth = Constants.DefaultPlayerHealth;
+        HasGameplayState = false;
         _introCutsceneRequested = false;
         _transitionSpawnPointId = null;
     }

@@ -559,6 +559,8 @@ These are prerequisites for all quest and story content.
 | `EquipmentManagerTest.cs`         | 15    | S11-03 | Slot/type matching, replacement/unequip, inventory exchange, invalid IDs, and equipment events.             |
 | `PlayerHealthManagerTest.cs`      | 10    | S11-03 | Damage/healing clamps, health events, one-time death event, and input validation.                           |
 | `InventoryItemUseServiceTest.cs`  | 5     | S11-03 | Tincture consumption/healing, max-health cap, invalid uses, and event unsubscribe.                          |
+| `GameplayStatePersistenceTest.cs` | 6     | S11-03 | Inventory/equipment/health snapshots, transition/pause save, save/load restore, and new-game reset.         |
+| `GameplayStatePersistenceTest.cs` | 5     | S11-03 | Inventory/equipment/health snapshots across transitions, save/load restore, and new-game reset.             |
 
 ---
 
@@ -1575,6 +1577,8 @@ Test coverage: `ItemDatabaseTest.cs` (27 cases).
 - [x] On `EquipmentChangedEvent`: HUD equipment display updates
 - [x] On `item_tincture_small` used from inventory: calls `PlayerHealthManager.Heal(25f)` via catalog `health_restore`
 - [x] Player character sprite layer updates to show equipped weapon icon (overlay sprite)
+- [x] Persist inventory, equipment, and current health through `GameSession` and `SaveData` across area transitions and save/load
+- [x] Persist inventory, equipment, and current health across area transitions and save/load through `GameSession` snapshots
 
 **Acceptance Criteria:**
 
@@ -1582,6 +1586,7 @@ Test coverage: `ItemDatabaseTest.cs` (27 cases).
 - Equipping a shield in the Weapon slot fails (wrong slot)
 - Using a small tincture heals exactly 25 HP (not above max)
 - Dying triggers `PlayerDiedEvent`
+- Inventory, equipped slots, and health survive area transitions and selected save/load
 
 **Tests Required:**
 
